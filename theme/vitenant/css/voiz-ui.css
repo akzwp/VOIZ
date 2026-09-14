@@ -4276,3 +4276,1046 @@ body.login-page .fotter .copyr p {
     }
     a { color: #000; text-decoration: underline; }
 }
+
+/* ============================================================
+   VOIZ UI v5 — styles.css / legacy-hardcoded kills
+   ============================================================
+   Neutralizes every hardcoded color in styles.css, header.css,
+   and table.css that fights the VOIZ theme tokens.
+   ============================================================ */
+
+/* ---------- body / global ---------- */
+body {
+    color: var(--voiz-text) !important;
+    font-family: var(--voiz-font) !important;
+    background: var(--voiz-bg) !important;
+}
+
+/* ---------- all form controls: inputs, selects, textareas ---------- */
+input,
+select,
+textarea {
+    background-color: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+    font-family: var(--voiz-font) !important;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="url"],
+input[type="tel"],
+input[type="search"],
+input:not([type]),
+textarea,
+select {
+    height: auto !important;
+    min-height: 36px !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--voiz-border) !important;
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text) !important;
+}
+input:focus,
+textarea:focus,
+select:focus {
+    background-color: var(--voiz-surface) !important;
+    border-color: var(--voiz-accent) !important;
+    box-shadow: 0 0 0 3px rgba(232,133,0,0.15) !important;
+    outline: none !important;
+}
+input:disabled,
+select:disabled,
+textarea:disabled {
+    background-color: var(--voiz-surface-2) !important;
+    color: var(--voiz-muted) !important;
+    border-color: var(--voiz-border) !important;
+    opacity: 0.6;
+}
+input[type="checkbox"],
+input[type="radio"] {
+    height: auto !important;
+    min-height: auto !important;
+    accent-color: var(--voiz-accent);
+}
+
+/* ---------- submit / reset buttons ---------- */
+input[type="submit"],
+input[type="reset"],
+INPUT.submit,
+INPUT.reset {
+    background: var(--voiz-accent) !important;
+    background-image: none !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 20px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: background 0.2s, transform 0.1s !important;
+}
+input[type="submit"]:hover,
+INPUT.submit:hover {
+    background: var(--voiz-accent-hover) !important;
+    transform: translateY(-1px);
+}
+
+/* ---------- SELECT dropdowns ---------- */
+select,
+SELECT {
+    background-color: var(--voiz-surface) !important;
+    border: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    height: auto !important;
+    min-height: 36px !important;
+    font-size: 13px !important;
+    appearance: auto !important;
+    background-image: none !important;
+}
+select:focus,
+SELECT:focus {
+    border-color: var(--voiz-accent) !important;
+    box-shadow: 0 0 0 3px rgba(232,133,0,0.15) !important;
+}
+
+/* ---------- TEXTAREA ---------- */
+TEXTAREA,
+textarea {
+    background-color: var(--voiz-surface) !important;
+    border: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ---------- .exportButton (toolbar) ---------- */
+.exportButton {
+    background: var(--voiz-surface-2) !important;
+    background-image: none !important;
+    border: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+    font-family: var(--voiz-font) !important;
+    cursor: pointer !important;
+    transition: background 0.2s, border-color 0.2s !important;
+}
+.exportButton:hover {
+    background: var(--voiz-accent) !important;
+    border-color: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+
+/* ---------- TD.celda_default (table cells) ---------- */
+TD.celda_default,
+td.celda_default {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text-soft) !important;
+    font-family: var(--voiz-font) !important;
+}
+
+/* ---------- .error text ---------- */
+.error,
+.error_msg {
+    color: var(--voiz-danger) !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+}
+
+/* ---------- div.div_msg_errors (error banner) ---------- */
+div.div_msg_errors,
+div[class*="div_msg_errors"],
+.msg_errors,
+.alert-danger {
+    background: var(--voiz-danger-bg) !important;
+    border: 1px solid var(--voiz-danger) !important;
+    color: var(--voiz-danger) !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    margin-bottom: 16px !important;
+    font-family: var(--voiz-font) !important;
+    font-size: 13px !important;
+}
+div.div_msg_errors:hover,
+.msg_errors:hover {
+    opacity: 0.95;
+}
+
+/* ---------- msg_info / success / warning ---------- */
+div.div_msg_info,
+.msg_info,
+.alert-info {
+    background: var(--voiz-info-bg) !important;
+    border: 1px solid var(--voiz-info) !important;
+    color: var(--voiz-info) !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    margin-bottom: 16px !important;
+}
+div.div_msg_success,
+.msg_success,
+.alert-success {
+    background: rgba(34,197,94,0.08) !important;
+    border: 1px solid #22c55e !important;
+    color: #22c55e !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    margin-bottom: 16px !important;
+}
+div.div_msg_warning,
+.msg_warning,
+.alert-warning {
+    background: rgba(234,179,8,0.08) !important;
+    border: 1px solid #eab308 !important;
+    color: #eab308 !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    margin-bottom: 16px !important;
+}
+
+/* ---------- TABLE backgrounds ---------- */
+TABLE.alert_info {
+    background: var(--voiz-surface-2) !important;
+}
+TABLE.table_data_login,
+TD.table_data_login {
+    background: var(--voiz-surface) !important;
+}
+table.menumini {
+    border-bottom: 1px solid var(--voiz-border) !important;
+    background-image: none !important;
+}
+
+/* ---------- legacy .subMenu / toolbar gradient ---------- */
+.subMenu,
+.neo-table-header-row,
+.neo-addons-header-row,
+.neo-addons-header,
+.neo-table-header,
+.neo-addons-row,
+.neo-table-row,
+.neo-addons-header-row,
+.neo-addons-row .neo-addons-form,
+.table-header,
+.table_filter,
+.neo-addons-form {
+    background: var(--voiz-surface-2) !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--voiz-border) !important;
+}
+.subMenu *,
+.neo-table-header-row *,
+.neo-addons-header-row *,
+.table_filter *,
+.table-header * {
+    color: var(--voiz-text) !important;
+}
+
+/* ---------- table.tabForm (forms page) ---------- */
+table.tabForm {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background: transparent !important;
+}
+table.tabForm td {
+    background: transparent !important;
+    padding: 6px 10px !important;
+    vertical-align: middle !important;
+    border: none !important;
+    font-family: var(--voiz-font) !important;
+    color: var(--voiz-text) !important;
+    font-size: 13px !important;
+}
+table.tabForm td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
+    width: 180px;
+    color: var(--voiz-heading) !important;
+}
+table.tabForm input,
+table.tabForm select,
+table.tabForm textarea {
+    width: 100% !important;
+    max-width: 400px;
+}
+
+/* ---------- .page-container / .content_pbx ---------- */
+.page-container,
+.page-container.sidebar-collapsed {
+    background: var(--voiz-bg) !important;
+    background-image: none !important;
+}
+.content_pbx,
+#content_pbx,
+.neo-module-content,
+.neo-module-content-frame {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+}
+
+/* ---------- port status / legacy tables ---------- */
+table[border="1"],
+table.issabel-standard-table {
+    border-collapse: collapse !important;
+}
+table[border="1"] td,
+table[border="1"] th,
+table.issabel-standard-table td,
+table.issabel-standard-table th {
+    border-color: var(--voiz-border) !important;
+    font-family: var(--voiz-font) !important;
+    color: var(--voiz-text-soft) !important;
+    background: var(--voiz-surface) !important;
+    padding: 8px 12px !important;
+    text-align: right !important;
+    direction: rtl !important;
+}
+table[border="1"] thead th,
+table.issabel-standard-table thead th {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-heading) !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid var(--voiz-accent) !important;
+}
+table[border="1"] tbody tr:hover,
+table.issabel-standard-table tbody tr:hover {
+    background: var(--voiz-surface-2) !important;
+}
+table[border="1"] tbody tr:nth-child(even),
+table.issabel-standard-table tbody tr:nth-child(even) {
+    background: var(--voiz-surface) !important;
+}
+table[border="1"] tbody tr:nth-child(odd),
+table.issabel-standard-table tbody tr:nth-child(odd) {
+    background: var(--voiz-surface) !important;
+}
+/* kill old gradient rows */
+table[border="1"] tr.primera_fila,
+table[border="1"] tr.fila_paginacion,
+tr.primera_fila,
+tr.fila_paginacion {
+    background-color: var(--voiz-surface) !important;
+    background-image: none !important;
+}
+tr.primera_fila td,
+tr.fila_paginacion td {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+    color: var(--voiz-text-soft) !important;
+}
+
+/* ---------- calendar widget ---------- */
+.jalali-calendar,
+.jCalendar,
+table.jCalendar,
+table.jCalendar td,
+table.jCalendar th,
+.calendar,
+.calendarContainer,
+.calendar table,
+.calendar td,
+.calendar th {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+}
+.jCalendar th,
+.calendar th,
+.calendarContainer th {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-heading) !important;
+    font-weight: 600 !important;
+    border-color: var(--voiz-border) !important;
+}
+.jCalendar td,
+.calendar td {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text) !important;
+}
+.jCalendar td:hover,
+.calendar td:hover,
+.calendarContainer td:hover,
+.calendar td.selected {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendarContainer .year,
+.calendarContainer .month {
+    color: var(--voiz-heading) !important;
+}
+.calendarContainer .title {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-heading) !important;
+    border-color: var(--voiz-border) !important;
+}
+/* kill calendar white body */
+table.jCalendar td,
+table.jCalendar th,
+.calendar table td,
+.calendar table th {
+    border: 1px solid var(--voiz-border) !important;
+}
+/* popup overlay calendar */
+.neo-modal-issabel-popup-box,
+#neo-modal-issabel-popup {
+    background: var(--voiz-surface) !important;
+}
+
+/* ---------- sidebar / topbar consistency ---------- */
+.sidebar-header,
+.sidebar {
+    background: var(--voiz-sidebar-bg) !important;
+    background-image: none !important;
+}
+.sidebar ul li a,
+.sidebar ul li.active > a {
+    color: var(--voiz-sidebar-text) !important;
+}
+.sidebar ul li.active > a {
+    color: var(--voiz-accent) !important;
+}
+.sidebar ul li.active > a::after,
+.sidebar ul li.active > a::before {
+    background: var(--voiz-accent) !important;
+}
+/* sidebar search input */
+.sidebar-search input,
+.sidebar-search input[type="text"] {
+    background: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+}
+
+/* ---------- topbar / page-header ---------- */
+.page-header,
+.page-header-top,
+.page-topbar,
+.header-height,
+.topbar-height {
+    background: var(--voiz-topbar-bg) !important;
+    background-image: none !important;
+}
+
+/* ---------- pagination ---------- */
+.neo-addons-pagination,
+table tr.fila_paginacion td,
+.page-options .neo-addons-pagination,
+.neo-addons-pagination a,
+.neo-addons-pagination span {
+    background: transparent !important;
+    background-image: none !important;
+    color: var(--voiz-text-soft) !important;
+}
+.neo-addons-pagination a:hover,
+.neo-addons-pagination span.current {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+    border-radius: 8px;
+}
+
+/* ---------- applets / dashboard widgets ---------- */
+.neo-addons-applet,
+.neo-addons-widget,
+.neo-addons-applet-container,
+.neo-addons-widget-container {
+    background: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+}
+.neo-addons-applet-header,
+.neo-addons-widget-header {
+    background: var(--voiz-surface-2) !important;
+    border-color: var(--voiz-border) !important;
+    color: var(--voiz-heading) !important;
+}
+
+/* ---------- sticky note ---------- */
+#neo-sticky-note {
+    background: var(--voiz-surface-2) !important;
+    border-color: var(--voiz-border) !important;
+}
+
+/* ---------- chat ---------- */
+#chat {
+    background: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+}
+
+/* ---------- iframe / embedded content ---------- */
+.iframe-content,
+.issabelPbxContent {
+    background: var(--voiz-surface) !important;
+}
+
+/* ---------- all tables: kill any remaining white ---------- */
+table:not(.jCalendar):not(.jCalendar td):not(.jCalendar th) {
+    background-color: transparent;
+}
+table:not(.jCalendar) > tbody > tr {
+    background-color: var(--voiz-surface) !important;
+}
+
+/* ---------- scrollable table container ---------- */
+.neo-addons-table-scrollable,
+.neo-addons-table-responsive {
+    background: var(--voiz-surface) !important;
+}
+
+/* ---------- delete / danger buttons ---------- */
+.btn-danger,
+button.btn-danger,
+a.btn-danger,
+.delete,
+.delete_btn {
+    background: var(--voiz-danger) !important;
+    border-color: var(--voiz-danger) !important;
+    color: #fff !important;
+}
+.btn-danger:hover,
+button.btn-danger:hover,
+a.btn-danger:hover {
+    background: #ef4444 !important;
+    color: #fff !important;
+}
+
+/* ---------- info / help links ---------- */
+a[style*="color"],
+.info,
+.help {
+    color: var(--voiz-text-soft) !important;
+}
+a.info,
+a.help,
+a[href*="help"] {
+    color: var(--voiz-accent) !important;
+}
+
+/* ---------- kill inline background colors ---------- */
+[style*="background: #"],
+[style*="background-color: #"],
+[style*="background-color:#"] {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+}
+
+/* ---------- kill hardcoded border-radius from old CSS ---------- */
+table,
+td,
+th {
+    border-radius: 0 !important;
+}
+
+/* ---------- login form extra ---------- */
+.login-body .form-control,
+.login-body input,
+.login-body select {
+    background: var(--voiz-surface) !important;
+    border: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+}
+.login-body .form-control:focus,
+.login-body input:focus {
+    border-color: var(--voiz-accent) !important;
+    box-shadow: 0 0 0 3px rgba(232,133,0,0.15) !important;
+}
+
+/* ---------- breadcrumbs / subnav ---------- */
+.breadcrumb,
+.neo-addons-breadcrumb,
+.neo-addons-breadcrumbs {
+    background: transparent !important;
+    border: none !important;
+}
+.breadcrumb a,
+.neo-addons-breadcrumb a,
+.neo-addons-breadcrumbs a {
+    color: var(--voiz-accent) !important;
+}
+.breadcrumb li::before,
+.neo-addons-breadcrumb li::before,
+.neo-addons-breadcrumbs li::before {
+    color: var(--voiz-muted) !important;
+}
+
+/* ---------- clear any remaining white backgrounds on any element ---------- */
+body * {
+    scrollbar-color: var(--voiz-surface-3) var(--voiz-surface);
+}
+body *::-webkit-scrollbar-track {
+    background: var(--voiz-surface) !important;
+}
+body *::-webkit-scrollbar-thumb {
+    background: var(--voiz-surface-3) !important;
+    border-radius: 8px !important;
+}
+
+/* ============================================================
+   VOIZ UI v5 PATCH 2 — legacy file content.css / applet.css /
+   table.css / login_styles.css / rightbar.css / header.css kills
+   ============================================================
+   These selectors target the exact rules in the legacy files and
+   override them with theme tokens via higher specificity.
+   ============================================================ */
+
+/* ---------- content.css kills ---------- */
+div.neo-module-content,
+.neo-module-content {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text-soft) !important;
+    background-image: none !important;
+}
+span.neo-module-name {
+    color: var(--voiz-heading) !important;
+}
+#neo-3menubox,
+div.neo-shortcuts-box {
+    background: var(--voiz-surface-2) !important;
+    background-image: none !important;
+    border-color: var(--voiz-border) !important;
+}
+div.neo-3mtab,
+div.neo-3mtab a,
+div.neo-3mtabon,
+div.neo-3mtabon a,
+div.neo-historybox-tab,
+div.neo-historybox-tab a,
+div.neo-historybox-tabon,
+div.neo-historybox-tabmid,
+div.neo-historybox-tabmid a {
+    color: var(--voiz-text) !important;
+    text-shadow: none !important;
+}
+div.neo-3mtabon,
+div.neo-3mtabon a,
+div.neo-historybox-tabon {
+    color: var(--voiz-accent) !important;
+}
+div.neo-3mtab:hover,
+div.neo-3mtab a:hover,
+div.neo-historybox-tab:hover,
+div.neo-historybox-tab a:hover,
+div.neo-historybox-tabmid:hover,
+div.neo-historybox-tabmid a:hover {
+    color: var(--voiz-accent) !important;
+}
+
+/* ---------- applet.css kills ---------- */
+div.neo-applet {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+    border-color: var(--voiz-border) !important;
+    border-radius: 12px !important;
+}
+div.neo-applet-title {
+    color: var(--voiz-heading) !important;
+    text-shadow: none !important;
+    font-weight: 700 !important;
+}
+div.neo-applet:hover {
+    border-color: var(--voiz-accent) !important;
+    box-shadow: 0 4px 24px rgba(232,133,0,0.1) !important;
+}
+
+/* ---------- table.css kills ---------- */
+.neo-table-header-row,
+.neo-addons-header-row,
+.neo-addons-header,
+.neo-table-header,
+#neo-table-header-filterrow,
+.neo-table-filter-controls,
+.neo-table-ref-table,
+.neo-filter-control,
+.neo-table-button-filter-left,
+.neo-table-button-filter-right {
+    background: var(--voiz-surface-2) !important;
+    background-image: none !important;
+    border-color: var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+}
+#neo-table-header-filterrow {
+    border: 1px solid var(--voiz-border) !important;
+    background-color: var(--voiz-surface-2) !important;
+}
+.neo-table-header-row *,
+.neo-addons-header-row *,
+#neo-table-header-filterrow *,
+.neo-filter-control *,
+.neo-table-button-filter-left *,
+.neo-table-button-filter-right * {
+    color: var(--voiz-text) !important;
+}
+table.issabel-standard-table > tbody > tr,
+table.issabel-standard-table > tbody > tr > td {
+    background-color: var(--voiz-surface) !important;
+    color: var(--voiz-text-soft) !important;
+    border-bottom: 1px solid var(--voiz-border) !important;
+}
+table.issabel-standard-table > tbody > tr:hover,
+table.issabel-standard-table > tbody > tr:hover > td {
+    background-color: var(--voiz-surface-2) !important;
+}
+.neo-table-action {
+    color: var(--voiz-accent) !important;
+}
+.neo-navigation-arrow-active {
+    color: var(--voiz-accent) !important;
+}
+.neo-table-footer-row {
+    background: var(--voiz-surface-2) !important;
+    background-image: none !important;
+}
+.neo-table-button-filter-left,
+.neo-table-button-filter-right {
+    background: var(--voiz-surface-2) !important;
+    border: 1px solid var(--voiz-border) !important;
+}
+/* kill remaining white backgrounds on table elements */
+.neo-table-ref-table,
+.neo-filter-control,
+.neo-table-filter-controls {
+    background-color: var(--voiz-surface-2) !important;
+}
+
+/* ---------- login_styles.css kills ---------- */
+body.login-page,
+body.mainBody.login-page,
+.login-body {
+    background: var(--voiz-bg) !important;
+    color: var(--voiz-text) !important;
+}
+#neo-login-box,
+.neo-login-box {
+    background: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3) !important;
+    border-radius: 16px !important;
+}
+input.neo-login-input {
+    background: var(--voiz-surface-2) !important;
+    border: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+    border-radius: 8px !important;
+}
+input.neo-login-input:focus {
+    border-color: var(--voiz-accent) !important;
+    box-shadow: 0 0 0 3px rgba(232,133,0,0.2) !important;
+}
+input.neo-login-submit {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    transition: background 0.2s, transform 0.1s !important;
+}
+input.neo-login-submit:hover {
+    background: var(--voiz-accent-hover) !important;
+    transform: translateY(-1px) !important;
+}
+.neo-footernote,
+.neo-footernote a {
+    color: var(--voiz-muted) !important;
+}
+/* kill login box white shadow */
+#neo-login-box,
+.neo-login-box {
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3) !important;
+}
+
+/* ---------- rightbar.css kills ---------- */
+#neo-rightbar,
+.neo-rightbar,
+.right-sidebar {
+    background: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+}
+
+/* ---------- header.css kills ---------- */
+.page-header,
+.page-header-top,
+.page-topbar,
+.header-height,
+.topbar-height,
+.page-header .page-header-inner,
+.page-header-top .page-header-inner {
+    background: var(--voiz-topbar-bg) !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--voiz-border) !important;
+}
+
+/* ---------- widgets.css kills ---------- */
+.neo-addons-widget,
+.neo-addons-widget-header,
+.neo-addons-widget-container {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+    border-color: var(--voiz-border) !important;
+}
+
+/* ---------- global: kill ALL remaining hardcoded backgrounds, borders, text shadows ---------- */
+body * {
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+/* re-enable intentional shadows on specific components */
+.voiz-sidebar,
+.sidebar,
+.page-container,
+.neo-module-content,
+.neo-module-content-frame,
+div.neo-applet,
+#neo-login-box,
+.neo-modal-issabel-popup-box {
+    box-shadow: var(--voiz-shadow) !important;
+}
+/* re-enable hover shadows */
+.neo-module-content-frame:hover,
+div.neo-applet:hover,
+.neo-addons-applet:hover,
+.neo-addons-widget:hover {
+    box-shadow: 0 4px 24px rgba(232,133,0,0.08) !important;
+}
+
+/* ---------- calendar popup in dark mode ---------- */
+.jalali-calendar,
+.calendarContainer,
+.calendarContainer *,
+.calendarContainer td,
+.calendarContainer th,
+.calendarContainer .year,
+.calendarContainer .month,
+.calendarContainer .title,
+.calendarContainer table {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+}
+.calendarContainer .title {
+    background: var(--voiz-surface-2) !important;
+}
+.calendarContainer td:hover {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+/* Calendar Aqua skin overrides — kill all GIF backgrounds */
+div.calendar,
+.calendar,
+.calendar table {
+    background: var(--voiz-surface) !important;
+    background-image: none !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+    font-family: var(--voiz-font) !important;
+}
+.calendar .button,
+.calendar thead tr,
+.calendar thead .title,
+.calendar thead .name,
+.calendar thead .hilite,
+.calendar thead .active,
+.calendar thead .daynames,
+.calendar tbody .rowhilite td,
+.calendar tbody td.hilite,
+.calendar tbody td.selected,
+.calendar tbody td.today,
+.calendar tfoot .footrow,
+.calendar tfoot .ttip,
+.calendar tfoot .hilite,
+.calendar tfoot .active,
+.calendar .combo,
+.calendar .combo .hilite,
+.calendar .combo .active,
+.calendar td.time,
+.calendar td.time .hour,
+.calendar td.time .minute,
+.calendar td.time .ampm,
+.calendar td.time span.hilite,
+.calendar td.time span.active {
+    background-image: none !important;
+}
+.calendar .button {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-text) !important;
+    font-weight: 700 !important;
+}
+.calendar .button:hover {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendar thead tr {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-heading) !important;
+}
+.calendar thead .title {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-heading) !important;
+    font-weight: 700 !important;
+}
+.calendar thead .name {
+    color: var(--voiz-text-soft) !important;
+    border-bottom-color: var(--voiz-border) !important;
+}
+.calendar thead .daynames {
+    background: var(--voiz-surface-2) !important;
+}
+.calendar thead .hilite,
+.calendar thead .active {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendar tbody .day {
+    color: var(--voiz-text) !important;
+    font-family: var(--voiz-font) !important;
+}
+.calendar tbody .day.othermonth {
+    color: var(--voiz-muted) !important;
+}
+.calendar tbody td.hilite {
+    background: var(--voiz-accent) !important;
+    border-color: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendar tbody td.selected {
+    background: var(--voiz-accent) !important;
+    border-color: var(--voiz-accent) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+.calendar tbody .rowhilite td {
+    background: var(--voiz-surface-2) !important;
+}
+.calendar tbody td.weekend {
+    color: var(--voiz-danger) !important;
+}
+.calendar thead .weekend {
+    color: var(--voiz-danger) !important;
+}
+.calendar tbody .disabled {
+    color: var(--voiz-muted) !important;
+}
+.calendar tfoot .footrow {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-text) !important;
+}
+.calendar tfoot .ttip {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-text) !important;
+}
+.calendar tfoot .hilite {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+    border-color: var(--voiz-accent) !important;
+}
+.calendar tfoot .active {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendar .wn {
+    background: var(--voiz-surface-2) !important;
+    border-right-color: var(--voiz-border) !important;
+    color: var(--voiz-text-soft) !important;
+}
+.calendar .combo {
+    background: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+}
+.calendar .combo .hilite {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendar .combo .active {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+.calendar td.time {
+    background: var(--voiz-surface-2) !important;
+    border-top-color: var(--voiz-border) !important;
+}
+.calendar td.time .hour,
+.calendar td.time .minute,
+.calendar td.time .ampm {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text) !important;
+}
+.calendar td.time span.hilite {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendar td.time span.active {
+    background: var(--voiz-accent) !important;
+    color: #fff !important;
+}
+.calendar .nav div {
+    background: none !important;
+}
+
+/* ---------- subMenu / filter rows that still leak ---------- */
+.subMenu,
+.subMenu td,
+.subMenu th,
+.neo-addons-row,
+.neo-addons-row td,
+.neo-addons-row th,
+.neo-addons-form,
+.neo-addons-form td,
+.neo-addons-form th {
+    background: var(--voiz-surface-2) !important;
+    background-image: none !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+}
+
+/* ---------- port status table / hardcoded border tables ---------- */
+table[border] {
+    border-color: var(--voiz-border) !important;
+}
+table[border] td,
+table[border] th {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text-soft) !important;
+    border-color: var(--voiz-border) !important;
+    font-family: var(--voiz-font) !important;
+}
+table[border] thead td,
+table[border] thead th,
+table[border] tr:first-child td,
+table[border] tr:first-child th {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-heading) !important;
+    font-weight: 700 !important;
+}
+
+/* ---------- neo-modal / popup box ---------- */
+.neo-modal-issabel-popup-box,
+#neo-modal-issabel-popup {
+    background: var(--voiz-surface) !important;
+    border-color: var(--voiz-border) !important;
+}
+.neo-modal-issabel-popup-titlebar,
+.neo-modal-issabel-popup-titlebar * {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-heading) !important;
+}
+
+/* ---------- page-body main content area ---------- */
+.page-body {
+    background: var(--voiz-bg) !important;
+}
+.main-content,
+#main-content,
+.neo-contentbox-maincolumn {
+    background: transparent !important;
+}

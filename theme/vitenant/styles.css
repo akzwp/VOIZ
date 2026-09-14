@@ -3,29 +3,14 @@
 @font-face{font-family:iransans;font-style:normal;font-weight:200;src:url("fonts/font/eot/IRANSansWeb(FaNum)_UltraLight.eot");src:url("fonts/font/eot/IRANSansWeb(FaNum)_UltraLight.eot?#iefix") format("embedded-opentype"),url("fonts/font/woff2/IRANSansWeb(FaNum)_UltraLight.woff2") format("woff2"),url("fonts/font/woff/IRANSansWeb(FaNum)_UltraLight.woff") format("woff"),url("fonts/font/ttf/IRANSansWeb(FaNum)_UltraLight.ttf") format("truetype")}
 
 body {
-    /**/
-    FONT-FAMILY: iransans, sans-serif;
-    /**/
-    /*background-color:#999;*/
     margin-left: 0px;
     margin-top: 0px;
     margin-right: 0px;
     margin-bottom: 0px;
-    font: 13px iransans,sans-serif;
-    color: #999;
 }
 .confdir{direction:ltr;}
 input {
-    COLOR:#333333;
-    FONT-FAMILY: iransans, sans-serif;
-    TEXT-DECORATION: none;
-    BACKGROUND: #FAFAFA;
-    border: 1px solid #ccc;
-    border-radius: 5px 5px 5px 5px;
-    -moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
-    font-size:12px;
-    height: 24px;
+    font-size: 12px;
     outline: none;
 }
 
@@ -34,10 +19,9 @@ input[type="checkbox"] {
 }
 
 input[type="text"] {
-    height: 22px;
-    -moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
-    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 input[type="file"] {
@@ -48,9 +32,7 @@ input[type="file"] {
 }
 
 A {
-    FONT-FAMILY:iransans, sans-serif;
     FONT-SIZE: 100%;
-    COLOR: #0000FF;
 }
 
 A.link1 {
@@ -61,14 +43,10 @@ A.link1 {
 }
 
 TD.celda_default {
-    FONT-FAMILY: iransans, sans-serif;
     FONT-SIZE: 9pt;
-    BACKGROUND: #FFFFFF;
 }
 .error {
-    COLOR: #FF0000;
     FONT-SIZE: 9pt;
-    FONT-FAMILY: iransans, sans-serif;
     FONT-WEIGHT: bold;
     TEXT-DECORATION: none;
 }
@@ -78,50 +56,22 @@ input:focus,textarea:focus, select:focus {
         border-color: #1d8df6;
 }
 SELECT {
-    border: 1px solid #BCBCBC;
-    COLOR: #333333;
-    FONT-FAMILY: iransans, sans-serif;
-    FONT-SIZE: 13px;
     FONT-STYLE: normal;
     FONT-VARIANT: normal;
     LINE-HEIGHT: normal;
     TEXT-DECORATION: none;
-    background-color: #fafafa;
-    border-radius: 5px 5px 5px 5px;
-    -moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
     padding: 0px;
     margin: 0px;
     vertical-align: top;
-    height: auto !important;
-    height: 24px;
-    min-height: 24px;
-    height: auto !important;
-    height: 24px;
 }
 
 TEXTAREA {
-    border-radius: 5px 5px 5px 5px;
-    -moz-border-radius: 5px 5px 5px 5px;
-    -webkit-border-radius: 5px 5px 5px 5px;
-    border: 1px solid #BCBCBC;
-    background-color: #FAFAFA;
+    border-radius: 5px;
 }
 
 INPUT.submit {
-        border: 1px solid #999999;
-        background-color: #d0d1d0;
-        font-size: 11px;
-        color: #444444;
-        font-weight: normal;
-        background-image: url(images/formButtonBg.gif);
-        background-repeat: repeat-x;
-        background-position: top;
 }
 INPUT:disabled {
-    background-color: #F2F2F2;
-    color: #000000;
-    border: #E6E6E6 1px solid;
 }
 /*
 TABLE.table_data {
@@ -148,22 +98,7 @@ TD.table_data {
     text-align: left;
 }*/
 .exportButton {
-    /*-moz-border-radius: 3px 3px 3px 3px;
-    -webkit-border-radius: 3px 3px 3px 3px;
-    border-radius: 3px 3px 3px 3px;*/
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    background: -moz-linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0 0 transparent;
-    background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F9F9F9),to(#E3E3E3));
-    background: linear-gradient(center top , #F9F9F9, #E3E3E3) repeat scroll 0 0 transparent;
-    /*border-color: #CCCCCC #BBBBBB #A0A0A0;
-    border-left: 1px solid #BBBBBB;
-    border-right: 1px solid #BBBBBB;
-    border-style: solid;
-    border-width: 1px;*/
-    color: #000000;
     cursor: default;
-    font: 75% arial,sans-serif;
     margin: 0 8px 0 0;
     padding: 3px 8px;
     text-align: center;

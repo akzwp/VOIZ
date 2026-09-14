@@ -52,6 +52,39 @@
 
         {$HEADER}
     {$HEADER_MODULES}
+    <!-- Voiz: Force Farsi calendar language if Calendar object exists -->
+    <script type="text/javascript">
+    (function () {
+        if (typeof Calendar === 'undefined') return;
+        Calendar._DN  = ["یکشنبه","دوشنبه","سه شنبه","چهارشنبه","پنجشنبه","جمعه","شنبه","یکشنبه"];
+        Calendar._SDN = ["یک","دو","سه","چهار","پنج","جمعه","شنبه","یک"];
+        Calendar._FD  = 6;
+        Calendar._MN  = ["ژانویه","فوریه","مارس","آوریل","می","جون","جولای","آگوست","سپتامبر","اکتبر","نوامبر","دسامبر"];
+        Calendar._SMN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        Calendar._JMN = ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
+        Calendar._JSMN= ["فروردین","اردیبهشت","خرداد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"];
+        Calendar._NUMBERS = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+        Calendar._DIR = 'rtl';
+        Calendar._TT = Calendar._TT || {};
+        Calendar._TT["INFO"]      = "درباره تقویم";
+        Calendar._TT["PREV_YEAR"] = "سال قبل";
+        Calendar._TT["PREV_MONTH"]= "ماه قبل";
+        Calendar._TT["GO_TODAY"]  = "رفتن به امروز";
+        Calendar._TT["NEXT_MONTH"]= "ماه بعد";
+        Calendar._TT["NEXT_YEAR"] = "سال بعد";
+        Calendar._TT["SEL_DATE"]  = "انتخاب تاریخ";
+        Calendar._TT["PART_TODAY"]= " (امروز)";
+        Calendar._TT["DAY_FIRST"] = "ابتدا %s نمایش داده شود";
+        Calendar._TT["CLOSE"]     = "بستن";
+        Calendar._TT["TODAY"]     = "امروز";
+        Calendar._TT["WK"]        = "هفته";
+        Calendar._TT["TIME"]      = "زمان :";
+        Calendar._TT["LAM"]       = "ق.ظ.";
+        Calendar._TT["AM"]        = "ق.ظ.";
+        Calendar._TT["LPM"]       = "ب.ظ.";
+        Calendar._TT["PM"]        = "ب.ظ.";
+    })();
+    </script>
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body" {$BODYPARAMS}>
     <div class="page-container">
