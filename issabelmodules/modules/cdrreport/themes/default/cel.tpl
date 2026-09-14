@@ -12,9 +12,8 @@
         })();
     </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-        <title>Issabel</title>
+        <title>VOIZ | CDR Report | VOIPIRAN + AKZ</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
     <!-- Voiz: RTL bootstrap core (LTR neon stack removed - it broke RTL content) -->
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/bootstrap-rtl.min.css">
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-core-rtl.css">

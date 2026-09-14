@@ -1,49 +1,17 @@
 /**
- *
- * Apply Here your Custom CSS
- *
-*/
+ * VOIZ - Custom Overrides (theme-aware)
+ */
 
-body.page-body.login-page.login-form-fall {
-    background: none;
-	background-image: url('../images/1.jpg');
-	background-size: cover;
+/* PBX Menu Font Size */
+#nav ul li a {
+    font-size: 12px;
 }
 
-.logovoiz img {
-    width: auto;
-    margin: 0 auto;
-}
-
-
-
-.neo-modal-issabel-popup-box { 
-    display: none;
-}
-
-
-/*PBX Menu Font Size*/
-#nav ul li a { 
-	font-size: 12px;
-}
-
-
-
-/*Operator Pannel*/
-/*
-.pbxelement{
-	text-align: right !important;
-	height: 36px !important;
-    line-height: 180% !important;
-    text-align-last: right !important;	
-}
-*/
-
-/* VOIZ – نوار بالا نهایی – تیره، مینیمال، دقیق وسط و کمی بالاتر */
+/* VOIZ - Topbar notification icons (theme-aware) */
 .neo-topbar-notification > li {
     display: inline-block;
     vertical-align: middle;
-    margin: 0 4px;
+    margin: 0 3px;
 }
 
 .neo-topbar-notification > li > a {
@@ -54,36 +22,42 @@ body.page-body.login-page.login-form-fall {
     width: 34px !important;
     height: 34px !important;
     border-radius: 50%;
-    background: #212121 !important;           /* بک‌گراند دقیقاً #212121 */
-    border: 1px solid rgba(255,255,255,0.25) !important;  /* خط دور نازک‌تر */
-    transition: all 0.22s ease;
-    top: -2px;                                 /* کمی بالاتر */
+    background: var(--voiz-topbar-icon-bg) !important;
+    border: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-topbar-icon) !important;
+    transition: all 0.2s ease;
 }
 
 .neo-topbar-notification > li > a:hover {
-    background: #2d2d2d !important;
-    border-color: rgba(255,255,255,0.5) !important;
-    transform: scale(1.1);
+    background: var(--voiz-primary) !important;
+    border-color: var(--voiz-primary) !important;
+    color: #fff !important;
+    transform: scale(1.08);
 }
 
-/* آیکون‌ها کاملاً سفید و دقیقاً وسط */
+/* Icons centered */
 .neo-topbar-notification > li > a i,
 .neo-topbar-notification > li > a img {
-    font-size: 16px;
-    color: #ffffff !important;
+    font-size: 15px;
+    color: inherit !important;
     margin: 0;
     padding: 0;
     line-height: 1;
 }
 
-/* حذف کامل چرخش */
+/* Remove pulse animation from queue icon */
 .top-bar-queue a i.fa-pulse,
 #queue_dashboard_link i.fa-pulse {
     animation: none !important;
     -webkit-animation: none !important;
 }
 
-/* فاصله عمودی دقیق */
+/* Vertical spacing */
 .neo-topbar-notification {
     padding: 10px 0 14px 0 !important;
+}
+
+/* Hidden popup init */
+.neo-modal-issabel-popup-box {
+    display: none;
 }

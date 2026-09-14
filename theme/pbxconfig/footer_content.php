@@ -23,10 +23,10 @@ $html .= '<a target="_blank" href="'
 //text
 
 $html .= '<span class="footer-float-left" id="footer_text">';
-$html .= '<a href="http://www.voipiran.io" target="_blank">CustomPBX</a> ' . br();
+$html .= '<a href="http://www.voipiran.io" target="_blank" rel="noopener">CustomPBX</a> ' . br();
 $html .= __('CustomPBX') . ' ' . $version . ' ' . __('is licensed under the')
 		. '<a href="http://www.gnu.org/copyleft/gpl.html" target="_blank"> GPL</a>' . br();
-$html .= 'Copyright&copy; 2004-'.date('Y',time());
+$html .= 'Copyright&copy; 2004-' . date('Y', time()) . ' <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a> | <a href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>';
 
 
 

@@ -4,24 +4,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>VOIZ | VOIPIRAN + AKZ</title>
-        <!-- Voiz: pre-paint theme init (avoids flash of wrong theme) -->
-        <script type='text/javascript'>
-            (function () {
-                var t = null;
-                try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
-                if (t !== 'dark' && t !== 'light') { t = 'light'; }
-                document.documentElement.setAttribute('data-theme', t);
-            })();
-        </script>
+        <meta name="description" content="VOIZ - VOIPIRAN + AKZ | akzwp.com | akzwp.ir" />
+        <title>VOIZ | VOIPIRAN + AKZ | akzwp.ir</title>
+    <!-- Voiz: pre-paint theme init (avoids flash of wrong theme) -->
+    <script type='text/javascript'>
+        (function () {
+            var t = null;
+            try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
+            if (t !== 'dark' && t !== 'light') { t = 'light'; }
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
-    <!-- <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/bootstrap.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-core.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-theme.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms.css">
-    
-      Voiz -->
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/bootstrap-rtl.min.css">     <!--  Voiz -->
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-core-rtl.css">  <!--  Voiz -->
      
@@ -84,7 +78,7 @@
         <footer class="main">
             <span class="voiz-footer-brands">
                 <!-- VOIPIRAN -->
-                <a class="voiz-footer-brand" href="http://www.voipiran.io" target='_blank'>VOIPIRAN | ویپ ایران</a>
+                <a class="voiz-footer-brand" href="http://www.voipiran.io" target='_blank' rel="noopener">VOIPIRAN | ویپ ایران</a>
                 <span class="sep">+</span>
                 <!-- AKZ -->
                 <a class="voiz-footer-brand" href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a>

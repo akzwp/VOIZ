@@ -27,9 +27,8 @@
 <html dir="rtl" lang="fa">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
-  <!-- Voiz: popups must be responsive too -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Issabel</title>
+  <title>VOIZ | VOIPIRAN + AKZ</title>
   <script type='text/javascript'>
     (function () {
         var t = null;

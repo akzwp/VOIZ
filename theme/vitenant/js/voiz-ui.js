@@ -57,10 +57,6 @@
 
     function initSidebarDrawer() {
         var overlay = jQuery('#voiz-sidebar-overlay');
-        /* Only the topbar burger is bound here. The legacy in-sidebar
-           burger (.sidebar-mobile-menu a) is bound by neon-custom.js,
-           which calls our overridden toggle_sidebar_menu() - binding it
-           here too would toggle the drawer open AND closed. */
         jQuery(document).on('click', '.voiz-topbar-burger', function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -162,14 +158,14 @@
             if (e.keyCode === 27) { close(); return; }
             if (!$items.length) { return; }
             var $cur = $items.filter('.voiz-active');
-            if (e.keyCode === 40 || e.keyCode === 38) {           /* down / up */
+            if (e.keyCode === 40 || e.keyCode === 38) {
                 e.preventDefault();
                 var next = e.keyCode === 40 ? $cur.index() + 1 : $cur.index() - 1;
                 if (next < 0) { next = $items.length - 1; }
                 if (next >= $items.length) { next = 0; }
                 $items.removeClass('voiz-active');
                 $items.eq(next).addClass('voiz-active');
-            } else if (e.keyCode === 13 && $cur.length) {          /* enter */
+            } else if (e.keyCode === 13 && $cur.length) {
                 e.preventDefault();
                 window.location.href = $cur.attr('href');
             }
@@ -190,7 +186,7 @@
     }
 
     /* ------------------------------------------------------------
-       Login page: show/hide password (UI only)
+       Login page: show/hide password (UI only, RTL-aware)
        ------------------------------------------------------------ */
     function initLoginPasswordToggle() {
         var $pass = jQuery('#input_pass');
@@ -224,18 +220,13 @@
     }
 
     /* ------------------------------------------------------------
-       Sidebar: replace neon's LTR padding animations (they fight
-       the RTL layout and break the menu) with clean class toggles.
-       neon-custom.js binds clicks to the GLOBAL toggle_sidebar_menu
-       at ready-time but resolves it at click-time, so overriding
-       the globals here is enough - no legacy file is modified.
+       Sidebar: replace neon's LTR padding animations
        ------------------------------------------------------------ */
     function isDrawerMode() {
         return window.matchMedia && window.matchMedia('(max-width: 991px)').matches;
     }
 
     function initSidebarOverrides() {
-        /* mark items with submenus ourselves (independent of neon setup) */
         jQuery('#main-menu li').each(function () {
             var $li = jQuery(this);
             if ($li.children('ul').length) { $li.addClass('has-sub'); }
@@ -262,17 +253,26 @@
             jQuery('.page-container').toggleClass('sidebar-collapsed');
         };
 
-        /* tapping a real menu link closes the mobile drawer */
         jQuery(document).on('click', '#main-menu a[href*="index.php?menu="]', function () {
             if (isDrawerMode()) { closeSidebar(); }
         });
 
-        /* fit_main_content_height() writes huge inline min-heights
-           that break the fixed rail - CSS clamps them, but also make
-           the legacy function a no-op for the sidebar itself. */
         if (typeof window.fit_main_content_height === 'function') {
             window.fit_main_content_height = function () { /* handled by CSS */ };
         }
+    }
+
+    /* ------------------------------------------------------------
+       Responsive check: force close sidebar on resize to desktop
+       ------------------------------------------------------------ */
+    function initResponsiveCheck() {
+        var mql = window.matchMedia && window.matchMedia('(min-width: 992px)');
+        if (!mql) { return; }
+        mql.addListener(function (e) {
+            if (e.matches) {
+                closeSidebar();
+            }
+        });
     }
 
     jQuery(function () {
@@ -283,6 +283,7 @@
         initPopupHygiene();
         initSidebarOverrides();
         initOutsideClose();
+        initResponsiveCheck();
     });
 
     window.VoizUI = {

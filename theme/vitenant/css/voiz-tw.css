@@ -295,3 +295,234 @@
 .voiz-icon--lg { font-size: 18px; }
 .voiz-icon--primary { color: var(--voiz-primary); }
 .voiz-icon--muted { color: var(--voiz-muted); }
+
+/* ------------------------------------------------------------
+    13. RESPONSIVE UTILITIES (v4 enhancements)
+    ------------------------------------------------------------ */
+/* hide on small, show on large */
+@media (max-width: 767px) {
+    .voiz-sm\:hidden { display: none !important; }
+    .voiz-sm\:block { display: block !important; }
+    .voiz-sm\:flex { display: flex !important; }
+    .voiz-sm\:grid { display: grid !important; }
+    .voiz-sm\:w-full { width: 100% !important; }
+    .voiz-sm\:p-0 { padding: 0 !important; }
+    .voiz-sm\:p-2 { padding: 8px !important; }
+    .voiz-sm\:p-3 { padding: 12px !important; }
+    .voiz-sm\:gap-2 { gap: 8px !important; }
+    .voiz-sm\:gap-3 { gap: 12px !important; }
+    .voiz-sm\:text-xs { font-size: 10px !important; }
+    .voiz-sm\:text-sm { font-size: 11.5px !important; }
+    .voiz-sm\:text-center { text-align: center !important; }
+    .voiz-sm\:flex-col { flex-direction: column !important; }
+    .voiz-sm\:flex-wrap { flex-wrap: wrap !important; }
+    .voiz-sm\:grid--1 { grid-template-columns: 1fr !important; }
+    .voiz-sm\:overflow-x { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    .voiz-md\:hidden { display: none !important; }
+    .voiz-md\:block { display: block !important; }
+    .voiz-md\:flex { display: flex !important; }
+    .voiz-md\:grid { display: grid !important; }
+    .voiz-md\:grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .voiz-md\:w-full { width: 100% !important; }
+    .voiz-md\:flex-col { flex-direction: column !important; }
+    .voiz-md\:gap-3 { gap: 12px !important; }
+    .voiz-md\:p-3 { padding: 12px !important; }
+}
+@media (min-width: 992px) {
+    .voiz-lg\:hidden { display: none !important; }
+    .voiz-lg\:block { display: block !important; }
+    .voiz-lg\:flex { display: flex !important; }
+    .voiz-lg\:flex-1 { flex: 1 1 0%; min-width: 0; }
+    .voiz-lg\:items-center { align-items: center; }
+    .voiz-lg\:grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .voiz-lg\:grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .voiz-lg\:flex-row { flex-direction: row; }
+    .voiz-lg\:flex-wrap { flex-wrap: wrap; }
+}
+@media (min-width: 1200px) {
+    .voiz-xl\:hidden { display: none !important; }
+    .voiz-xl\:flex { display: flex !important; }
+    .voiz-xl\:grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .voiz-xl\:grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* ------------------------------------------------------------
+    14. FORM COMPONENT PRIMITIVES
+    ------------------------------------------------------------ */
+.voiz-form-group { margin-bottom: 14px; }
+.voiz-form-label {
+    display: block;
+    margin-bottom: 6px;
+    font: 500 12px/1.5 "Vazirmatn", Tahoma, sans-serif;
+    color: var(--voiz-text-soft);
+}
+.voiz-form-label .required { color: var(--voiz-danger); margin-right: 2px; }
+.voiz-form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+@media (max-width: 767px) {
+    .voiz-form-row { grid-template-columns: 1fr; }
+}
+.voiz-form-hint {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--voiz-muted);
+}
+.voiz-form-error {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--voiz-danger);
+}
+.voiz-input-group {
+    display: flex;
+    align-items: stretch;
+}
+.voiz-input-group .voiz-field {
+    flex: 1;
+    min-width: 0;
+}
+.voiz-input-group .voiz-btn {
+    border-radius: 0;
+    border-right: 0;
+}
+.voiz-input-group .voiz-btn:last-child {
+    border-radius: 0 var(--tw-r-sm) var(--tw-r-sm) 0;
+    border-right: 1px solid var(--voiz-border);
+}
+
+/* ------------------------------------------------------------
+    15. CARD / SECTION COMPONENTS
+    ------------------------------------------------------------ */
+.voiz-card {
+    background: var(--voiz-surface);
+    border: 1px solid var(--voiz-border);
+    border-radius: var(--voiz-radius);
+    box-shadow: var(--voiz-card-shadow);
+    padding: 16px;
+}
+.voiz-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--voiz-border);
+    background: var(--voiz-surface-2);
+    border-radius: var(--voiz-radius) var(--voiz-radius) 0 0;
+}
+.voiz-card-body {
+    padding: 16px;
+}
+.voiz-card-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--voiz-border);
+    background: var(--voiz-surface-2);
+    border-radius: 0 0 var(--voiz-radius) var(--voiz-radius);
+}
+
+/* ------------------------------------------------------------
+    16. DIVIDER / SEPARATOR
+    ------------------------------------------------------------ */
+.voiz-divider {
+    height: 1px;
+    background: var(--voiz-border);
+    margin: 12px 0;
+    border: none;
+}
+.voiz-divider--soft {
+    background: var(--voiz-border);
+    opacity: 0.5;
+}
+
+/* ------------------------------------------------------------
+    17. BADGE / STATUS DOT
+    ------------------------------------------------------------ */
+.voiz-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+.voiz-badge--primary { background: var(--voiz-primary-soft); color: var(--voiz-primary); }
+.voiz-badge--success { background: var(--voiz-success-soft); color: var(--voiz-success); }
+.voiz-badge--danger { background: var(--voiz-danger-soft); color: var(--voiz-danger); }
+.voiz-badge--warning { background: var(--voiz-warning-soft); color: var(--voiz-warning); }
+.voiz-badge--info { background: var(--voiz-accent-soft); color: var(--voiz-info); }
+.voiz-badge--muted { background: var(--voiz-surface-3); color: var(--voiz-muted); }
+.voiz-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.voiz-dot--primary { background: var(--voiz-primary); }
+.voiz-dot--success { background: var(--voiz-success); }
+.voiz-dot--danger { background: var(--voiz-danger); }
+.voiz-dot--warning { background: var(--voiz-warning); }
+.voiz-dot--info { background: var(--voiz-info); }
+
+/* ------------------------------------------------------------
+    18. EMPTY STATE / LOADING
+    ------------------------------------------------------------ */
+.voiz-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--voiz-muted);
+}
+.voiz-empty-state i {
+    font-size: 40px;
+    margin-bottom: 12px;
+    opacity: 0.4;
+}
+.voiz-empty-state p {
+    font-size: 13px;
+    max-width: 320px;
+}
+.voiz-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--voiz-border);
+    border-top-color: var(--voiz-primary);
+    border-radius: 50%;
+    animation: voiz-spin .6s linear infinite;
+}
+@keyframes voiz-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ------------------------------------------------------------
+    19. TABLE ENHANCEMENTS
+    ------------------------------------------------------------ */
+.voiz-table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--voiz-border);
+    border-radius: var(--voiz-radius);
+    background: var(--voiz-surface);
+    box-shadow: var(--voiz-card-shadow);
+}
+.voiz-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.voiz-table-actions .voiz-btn--sm {
+    padding: 4px 8px;
+    height: 28px;
+}
