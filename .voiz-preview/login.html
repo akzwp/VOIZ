@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOIZ UI Preview - Login</title>
+<link rel="stylesheet" href="fa.css">
+<link rel="stylesheet" href="fa-local.css">
+<link rel="stylesheet" href="voiz-ui.css">
+<style>body { margin: 0; }</style>
+</head>
+<body class="page-body login-page" data-url="">
+    <div class="voiz-login-theme">
+        <a href="#" onclick="VoizUI.toggleTheme(); return false;"><i class="fa fa-moon-o"></i></a>
+    </div>
+    <div class="login-wrapper">
+        <div class="logovoiz"><a><img src="voiz2.png" alt="VOIZ Logo"></a></div>
+        <div id="login">
+            <div class="form-login-error" id="login-error">
+                <h3>ورود ناموفق</h3>
+                <p>نام کاربری یا رمز عبور اشتباه است.</p>
+            </div>
+            <form method="post" id="login-form">
+                <fieldset>
+                    <div class="voiz-login-field">
+                        <label class="voiz-login-label" for="input_user"><i class="fa fa-user"></i>نام کاربری</label>
+                        <input type="text" class="form-control" name="input_user" id="input_user" placeholder="نام کاربری" autocomplete="off">
+                    </div>
+                    <div class="voiz-login-field">
+                        <label class="voiz-login-label" for="input_pass"><i class="fa fa-lock"></i>رمز عبور</label>
+                        <input type="password" class="form-control" name="input_pass" id="input_pass" placeholder="رمز عبور" autocomplete="off">
+                    </div>
+                    <div class="voiz-login-field">
+                        <input name="submit_login" type="submit" value="ورود">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="fotter">
+            <div class="copyr">
+                <p>
+                    Copyrights © 2017-2026 All Rights Reserved by <a href="http://www.voipiran.io">VOIPIRAN | ویپ ایران</a>
+                </p>
+                <p class="voiz-login-brands">
+                    Powered by <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a><span class="sep">|</span><a href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>
+                </p>
+            </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="voiz-ui.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#login-error').addClass('show');
+    });
+</script>
+</body>
+</html>

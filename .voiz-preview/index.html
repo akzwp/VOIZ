@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOIZ UI Preview</title>
+<link rel="stylesheet" href="fa.css">
+<link rel="stylesheet" href="fa-local.css">
+<link rel="stylesheet" href="voiz-ui.css">
+<style>body { margin: 0; }</style>
+</head>
+<body class="mainBody page-body">
+<div class="page-container">
+    <div id="voiz-sidebar-overlay" class="voiz-sidebar-overlay"></div>
+
+    <div class="sidebar-menu">
+        <header class="logo-env">
+            <div class="logo"><a href="#"><img src="logov.png" width="40" alt=""></a></div>
+            <div class="sidebar-collapse"><a href="#" class="sidebar-collapse-icon"><i class="entypo-menu"></i></a></div>
+            <div class="sidebar-mobile-menu visible-xs"><a href="#" class="with-animation"><i class="entypo-menu"></i></a></div>
+        </header>
+        <ul id="main-menu" class="main-menu">
+            <li class="active opened active">
+                <a href="index.php?menu=pbx"><i class="fa fa-phone"></i><span>مرکز تلفن</span></a>
+                <ul class="visible">
+                    <li><a href="index.php?menu=ext"><i class="fa fa-user"></i><span>داخلی‌ها</span></a></li>
+                    <li class="active opened active"><a href="index.php?menu=trunks"><i class="fa fa-random"></i><span>ترانک‌ها</span></a>
+                        <ul class="visible">
+                            <li><a href="index.php?menu=sip"><span>ترانک SIP</span></a></li>
+                            <li><a href="index.php?menu=pjsip"><span>ترانک PJSIP</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.php?menu=routes"><i class="fa fa-sitemap"></i><span>مسیرهای خروجی</span></a></li>
+                    <li><a href="index.php?menu=routes2"><i class="fa fa-sign-in"></i><span>مسیرهای ورودی</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="index.php?menu=reports"><i class="fa fa-bar-chart"></i><span>گزارش‌ها</span></a>
+                <ul>
+                    <li><a href="index.php?menu=cdr"><i class="fa fa-list"></i><span>جزئیات مکالمات CDR</span></a></li>
+                    <li><a href="index.php?menu=report1"><span>گزارش ترافیک</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="index.php?menu=fax"><i class="fa fa-fax"></i><span>فکس</span></a>
+                <ul><li><a href="index.php?menu=faxlist"><i class="fa fa-file"></i><span>لیست فکس‌ها</span></a></li></ul>
+            </li>
+            <li>
+                <a href="index.php?menu=system"><i class="fa fa-gears"></i><span>سیستم</span></a>
+                <ul>
+                    <li><a href="index.php?menu=network"><i class="fa fa-globe"></i><span>شبکه</span></a></li>
+                    <li><a href="index.php?menu=storage"><i class="fa fa-hdd-o"></i><span>ذخیره‌سازی</span></a></li>
+                    <li><a href="index.php?menu=admin"><i class="fa fa-shield"></i><span>مدیریت</span></a></li>
+                </ul>
+            </li>
+            <li><a href="index.php?menu=apps"><i class="fa fa-th-large"></i><span>افزونه‌ها</span></a></li>
+            <li><a href="index.php?menu=cc"><i class="fa fa-headphones"></i><span>مرکز تماس</span></a></li>
+            <li><a href="index.php?menu=crm"><i class="fa fa-users"></i><span>CRM</span></a></li>
+            <li><a href="index.php?menu=voizset"><i class="fa fa-wrench"></i><span>تنظیمات ویوز</span></a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="voiz-topbar">
+            <a href="#" class="voiz-topbar-burger"><i class="fa fa-bars"></i></a>
+            <div class="voiz-topbar-logo">
+                <a href="#"><img src="logo-light.png" alt="voiz"></a>
+                <kbd>version 5.6</kbd>
+            </div>
+            <div class="voiz-topbar-search">
+                <form method="get" action="">
+                    <i class="fa fa-search voiz-search-icon"></i>
+                    <input type="text" id="search_module_issabel" name="search_module_issabel" placeholder="جستجوی ماژول‌ها" aria-label="جستجوی ماژول‌ها">
+                    <button type="submit"><i class="entypo-search"></i></button>
+                </form>
+            </div>
+            <span class="voiz-topbar-sep"></span>
+            <ul class="voiz-topbar-actions list-inline links-list neo-topbar-notification">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-download"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="caret"></li>
+                        <li><a href="#"><i class="fa fa-external-link"></i>Winscp</a></li>
+                        <li><a href="#"><i class="fa fa-external-link"></i>Putty</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="#"><i class="fa fa-cog"></i></a></li>
+                <li class="dropdown"><a href="#"><i class="fa fa-phone"></i></a></li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-bell-o"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="caret"></li>
+                        <li><p>اطلاع‌رسانی سیستم</p></li>
+                        <li><ul>
+                            <li class="notification-info"><a href="#"><i class="fa fa-info"></i>یک داخلی ثبت شد</a></li>
+                            <li class="notification-danger"><a href="#"><i class="fa fa-ban"></i>یک ترانک قطع است</a></li>
+                        </ul></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#"><i class="fa fa-info-circle"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="caret"></li>
+                        <li><a href="#"><i class="fa fa-check"></i>ثبت شده</a></li>
+                        <li><a href="#"><i class="fa fa-cube"></i>جزئیات نسخه</a></li>
+                        <li><a href="http://www.voipiran.io" target="_blank"><i class="fa fa-external-link"></i>VOIPIRAN Website</a></li>
+                        <li><a href="https://akzwp.com" target="_blank"><i class="fa fa-globe"></i>AKZ Website</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <span class="voiz-topbar-sep"></span>
+            <div class="voiz-topbar-user">
+                <a href="#" class="voiz-user-link dropdown-toggle" data-toggle="dropdown">
+                    <img src="Icon-user.png" alt="">
+                    <span class="voiz-user-name">admin</span>
+                    <i class="fa fa-angle-down voiz-user-caret"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="caret"></li>
+                    <li><a href="#"><i class="fa fa-user"></i>تغییر رمز</a></li>
+                    <li><a href="#"><i class="fa fa-sign-out"></i>خروج</a></li>
+                </ul>
+            </div>
+            <a href="#" class="voiz-theme-toggle" onclick="VoizUI.toggleTheme(); return false;"><i class="fa fa-moon-o"></i></a>
+        </div>
+
+        <ol class="breadcrumb bc-2">
+            <li><a href="/"><i class="entypo-home"></i></a><a href="#"> مرکز تلفن</a></li>
+            <li><a href="#">تنظیمات</a></li>
+            <li class="active"><strong>داخلی‌ها</strong></li>
+            <li id="tenant-help"><a href="#"><i class="fa fa-support"></i></a></li>
+            <li id="tenant-sticky" class="dropdown"><a href="#"><i class="fa fa-sticky-note"></i></a></li>
+        </ol>
+
+        <div id="neo-contentbox">
+            <div id="neo-contentbox-maincolumn">
+                <div class="neo-module-content">
+
+                    <div class="div_msg_errors">
+                        <div class="div_msg_errors_title"><b><i class="fa fa-exclamation-circle"></i> خطا</b></div>
+                        <div class="div_msg_errors_dismiss"><i class="fa fa-lg fa-remove"></i></div>
+                        <div class="div_msg_errors_content">داخلی ۲۰۱ قبلاً ثبت شده است.</div>
+                    </div>
+
+                    <form class="issabel-standard-formgrid" id="idformgrid" method="POST" action="#">
+                        <div class="neo-table-header-row">
+                            <div class="neo-table-header-row-filter">
+                                <button type="button" class="neo-table-toolbar-button"><i class="fa fa-plus"></i> افزودن داخلی</button>
+                            </div>
+                            <div class="neo-table-header-row-filter">
+                                <input type="text" placeholder="جستجو">
+                                <input type="submit" value="جستجو" class="neo-table-action">
+                            </div>
+                            <div class="neo-table-header-row-filter">
+                                <select><option>همه</option><option>فروش</option></select>
+                                <input type="submit" value="اعمال" class="neo-table-action">
+                            </div>
+                            <button type="button" class="neo-table-button-filter-left"><i class="fa fa-filter"></i> فیلترها</button>
+                            <button type="button" class="neo-table-button-filter-right"><i class="fa fa-caret-down"></i></button>
+                            <button type="button" class="neo-table-button-filter-left" id="export_button"><i class="fa fa-download"></i> دریافت خروجی</button>
+                            <button type="button" class="neo-table-button-filter-right"><i class="fa fa-caret-down"></i></button>
+                            <div class="neo-table-header-row-navigation">
+                                <a href="#" class="fa fa-step-backward neo-navigation-arrow-active"></a>
+                                صفحه <input type="text" value="1" size="2"> از 12
+                                <a href="#" class="fa fa-step-forward neo-navigation-arrow-active"></a>
+                            </div>
+                        </div>
+                        <table class="issabel-standard-table" width="100%">
+                            <thead><tr><th>داخلی</th><th>نام کامل کاربر</th><th>ایمیل</th><th>وضعیت</th><th>فناوری</th><th>عملیات</th></tr></thead>
+                            <tbody>
+                                <tr><td class="table_data">۲۰۱</td><td class="table_data">علی رضایی</td><td class="table_data confdir">ali@example.com</td><td class="table_data"><span class="label label-success">فعال</span></td><td class="table_data confdir">SIP</td>
+                                    <td class="table_data"><button class="neo-table-toolbar-button" style="height:26px;padding:0 10px;font-size:11px;"><i class="fa fa-pencil"></i> ویرایش</button> <button class="neo-table-toolbar-button" style="height:26px;padding:0 10px;font-size:11px;"><i class="fa fa-trash-o"></i> حذف</button></td></tr>
+                                <tr><td class="table_data">۲۰۲</td><td class="table_data">مریم احمدی</td><td class="table_data confdir">maryam@example.com</td><td class="table_data"><span class="label label-warning">مشغول</span></td><td class="table_data confdir">PJSIP</td>
+                                    <td class="table_data"><button class="neo-table-toolbar-button" style="height:26px;padding:0 10px;font-size:11px;"><i class="fa fa-pencil"></i> ویرایش</button> <button class="neo-table-toolbar-button" style="height:26px;padding:0 10px;font-size:11px;"><i class="fa fa-trash-o"></i> حذف</button></td></tr>
+                                <tr><td class="table_data">۲۰۳</td><td class="table_data">رضا کریمی</td><td class="table_data confdir">reza@example.com</td><td class="table_data"><span class="label label-danger">قطع</span></td><td class="table_data confdir">SIP</td>
+                                    <td class="table_data"><button class="neo-table-toolbar-button" style="height:26px;padding:0 10px;font-size:11px;"><i class="fa fa-pencil"></i> ویرایش</button> <button class="neo-table-toolbar-button" style="height:26px;padding:0 10px;font-size:11px;"><i class="fa fa-trash-o"></i> حذف</button></td></tr>
+                            </tbody>
+                            <tfoot><tr><th>داخلی</th><th>نام کامل کاربر</th><th>ایمیل</th><th>وضعیت</th><th>فناوری</th><th>عملیات</th></tr></tfoot>
+                        </table>
+                    </form>
+
+                    <div class="neo-addons-header-row" style="margin-top:18px;">
+                        <strong style="color:var(--voiz-heading);">تنظیمات صوتی — فرم کامل</strong>
+                    </div>
+                    <form class="filterForm">
+                        <table class="tabForm" width="100%">
+                            <tr><td><b>نام کامل:</b></td><td><input type="text" value="علی رضایی" style="width:260px"></td></tr>
+                            <tr><td><b>ایمیل:</b></td><td><input type="text" value="ali@example.com" style="width:260px"></td></tr>
+                            <tr><td><b>فناوری:</b></td><td><select style="width:180px"><option>SIP</option><option>PJSIP</option></select></td></tr>
+                            <tr><td><b>ضبط مکالمات:</b></td><td><input type="checkbox" checked> ضبط تمام تماس‌ها</td></tr>
+                            <tr><td><b>توضیحات:</b></td><td><textarea rows="3" style="width:420px;"></textarea></td></tr>
+                            <tr><td colspan="2" class="fila_botonera" style="padding-top:12px;">
+                                <input type="submit" value="ذخیره">
+                                <input type="button" value="انصراف">
+                            </td></tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="main">
+    <span class="voiz-footer-brands">
+        <a class="voiz-footer-brand" href="#">VOIPIRAN | ویپ ایران</a>
+        <span class="sep">+</span>
+        <a class="voiz-footer-brand" href="#">AKZ</a>
+        <span class="sep">|</span>
+        <a class="voiz-footer-brand" href="#">akzwp.ir</a>
+        <span class="sep">·</span>
+        <span>Licensed GPL. 2006 - 2026</span>
+    </span>
+</footer>
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="voiz-ui.js"></script>
+<script>
+    jQuery(document).on('click', '.dropdown > a[data-toggle="dropdown"]', function(e){
+        e.preventDefault();
+        jQuery(this).parent().toggleClass('open');
+    });
+</script>
+</body>
+</html>

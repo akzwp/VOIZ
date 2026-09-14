@@ -167,15 +167,6 @@
     <ul id="main-menu" class="main-menu">
         <!-- add class "multiple-expanded" to allow multiple submenus to open -->
         <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-        <!-- Search Bar -->
-        <li id="search">
-            <form method="get" action="">
-                <input type="text" id="search_module_issabel" name="search_module_issabel" class="search-input" placeholder="{$MODULES_SEARCH}"/>
-                <button type="submit">
-                    <i class="entypo-search"></i>
-                </button>
-            </form>
-        </li>
         <!--recorremos el arreglo del menu nivel primario-->
         {foreach from=$arrMainMenu key=idMenu item=menu name=menuMain}
             {if $idMenu eq $idMainMenuSelected}
@@ -228,158 +219,134 @@
 <!-- fin del menú tipo acordeon-->
 <!-- inicio del head principal-->
 <div class="main-content">
-    <div style="height:68px; background-color:#2F3640; padding:10px;">
-        <!-- Profile Info and Notifications -->
-        <span style='float:left; text-align:right; padding:0px 5px 0px 0px; width:175px;' class="col-md-6 col-sm-8 clearfix">
-            <ul style='' class="user-info pull-none-xsm">
-                <!-- Profile Info -->
-                <li class="profile-info dropdown pull-right"><!-- add class "pull-right" if you want to place this from right -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <!--<img style="border:0px" src="index.php?menu=_issabelutils&action=getImage&ID={$USER_ID}&rawmode=yes" alt="" class="img-circle" width="44" />-->
-                        <img style="border:0px" src="/themes/{$THEMENAME}/images/Icon-user.png" alt="" class="img-circle" width="44" />
-                        {$USER_LOGIN}
-                    </a>
-                    <!-- Reverse Caret -->
-                    <i style='font-size:15px;font-weight:bold;' class="fa fa-angle-down"></i>
-                    <!-- Profile sub-links -->
-                    <ul class="dropdown-menu">
-                        <!-- Reverse Caret -->
-                        <li class="caret"></li>
-                        <!-- Profile sub-links -->
-                        <li class="dropdown">
-                            <a href="#" class="setadminpassword">
-                                <i class="fa fa-user"></i>
-                                {$CHANGE_PASSWORD}
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a {*data-toggle="dropdown"*} href="index.php?logout=yes" {*style="background-color: red"*}>
-                                <i class="fa fa-sign-out"></i>
-                                {$LOGOUT}
-                            </a>
-                        </li>
-                    </ul>
+    <!-- Voiz topbar: logo / search / actions / user / theme -->
+    <div class="voiz-topbar">
+        <a href="#" class="voiz-topbar-burger"><i class="fa fa-bars"></i></a>
+
+        <div class="voiz-topbar-logo">
+            <a href="#">
+                <img src="{$WEBPATH}themes/{$THEMENAME}/images/logo-light.png" alt="voiz" />
+            </a>
+            <kbd>version {$VERSION}</kbd>
+        </div>
+
+        <div class="voiz-topbar-search">
+            <form method="get" action="">
+                <i class="fa fa-search voiz-search-icon"></i>
+                <input type="text" id="search_module_issabel" name="search_module_issabel" placeholder="{$MODULES_SEARCH}" aria-label="{$MODULES_SEARCH}"/>
+                <button type="submit"><i class="entypo-search"></i></button>
+            </form>
+        </div>
+
+        <span class="voiz-topbar-sep"></span>
+
+        <ul class="voiz-topbar-actions list-inline links-list neo-topbar-notification">
+            <li id="header_notification_bar" class="dropdown top-bar-downloads">
+                <a data-toggle="dropdown" class="" href="#" title="Downloads">
+                    <i class="fa fa-download"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="caret"></li>
+                    <li><a target="_blank" id="winscp_link" class="" href=""><i class="fa fa-external-link"></i>Winscp</a></li>
+                    <li><a target="_blank" id="putty_link" class="" href=""><i class="fa fa-external-link"></i>Putty</a></li>
+                    <li><a target="_blank" id="softphone_link" class="" href=""><i class="fa fa-external-link"></i>Softphone</a></li>
+                </ul>
+            </li>
+            <li class="dropdown top-bar-webmin">
+                <a id="webmin_link" href="#" onclick="gotowebmin(); return false;" target="_blank" title="Webmin">
+                    <i class="fa fa-cog"></i>
+                </a>
+            </li>
+            <li class="dropdown top-bar-webphone">
+                <a id="webphone_link" href="https://{$SERVER_NAME}/phone" target="_blank" rel="noopener" title="Webphone">
+                    <i class="fa fa-phone"></i>
+                </a>
+            </li>
+            <li class="dropdown top-bar-queue">
+                <a id="queue_dashboard_link" href="#" onclick="gotoQueueDashboard(); return false;" class="" title="Queue Dashboard">
+                    <i class="fa fa-bar-chart"></i>
+                </a>
+            </li>
+            <li id="header_notification_bar" class="dropdown top-bar-info">
+                <a data-toggle="dropdown" class="" href="#">
+                    <i class="fa fa-info-circle"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="caret"></li>
+                    <li><a href="#" class="register_link">{$Registered}</a></li>
+                    <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
+                    <li><a href="http://www.voipiran.io" target="_blank"><i class="fa fa-external-link"></i>VOIPIRAN Website</a></li>
+                    <li><a href="https://akzwp.com" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ Website</a></li>
+                    <li><a href="#" id="dialogaboutissabel"><i class="fa fa-info-circle"></i>{$ABOUT_ISSABEL2}</a></li>
+                </ul>
+            </li>
+            <li id="header_notification_bar" class="dropdown">
+                <a data-toggle="dropdown" class="" href="#">
+                    <i id="notibell" class="fa fa-bell-o {$ANIMATE_NOTIFICATION}"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="caret"></li>
+                    <li><p>{$NOTIFICATIONS.LBL_NOTIFICATION_SYSTEM}</p></li>
+                    <li>
+                        <ul>
+                            {foreach from=$NOTIFICATIONS.NOTIFICATIONS_PUBLIC item=NOTI}
+                                <li id="notiitem{$NOTI.id}" class="{if $NOTI.level == "info"}notification-info{elseif $NOTI.level == "warning"}notification-warning{elseif $NOTI.level == "error"}notification-danger{/if}">
+                                    <a href="#" onclick='readNoti("{$NOTI.id}")'><i class="{if $NOTI.level == "info"}fa fa-info{elseif $NOTI.level == "warning"}fa fa-warning{elseif $NOTI.level == "error"}fa fa-ban{/if}"></i>{$NOTI.content}</a>
+                                </li>
+                            {foreachelse}
+                                <li><p>{$NOTIFICATIONS.TXT_NO_NOTIFICATIONS}</p></li>
+                            {/foreach}
+                        </ul>
+                    </li>
+                    <li><p>{$NOTIFICATIONS.LBL_NOTIFICATION_USER}</p></li>
+                    <li>
+                        <ul>
+                            {foreach from=$NOTIFICATIONS.NOTIFICATIONS_PRIVATE item=NOTI}
+                                <li class="{if $NOTI.level == "info"}notification-info{elseif $NOTI.level == "warning"}notification-warning{elseif $NOTI.level == "error"}notification-danger{/if}">
+                                    <a href="#"><i class="{if $NOTI.level == "info"}fa fa-info{elseif $NOTI.level == "warning"}fa fa-warning{elseif $NOTI.level == "error"}fa fa-ban{/if}"></i>{$NOTI.content}</a>
+                                </li>
+                            {foreachelse}
+                                <li><p>{$NOTIFICATIONS.TXT_NO_NOTIFICATIONS}</p></li>
+                            {/foreach}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            {if $ISSABEL_PANELS}
+                <li id="header_open_sidebar" class="dropdown">
+                    <a href="#" data-toggle="chat" data-collapse-sidebar="1"><i class="fa fa-th-list"></i></a>
                 </li>
-            </ul>
-        </span>
-        <!-- Raw Links -->
-        <span style=' width:400px;'>
-            <ul style="padding-top:12px;" class="list-inline links-list pull-right neo-topbar-notification">
-<!------- voipiran Download ---->
-        <li id="header_notification_bar" class="profile-info dropdown top-bar-downloads"> <!-- voipiran msm -->
-            <a data-toggle="dropdown" class="" href="#">
-                <i class="fa fa-download"></i>
+            {/if}
+        </ul>
+
+        <span class="voiz-topbar-sep"></span>
+
+        <div class="voiz-topbar-user">
+            <a href="#" class="voiz-user-link dropdown-toggle" data-toggle="dropdown">
+                <img style="border:0px" src="/themes/{$THEMENAME}/images/Icon-user.png" alt="" />
+                <span class="voiz-user-name">{$USER_LOGIN}</span>
+                <i class="fa fa-angle-down voiz-user-caret"></i>
             </a>
             <ul class="dropdown-menu">
-                <!-- Reverse Caret -->
                 <li class="caret"></li>
-                <!-- Profile sub-links -->
-                <li><a target="_blank" id="winscp_link" class="" href=""><i class="fa fa-external-link"></i>Winscp</a></li>
-                <li><a target="_blank" id="putty_link" class="" href=""><i class="fa fa-external-link"></i>Putty</a></li>
-                <li><a target="_blank" id="softphone_link" class="" href=""><i class="fa fa-external-link"></i>Softphone</a></li>
-   </ul>
-        </li>
-<!------ end doubledup code ----->
-                <!--li id="header_notification_bar" class="dropdown">
-                    <a {*data-toggle="dropdown"*} class="" href="index.php?menu=addons">
-                        <i class="fa fa-cubes"></i>
-                    </a>
-                </li-->
-                <!-- notification dropdown start-->
-                <!--li id="header_notification_bar" class="dropdown">
-                    <a data-toggle="dropdown" class="" href="#">
-                        <i class="fa fa-heartbeat"></i>
-                    </a>
-                </li-->
-<!-- Webmin Button – آیکون ساده و مطمئن از سری fa -->
-<li class="profile-info dropdown top-bar-webmin">
-    <a id="webmin_link" href="#" onclick="gotowebmin(); return false;" target="_blank">
-        <i class="fa fa-cog"></i>
-    </a>
-</li>
-                <!-- <li id="header_notification_bar" class="profile-info dropdown"> -->
-                 <!-- <a target="_blank" id="crm_link" class="" href=""> -->
-                <!-- <img style="width:16px;" src="{$WEBPATH}themes/{$THEMENAME}/images/crm.png" /> -->
-               <!-- </a> -->
-              <!-- </li> -->
-                <li id="header_notification_bar" class="profile-info dropdown top-bar-info"> <!-- voipiran msm -->
-                    <a data-toggle="dropdown" class="" href="#">
-                        <i class="fa fa-info-circle"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- Reverse Caret -->
-                        <li class="caret"></li>
-                        <!-- Profile sub-links -->
-                        <li><a href="#" class="register_link">{$Registered}</a></li>
-                        <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
-                        <li><a href="http://www.voipiran.io" target="_blank"><i class="fa fa-external-link"></i>VOIPIRAN Website</a></li>
-                        <li><a href="#" id="dialogaboutissabel"><i class="fa fa-info-circle"></i>{$ABOUT_ISSABEL2}</a></li>
-                    </ul>
-                </li>
-                <!-- notification dropdown end -->
-                <li id="header_notification_bar" class="profile-info dropdown" style="float: none !important;">
-                    <a data-toggle="dropdown" class="" href="#">
-                        <i id='notibell' class="fa fa-bell-o {$ANIMATE_NOTIFICATION}"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- Reverse Caret -->
-                        <li class="caret"></li>
-                        <li><p>{$NOTIFICATIONS.LBL_NOTIFICATION_SYSTEM}</p></li>
-                        <li>
-                            <ul>
-                                {foreach from=$NOTIFICATIONS.NOTIFICATIONS_PUBLIC item=NOTI}
-                                    <li id='notiitem{$NOTI.id}' class="{if $NOTI.level == "info"}notification-info{elseif $NOTI.level == "warning"}notification-warning{elseif $NOTI.level == "error"}notification-danger{/if}">
-                                        <a href="#" onclick='readNoti("{$NOTI.id}")'><i class="{if $NOTI.level == "info"}fa fa-info{elseif $NOTI.level == "warning"}fa fa-warning{elseif $NOTI.level == "error"}fa fa-ban{/if}"></i>{$NOTI.content}</a>
-                                    </li>
-                                {foreachelse}
-                                    <li><p>{$NOTIFICATIONS.TXT_NO_NOTIFICATIONS}</p></li>
-                                        {/foreach}
-                            </ul>
-                        </li>
-                        <li><p>{$NOTIFICATIONS.LBL_NOTIFICATION_USER}</p></li>
-                        <li>
-                            <ul>
-                                {foreach from=$NOTIFICATIONS.NOTIFICATIONS_PRIVATE item=NOTI}
-                                    <li class="{if $NOTI.level == "info"}notification-info{elseif $NOTI.level == "warning"}notification-warning{elseif $NOTI.level == "error"}notification-danger{/if}">
-                                        <a href="#"><i class="{if $NOTI.level == "info"}fa fa-info{elseif $NOTI.level == "warning"}fa fa-warning{elseif $NOTI.level == "error"}fa fa-ban{/if}"></i>{$NOTI.content}</a>
-                                    </li>
-                                {foreachelse}
-                                    <li><p>{$NOTIFICATIONS.TXT_NO_NOTIFICATIONS}</p></li>
-                                        {/foreach}
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                {if $ISSABEL_PANELS}
-                    <!-- SIDEBAR LIST -->
-                    <li id="header_open_sidebar">
-                        <a href="#" data-toggle="chat" data-collapse-sidebar="1"><i class="fa fa-th-list"></i></a>
-                    </li>
-                {/if}
-                <!-- Queue Dashboard Button -->
-                <li id="header_notification_bar" class="profile-info dropdown top-bar-queue">
-                    <a id="queue_dashboard_link" href="#" onclick="gotoQueueDashboard(); return false;" class="">
-		<i class="fa fa-bar-chart"></i>
+                <li>
+                    <a href="#" class="setadminpassword">
+                        <i class="fa fa-user"></i>
+                        {$CHANGE_PASSWORD}
                     </a>
                 </li>
-				
-<!-- Webphone Button – باز شدن در تب جدید -->
-<li class="profile-info dropdown top-bar-webphone">
-    <a id="webphone_link" href="https://{$SERVER_NAME}/phone" target="_blank" rel="noopener">
-        <i class="fa fa-phone"></i>
-    </a>
-</li>
-				
+                <li>
+                    <a href="index.php?logout=yes">
+                        <i class="fa fa-sign-out"></i>
+                        {$LOGOUT}
+                    </a>
+                </li>
             </ul>
-        </span>
-        <div class="logo">
-            <a href="#">
-                <img style="height:60px;" src="{$WEBPATH}themes/{$THEMENAME}/images/logo-light.png" alt="voiz" />
-</a>
-<!------ VOIPIRAN version ----->
-<kbd>version {$VERSION}</kbd>
- 
-</div>
+        </div>
+
+        <a href="#" class="voiz-theme-toggle" onclick="VoizUI.toggleTheme(); return false;" title="تغییر تم روشن/تیره">
+            <i class="fa fa-moon-o"></i>
+        </a>
     </div>
     <!-- Breadcrumb 3 -->
     <ol class="breadcrumb bc-2">

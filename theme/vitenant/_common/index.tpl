@@ -1,9 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html dir="rtl">  <!--  Voiz -->
+<html dir="rtl" lang="fa">  <!--  Voiz -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>VOIZ | VOIPIRAN</title>
+        <!-- Voiz: pre-paint theme init (avoids flash of wrong theme) -->
+        <script type='text/javascript'>
+            (function () {
+                var t = null;
+                try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
+                if (t !== 'dark' && t !== 'light') { t = 'light'; }
+                document.documentElement.setAttribute('data-theme', t);
+            })();
+        </script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
     <!-- <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/bootstrap.css">
@@ -31,10 +41,12 @@
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}libs/js/sticky_note/sticky_note.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/table.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/rightbar.css" />
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/purple.css">
     <!-- voipiran msm -->
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/rtl.css">   <!--  Voiz -->
     <!-- voipiran msm \-->
+    <!-- Voiz: UI/UX layer (loaded last). NOTE: css/purple.css is intentionally NOT loaded -
+         the redesign layer (voiz-ui.css) fully replaces its look. -->
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css">
 
     {$HEADER_LIBS_JQUERY}
         <!--<script type='text/javascript' src="{$WEBCOMMON}js/base.js"></script>-->
@@ -49,13 +61,14 @@
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body" {$BODYPARAMS}>
     <div class="page-container">
+        <div id="voiz-sidebar-overlay" class="voiz-sidebar-overlay"></div>
 
         {$MENU} <!-- Viene del tpl menu.tlp-->
                     {if !empty($mb_message)}
                     <div class="div_msg_errors" id="message_error">
                     {if !empty($mb_title)}
                         <div class="div_msg_errors_title">
-                            <b style="color:red;">&nbsp;{$mb_title}</b>
+                            <b>&nbsp;{$mb_title}</b>
                         </div>
                     {/if}
                         <div class="div_msg_errors_dismiss"><i class="fa fa-lg fa-remove" onclick="hide_message_error();"></i></div>
@@ -68,9 +81,18 @@
         </div><!-- neo-contentbox -->
 
         <!-- Footer -->
-        <footer class="main" style="margin-left:16px;">
-        <!-- VOIPIRAN -->		
-            <a href="http://www.voipiran.io" style="color: #444; text-decoration: none;" target='_blank'>VOIZ</a> {$ISSABEL_LICENSED} <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank' style="color: #445; text-decoration: none;" >GPL</a>. 2006 - {$currentyear}.
+        <footer class="main">
+            <span class="voiz-footer-brands">
+                <!-- VOIPIRAN -->
+                <a class="voiz-footer-brand" href="http://www.voipiran.io" target='_blank'>VOIPIRAN | ویپ ایران</a>
+                <span class="sep">+</span>
+                <!-- AKZ -->
+                <a class="voiz-footer-brand" href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a>
+                <span class="sep">|</span>
+                <a class="voiz-footer-brand" href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>
+                <span class="sep">·</span>
+                <span>{$ISSABEL_LICENSED} <a href="http://www.opensource.org/licenses/gpl-license.php" target='_blank'>GPL</a>. 2006 - {$currentyear}</span>
+            </span>
         </footer>
 
         {*<br />*}
@@ -150,6 +172,7 @@ $(document).ready(function(e) {
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-login.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-custom.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-demo.js"></script>
+        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/voiz-ui.js"></script>
     </div>
 </body>
 </html>
