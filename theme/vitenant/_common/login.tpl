@@ -5,10 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="VOIZ - VOIPIRAN" />
-        <meta name="author" content="VOIPIRAN" />
+        <meta name="description" content="VOIZ - VOIPIRAN + AKZ" />
+        <meta name="author" content="VOIPIRAN + AKZ" />
 
-        <title>{$PAGE_NAME} - VOIZ | VOIPIRAN</title>
+        <title>{$PAGE_NAME} - VOIZ | VOIPIRAN + AKZ</title>
 
         <!-- Voiz: pre-paint theme init (avoids flash of wrong theme) -->
         <script type="text/javascript">
@@ -85,7 +85,7 @@
             <div class="fotter">
                 <div class="copyr">
                     <p>
-                        Copyrights © 2017-2026 All Rights Reserved by <a href="http://www.voipiran.io">VOIPIRAN | ویپ ایران</a>
+                        Copyrights © 2017-2026 All Rights Reserved by <a href="http://www.voipiran.io">VOIPIRAN | ویپ ایران</a> + <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a>
                     </p>
                     <p class="voiz-login-brands">
                         Powered by <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a><span class="sep">|</span><a href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>

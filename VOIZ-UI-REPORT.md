@@ -139,3 +139,63 @@ theme/vitenant/
 - **هیچ فایل PHP تغییر نکرده**
 - **هیچ منطق سرور یا دیتابیس دست نخورده**
 - فقط HTML (_tpl) + CSS + JS رابط کاربری
+
+---
+
+# 🔄 نسخه ۳ — ریسپانسیو کامل، منوی موبایل، موتور داخلی Tailwind، برندینگ AKZ
+
+> نتیجه‌ی بازبینی اسکرین‌شات‌های واقعی پنل. سه مشکل اصلی ریشه‌ای پیدا و رفع شد.
+
+## 🔎 ریشه‌یابی مشکلات
+
+| مشکل گزارش‌شده | ریشه‌ی واقعی | راه‌حل |
+|---|---|---|
+| منوی موبایل باز می‌شود ولی خالی است | `neon-core-rtl.css` در عرض `<767px` روی `#main-menu` می‌گذارد `display:none` + دوباره‌اتصالی دکمه‌ی همبرگر (JS نئون + JS ویوز هر دو toggle می‌کردند) | فورس `display:block !important` برای دراور + حذف اتصالی تکراری از `voiz-ui.js` (نئون خودش `toggle_sidebar_menu` ما را صدا می‌زند) |
+| کانتنت ماژول‌ها با UI جدید نخواند | صفحات CDR (`cel.tpl`) و اپلت‌های داشبورد سند HTML کامل با `<head>` جدا دارند و استک قدیمی LTR + `purple.css` را لود می‌کنند | تبدیل `cel.tpl` به استک RTL و لود `voiz-ui.css` در آخر؛ همین کار برای `popup.tpl` |
+| باکس‌های داشبورد خراب | `1_style.css` اپلت‌ها `float:left` + عرض/ارتفاع ثابت ۴۸۰×۳۰۰ + رنگ ثابت | `appletgrid.tpl` بازنویسی شد به گرید سیال + CSS v3 اپلت‌ها را تم‌دار می‌کند |
+
+## ⚙️ موتور داخلی Tailwind (بدون CDN)
+
+فایل جدید **`theme/vitenant/css/voiz-tw.css`** — سیستم یوتیلیتی دست‌ساز با API شبیه Tailwind:
+
+- توکن‌ها: اسپیسینگ، ردیوس، سایز فونت، z-index
+- یوتیلیتی‌ها: `voiz-flex`، `voiz-grid--2`، `voiz-gap-4`، `voiz-p-3`، `voiz-text-sm`، `voiz-rounded`، `voiz-shadow` و…
+- واریانت ریسپانسیو: `voiz-sm:*` (<992px)، `voiz-md:*` (≥992px)، `voiz-lg:*` (≥1200px)
+- پریمیتیو کامپوننت: `voiz-btn--primary/ghost/danger`، `voiz-field`، `voiz-label`
+- `voiz-ui.css` آن را با `@import` می‌کشد — فقط یک `<link>` در قالب‌ها
+
+## 📱 اصلاحات ریسپانسیو (v3)
+
+- دراور موبایل: جایگزینی کامل رفتار نئون — آفست دقیق، انیمیشن transform، بستن با ESC/کلیک بیرون/کلیک روی لینک
+- دکمه‌ی همبرگر قدیمی داخل هدر سایدبار در حالت دراور مخفی شد (تاپ‌بار مالک toggle است)
+- اپلت‌های داشبورد: گرید ۲ ستونه → ۱ ستونه در تبلت/موبایل
+- جدول تقویم داخل اپلت‌ها `display:table` حفظ شد (باگ `display:block` که خودم ایجاد کرده بودم — پیدا و رفع شد)
+- ریست‌های دفاعی: `#main-menu` و `.breadcrumb` هرگز نشانگر لیست بومی نمی‌گیرند حتی بدون bootstrap
+
+## 🏷️ برندینگ AKZ (کامل)
+
+- عنوان صفحات: `VOIZ | VOIPIRAN + AKZ`
+- فوتر لاگین: `Copyrights © ... VOIPIRAN | ویپ ایران + AKZ` + خط `Powered by AKZ | akzwp.ir`
+- فوتر پنل: `VOIPIRAN | ویپ ایران + AKZ | akzwp.ir`
+- منوی اطلاعات: دو لینک `AKZ Website | akzwp.com` و `AKZ Website | akzwp.ir`
+
+## 📁 فایل‌های نسخه ۳
+
+```
+theme/vitenant/css/voiz-tw.css                       ← جدید: موتور یوتیلیتی داخلی
+theme/vitenant/css/voiz-ui.css                       ← پچ v3 (دراور/اپلت/تقویم/ریست‌ها)
+theme/vitenant/js/voiz-ui.js                          ← رفع دوباره‌اتصالی همبرگر
+theme/vitenant/_common/popup.tpl                      ← RTL + voiz-ui
+theme/vitenant/_common/{index,login,_menu}.tpl        ← برندینگ AKZ
+issabelmodules/modules/cdrreport/themes/default/cel.tpl   ← استک RTL + voiz-ui
+issabelmodules/modules/dashboard/themes/default/appletgrid.tpl ← گرید سیال
+.freebuff/run.md                                      ← مستند بازسازی پیش‌نمایش زنده
+```
+
+## ✅ راستی‌آزمایی مرورگر (هر دو تم)
+
+- دراور موبایل: ۲۰ آیتم منو، اکتیو با نوار نارنجی، زیرمنوی باز ✔️
+- فرم موبایل: تک‌ستونه، ورودی‌ها تمام‌عرض ✔️
+- جدول موبایل: اسکرول افقی بدون شکستگی ✔️
+- دسکتاپ ۱۴۴۰: ریل سایدبار ۲۸۰px + گرید اپلت ۲ ستونه + تقویم تم‌دار ✔️
+- لاگین: خطای ورود، toggle رمز، برندینگ AKZ ✔️

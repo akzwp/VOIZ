@@ -1,0 +1,11 @@
+/* minimal local stand-ins for the harness only */
+.neo-display-none { display: none !important; }
+.visible-xs { display: none; }
+@media (max-width: 767px) { .visible-xs { display: block; } }
+.voiz-topbar-actions > li, .voiz-topbar-user { position: relative; }
+.voiz-topbar-actions .dropdown-menu, .voiz-topbar-user .dropdown-menu { display: none; }
+.open > .dropdown-menu { display: block; }
+.entypo-menu:before { content: "\2261"; font-style: normal; }
+.entypo-home:before { content: "\2302"; font-style: normal; }
+.entypo-search:before { content: "\1F50D"; font-style: normal; }
+.entypo-cancel:before { content: "\2715"; font-style: normal; }

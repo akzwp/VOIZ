@@ -1,0 +1,250 @@
+
+/* ############################################################
+   VOIZ UI v3 - internal engine integration + responsive fixes
+   (loaded after all legacy css; voiz-tw utilities available)
+   ############################################################ */
+
+/* ------------------------------------------------------------
+   A. VOIZ TW INTEGRATION
+   The internal utility engine is authoritative for everything
+   that uses it: neutralize legacy chrome around voiz-tw markup.
+   ------------------------------------------------------------ */
+.voiz-tw {
+    float: none !important;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    color: var(--voiz-text);
+}
+span.voiz-tw,
+a.voiz-tw,
+i.voiz-tw {
+    float: none !important;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+table.voiz-tw,
+table.voiz-tw > tbody,
+table.voiz-tw > tbody > tr,
+table.voiz-tw > tbody > tr > td {
+    display: block;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    width: auto;
+}
+
+/* ------------------------------------------------------------
+   B. PAGE SHELL - the legacy head strip is dead markup here
+   ------------------------------------------------------------ */
+body.page-body > .page-container > .sidebar-menu {
+    padding-top: 0;
+}
+body.page-body > .page-container > .sidebar-menu > * {
+    display: block !important;
+}
+
+/* ------------------------------------------------------------
+   C. MOBILE DRAWER FIX  (#main-menu was display:none <=767px
+      in neon-core-rtl.css - drawer slid in empty)
+   ------------------------------------------------------------ */
+@media (max-width: 991px) {
+    body .page-container .sidebar-menu {
+        position: fixed !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        left: auto !important;
+        width: 285px !important;
+        max-width: 86vw;
+        min-height: 0 !important;
+        transform: translateX(105%);
+        transition: transform .28s ease;
+        box-shadow: -10px 0 44px rgba(0, 0, 0, .35);
+        z-index: 10650;
+        padding-top: 0 !important;
+    }
+    body.voiz-sidebar-open .page-container .sidebar-menu {
+        transform: translateX(0);
+    }
+    /* THE FIX: neon hides the menu itself on phones */
+    body .page-container .sidebar-menu #main-menu {
+        display: block !important;
+        margin-bottom: 0 !important;
+    }
+    /* submenus are toggled by class, not width */
+    body .page-container .sidebar-menu #main-menu li ul {
+        display: none;
+    }
+    body .page-container .sidebar-menu #main-menu li ul.visible {
+        display: block;
+    }
+    /* fullscreen takeover for the issabel-panels drawer */
+    #chat.chat-visible,
+    #chat.chat-visible.fixed {
+        display: block;
+    }
+    body .page-container {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+}
+
+/* ------------------------------------------------------------
+   D. DASHBOARD APPLET GRID  (was float:left / 480x300 px fixed)
+   ------------------------------------------------------------ */
+#applet_grid {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 auto;
+    float: none !important;
+}
+@media (max-width: 991px) {
+    #applet_grid { grid-template-columns: 1fr; }
+}
+#applet_grid .appletcolumn,
+#applet_grid .appletcolumn td {
+    width: auto !important;
+    padding: 0 !important;
+    display: block;
+}
+#applet_grid .appletcolumn { display: contents; }
+#applet_grid .appletwindow {
+    float: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 140px;
+    margin: 0 !important;
+    padding: 0 0 10px !important;
+    border-radius: var(--voiz-radius) !important;
+    border: 1px solid var(--voiz-border) !important;
+    background: var(--voiz-surface) !important;
+    box-shadow: var(--voiz-card-shadow) !important;
+    font-size: 13px !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+#applet_grid .appletwindow > .appletwindow_topbar {
+    height: auto !important;
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--voiz-heading) !important;
+    direction: rtl !important;
+    cursor: default;
+    background: var(--voiz-surface-2) !important;
+    border-bottom: 1px solid var(--voiz-border) !important;
+}
+#applet_grid .appletwindow > .appletwindow_topbar .appletwindow_widgets i,
+#applet_grid .appletwindow .appletrefresh i {
+    color: var(--voiz-muted) !important;
+}
+#applet_grid .appletwindow .appletrefresh:hover i {
+    color: var(--voiz-primary) !important;
+}
+#applet_grid .appletwindow_content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+}
+/* each applet family: kill hard-coded light chrome */
+#applet_grid .appletwindow .neo-applet,
+.appletwindow_fullcontent div.neo-applet {
+    background: transparent !important;
+    border: 0 !important;
+}
+.appletwindow_fullcontent .gadget,
+.appletwindow_fullcontent table {
+    color: var(--voiz-text);
+}
+.appletwindow_fullcontent .gadget > tbody > tr > td,
+.appletwindow_fullcontent .gadget td,
+.appletwindow_fullcontent table td {
+    color: var(--voiz-text);
+    border-color: var(--voiz-border) !important;
+}
+/* gauge/donut labels and legends inherit theme text */
+.appletwindow_fullcontent .legend,
+.appletwindow_fullcontent .legend td,
+.appletwindow_fullcontent .jqplot-target,
+.appletwindow_fullcontent .jqplot-table-legend,
+.appletwindow_fullcontent .jqplot-axis,
+.appletwindow_fullcontent .jqplot-xaxis-tick,
+.appletwindow_fullcontent .jqplot-yaxis-tick {
+    color: var(--voiz-text-soft) !important;
+}
+
+/* applet-internal status rows (system resources etc) */
+.appletwindow_fullcontent .applet-table,
+.appletwindow_fullcontent .gadget {
+    width: 100% !important;
+}
+
+/* ------------------------------------------------------------
+   E. JALALI CALENDAR WIDGET  (dashboard "چشم‌انداز" month grid
+      and date pickers were hard-coded white-on-white)
+   ------------------------------------------------------------ */
+.jalali-calendar table,
+table.jCalendar,
+.calendar,
+.jcalendar {
+    background: transparent !important;
+}
+.jalali-calendar th,
+.jalali-calendar td,
+table.jCalendar th,
+table.jCalendar td,
+.calendar table td,
+.calendar table th {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+}
+.jalali-calendar th,
+table.jCalendar th,
+.calendar table th {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-text-soft) !important;
+    font-weight: 600;
+}
+.jalali-calendar td.today,
+table.jCalendar td.today,
+.calendar table td.today {
+    background: var(--voiz-primary-soft) !important;
+    color: var(--voiz-primary) !important;
+    font-weight: 700;
+}
+.jalali-calendar td.selected,
+table.jCalendar td.selected,
+.calendar table td.selected {
+    background: var(--voiz-primary) !important;
+    color: #fff !important;
+}
+/* the month-view event blocks (red strip in screenshot) */
+.jalali-calendar .event,
+.jalali-calendar a.event {
+    background: var(--voiz-primary-soft) !important;
+    color: var(--voiz-primary) !important;
+    border-radius: 6px;
+    padding: 2px 6px;
+}
+
+/* ------------------------------------------------------------
+   F. MISC v3 POLISH
+   ------------------------------------------------------------ */
+/* fullcontent iframe-less content should scroll, not clip */
+.appletwindow_fullcontent {
+    max-height: 260px;
+    overflow: auto;
+}
+@media (max-width: 767px) {
+    #applet_grid { gap: 12px; }
+    .appletwindow_fullcontent { max-height: none; }
+}
+/* inline width/height attrs from legacy markup are capped */
+.appletwindow_fullcontent img,
+.appletwindow_fullcontent canvas { max-width: 100%; height: auto; }

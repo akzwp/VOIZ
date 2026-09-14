@@ -276,7 +276,8 @@
                     <li><a href="#" class="register_link">{$Registered}</a></li>
                     <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
                     <li><a href="http://www.voipiran.io" target="_blank"><i class="fa fa-external-link"></i>VOIPIRAN Website</a></li>
-                    <li><a href="https://akzwp.com" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ Website</a></li>
+                    <li><a href="https://akzwp.com" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ Website | akzwp.com</a></li>
+                    <li><a href="https://akzwp.ir" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ Website | akzwp.ir</a></li>
                     <li><a href="#" id="dialogaboutissabel"><i class="fa fa-info-circle"></i>{$ABOUT_ISSABEL2}</a></li>
                 </ul>
             </li>

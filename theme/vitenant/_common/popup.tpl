@@ -24,12 +24,25 @@
   +----------------------------------------------------------------------+
   $Id: popup.tpl,v 1.1.1.1 2007/07/06 21:31:56 gcarrillo Exp $
 *}
-<html>
+<html dir="rtl" lang="fa">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+  <!-- Voiz: popups must be responsive too -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Issabel</title>
+  <script type='text/javascript'>
+    (function () {
+        var t = null;
+        try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
+        if (t !== 'dark' && t !== 'light') { t = 'light'; }
+        document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/styles.css">
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/help.css">
+  <!-- Voiz: internal utility engine + redesign layer (always last) -->
+  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tw.css">
+  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css">
   <script src="{$WEBCOMMON}js/base.js"></script>
   <script src="{$WEBCOMMON}js/iframe.js"></script>
 </head>

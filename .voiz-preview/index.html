@@ -195,6 +195,80 @@
                             </td></tr>
                         </table>
                     </form>
+
+                    <div class='neo-addons-header-row' style='margin-top:18px;'><strong style='color:var(--voiz-heading);'>داشبورد — ویجت‌ها</strong></div>
+                    <div id='applet_grid'>
+                        <div class='appletcolumn' id='applet_col_1'>
+                            <div class='appletwindow' id='portlet-cpu'>
+                                <div class='appletwindow_topbar'>
+                                    <div class='appletwindow_title'>مشاع سیستم</div>
+                                    <div class='appletwindow_widgets'><a class='appletrefresh'><i class='fa fa-refresh'></i></a></div>
+                                </div>
+                                <div class='appletwindow_content' id='cpu'>
+                                    <div class='appletwindow_wait'><i class='fa fa-spinner fa-pulse'></i> در حال بارگذاری</div>
+                                    <div class='appletwindow_fullcontent'>
+                                        <div class='neo-applet'>
+                                            <table class='gadget' width='100%'>
+                                                <tr><td>CPU</td><td><span class='label label-success'>۶٪</span></td></tr>
+                                                <tr><td>RAM</td><td><span class='label label-warning'>۲۲٪</span></td></tr>
+                                                <tr><td>SWAP</td><td><span class='label label-danger'>۰٪</span></td></tr>
+                                                <tr><td>دیسک</td><td><span class='label label-info'>۱۹٪</span></td></tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='appletwindow' id='portlet-cal'>
+                                <div class='appletwindow_topbar'>
+                                    <div class='appletwindow_title'>تقویم رویدادها</div>
+                                    <div class='appletwindow_widgets'><a class='appletrefresh'><i class='fa fa-refresh'></i></a></div>
+                                </div>
+                                <div class='appletwindow_content' id='cal'>
+                                    <div class='appletwindow_fullcontent'>
+                                        <table class='jCalendar' width='100%'>
+                                            <tr><th>ش</th><th>ی</th><th>د</th><th>س</th><th>چ</th><th>پ</th><th>ج</th></tr>
+                                            <tr><td>۱</td><td class='today'>۲</td><td>۳</td><td class='selected'>۴</td><td>۵</td><td>۶</td><td>۷</td></tr>
+                                            <tr><td>۸</td><td>۹</td><td>۱۰</td><td>۱۱</td><td>۱۲</td><td>۱۳</td><td>۱۴</td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='appletcolumn' id='applet_col_2'>
+                            <div class='appletwindow' id='portlet-hd'>
+                                <div class='appletwindow_topbar'>
+                                    <div class='appletwindow_title'>هارد دیسک</div>
+                                    <div class='appletwindow_widgets'><a class='appletrefresh'><i class='fa fa-refresh'></i></a></div>
+                                </div>
+                                <div class='appletwindow_content' id='hd'>
+                                    <div class='appletwindow_fullcontent'>
+                                        <div class='neo-applet'>
+                                            <p class='voiz-text-soft voiz-text-sm'>فایل سیستم <span class='voiz-ltr'>/dev/sda1</span> — 43.29GB استفاده شده (۱۹٪)</p>
+                                            <div style='background:var(--voiz-surface-2);border:1px solid var(--voiz-border);border-radius:8px;padding:10px;margin-top:8px;'>
+                                                <div class='voiz-text-xs voiz-text-muted voiz-mb-1'>Drives information</div>
+                                                <div class='voiz-text-xs'>مخفی — برای نمایش، روی دکمه بزنید</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='appletwindow' id='portlet-calls'>
+                                <div class='appletwindow_topbar'>
+                                    <div class='appletwindow_title'>نمودار کارایی</div>
+                                    <div class='appletwindow_widgets'><a class='appletrefresh'><i class='fa fa-refresh'></i></a></div>
+                                </div>
+                                <div class='appletwindow_content' id='calls'>
+                                    <div class='appletwindow_fullcontent'>
+                                        <div class='jqplot-target' style='height:120px;background:var(--voiz-surface-2);border-radius:8px;display:flex;align-items:center;justify-content:center;'>
+                                            <span class='voiz-text-muted voiz-text-sm'>jqplot chart area</span>
+                                        </div>
+                                        <table class='legend'><tr><td><span class='label label-success'>تماس‌های موفق</span></td><td><span class='label label-danger'>نا موفق</span></td></tr></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -57,7 +57,11 @@
 
     function initSidebarDrawer() {
         var overlay = jQuery('#voiz-sidebar-overlay');
-        jQuery(document).on('click', '.voiz-topbar-burger, .sidebar-mobile-menu a', function (e) {
+        /* Only the topbar burger is bound here. The legacy in-sidebar
+           burger (.sidebar-mobile-menu a) is bound by neon-custom.js,
+           which calls our overridden toggle_sidebar_menu() - binding it
+           here too would toggle the drawer open AND closed. */
+        jQuery(document).on('click', '.voiz-topbar-burger', function (e) {
             e.preventDefault();
             e.stopPropagation();
             jQuery('body').toggleClass('voiz-sidebar-open');

@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>VOIZ | VOIPIRAN</title>
+        <title>VOIZ | VOIPIRAN + AKZ</title>
         <!-- Voiz: pre-paint theme init (avoids flash of wrong theme) -->
         <script type='text/javascript'>
             (function () {

@@ -1,15 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html dir="rtl" lang="fa">
     <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type='text/javascript'>
+        (function () {
+            var t = null;
+            try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
+            if (t !== 'dark' && t !== 'light') { t = 'light'; }
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
         <title>Issabel</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/bootstrap.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-core.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-theme.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms.css">
+    <!-- Voiz: RTL bootstrap core (LTR neon stack removed - it broke RTL content) -->
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/bootstrap-rtl.min.css">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-core-rtl.css">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-theme-rtl.css">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms-rtl.css">
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/font-awesome-animation.min.css">
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/custom.css">
 
@@ -22,7 +32,9 @@
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}libs/js/sticky_note/sticky_note.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/table.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/rightbar.css" />
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/purple.css">
+    <!-- Voiz: internal utility engine + redesign layer (always last, replaces purple) -->
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tw.css">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css">
     <style>
     .neo-table-header-row { display:none !important; }
     </style>
