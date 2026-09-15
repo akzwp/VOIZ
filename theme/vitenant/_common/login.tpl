@@ -15,7 +15,7 @@
             (function () {
                 var t = null;
                 try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
-                if (t !== 'dark' && t !== 'light') { t = 'light'; }
+                if (t !== 'dark' && t !== 'light') { t = 'dark'; }
                 document.documentElement.setAttribute('data-theme', t);
             })();
         </script>
@@ -26,7 +26,8 @@
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/font-awesome-animation.min.css">
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/custom.css">
         <!-- Voiz: UI/UX layer (loaded last) -->
-        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css">
+        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
+        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-repair.css?v=6.0.0">
 
         <!--[if lt IE 9]><script src="{$WEBPATH}themes/{$THEMENAME}/js/ie8-responsive-file-warning.js"></script><![endif]-->
 

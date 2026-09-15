@@ -20,7 +20,7 @@
 
     function applyTheme(theme, persist) {
         if (theme !== 'dark' && theme !== 'light') {
-            theme = 'light';
+            theme = 'dark';
         }
         document.documentElement.setAttribute('data-theme', theme);
         if (persist !== false) {

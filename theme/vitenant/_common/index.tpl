@@ -11,7 +11,7 @@
         (function () {
             var t = null;
             try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
-            if (t !== 'dark' && t !== 'light') { t = 'light'; }
+            if (t !== 'dark' && t !== 'light') { t = 'dark'; }
             document.documentElement.setAttribute('data-theme', t);
         })();
     </script>
@@ -40,7 +40,7 @@
     <!-- voipiran msm \-->
     <!-- Voiz: UI/UX layer (loaded last). NOTE: css/purple.css is intentionally NOT loaded -
          the redesign layer (voiz-ui.css) fully replaces its look. -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
 
     {$HEADER_LIBS_JQUERY}
         <!--<script type='text/javascript' src="{$WEBCOMMON}js/base.js"></script>-->
@@ -52,6 +52,8 @@
 
         {$HEADER}
     {$HEADER_MODULES}
+    <!-- Final theme contract: loaded after module-provided styles. -->
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-repair.css?v=6.0.0">
     <!-- Voiz: Force Farsi calendar language if Calendar object exists -->
     <script type="text/javascript">
     (function () {

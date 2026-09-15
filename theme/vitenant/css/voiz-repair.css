@@ -1,0 +1,397 @@
+/*
+ * VOIZ UI v6 final layer
+ *
+ * This file deliberately stays small and is loaded after both the core theme
+ * and module assets.  It is the only place that owns cross-module layout and
+ * colour decisions, so old module styles cannot leak into the application.
+ */
+
+:root,
+[data-theme="dark"] {
+    --voiz-bg: #0b1220;
+    --voiz-bg-soft: #101a2d;
+    --voiz-surface: #121e31;
+    --voiz-surface-2: #18263c;
+    --voiz-surface-3: #243552;
+    --voiz-border: #2b3d59;
+    --voiz-border-strong: #3b5276;
+    --voiz-inset: #0d1728;
+    --voiz-text: #e7eef9;
+    --voiz-text-soft: #b6c5da;
+    --voiz-muted: #7f93af;
+    --voiz-heading: #f7fbff;
+    --voiz-primary: #38bdf8;
+    --voiz-primary-hover: #0ea5e9;
+    --voiz-primary-strong: #0284c7;
+    --voiz-primary-contrast: #06121f;
+    --voiz-primary-soft: rgba(56, 189, 248, .16);
+    --voiz-accent: #a78bfa;
+    --voiz-accent-soft: rgba(167, 139, 250, .15);
+    --voiz-accent-text: #d8ccff;
+    --voiz-success: #34d399;
+    --voiz-danger: #fb7185;
+    --voiz-warning: #fbbf24;
+    --voiz-info: #38bdf8;
+    --voiz-danger-soft: rgba(251, 113, 133, .14);
+    --voiz-success-soft: rgba(52, 211, 153, .14);
+    --voiz-warning-soft: rgba(251, 191, 36, .15);
+    --voiz-sidebar-bg: #0d1728;
+    --voiz-sidebar-text: #aebed3;
+    --voiz-sidebar-text-act: #ffffff;
+    --voiz-sidebar-item-hover: rgba(56, 189, 248, .08);
+    --voiz-sidebar-active-bg: rgba(56, 189, 248, .15);
+    --voiz-sidebar-sub-bg: #101d30;
+    --voiz-sidebar-sub-text: #91a6c1;
+    --voiz-sidebar-border: #20324d;
+    --voiz-sidebar-logo-bg: #0b1424;
+    --voiz-sidebar-collapse: #aebed3;
+    --voiz-topbar-bg: #0d1728;
+    --voiz-topbar-border: #20324d;
+    --voiz-topbar-icon-bg: #17243a;
+    --voiz-topbar-icon: #c6d4e6;
+    --voiz-topbar-icon-hover: #06121f;
+    --voiz-topbar-icon-hover-bg: #38bdf8;
+    --voiz-card-shadow: 0 10px 30px rgba(2, 8, 23, .24);
+    --voiz-popover-shadow: 0 18px 48px rgba(2, 8, 23, .42);
+    --voiz-input-bg: #0f1b2e;
+    --voiz-input-focused: #38bdf8;
+}
+
+[data-theme="light"] {
+    --voiz-bg: #eef4fb;
+    --voiz-bg-soft: #f7faff;
+    --voiz-surface: #ffffff;
+    --voiz-surface-2: #f5f8fd;
+    --voiz-surface-3: #e6edf7;
+    --voiz-border: #d4dfed;
+    --voiz-border-strong: #b7c8de;
+    --voiz-inset: #edf3fa;
+    --voiz-text: #1b2a41;
+    --voiz-text-soft: #52657d;
+    --voiz-muted: #7a8da5;
+    --voiz-heading: #10233d;
+    --voiz-primary: #0284c7;
+    --voiz-primary-hover: #0369a1;
+    --voiz-primary-strong: #075985;
+    --voiz-primary-contrast: #ffffff;
+    --voiz-primary-soft: rgba(2, 132, 199, .11);
+    --voiz-accent: #6d4ee6;
+    --voiz-accent-soft: rgba(109, 78, 230, .10);
+    --voiz-accent-text: #4c32b5;
+    --voiz-success: #059669;
+    --voiz-danger: #e11d48;
+    --voiz-warning: #b45309;
+    --voiz-info: #0284c7;
+    --voiz-danger-soft: rgba(225, 29, 72, .10);
+    --voiz-success-soft: rgba(5, 150, 105, .10);
+    --voiz-warning-soft: rgba(180, 83, 9, .12);
+    --voiz-sidebar-bg: #ffffff;
+    --voiz-sidebar-text: #52657d;
+    --voiz-sidebar-text-act: #10233d;
+    --voiz-sidebar-item-hover: rgba(2, 132, 199, .07);
+    --voiz-sidebar-active-bg: rgba(2, 132, 199, .10);
+    --voiz-sidebar-sub-bg: #f6f9fd;
+    --voiz-sidebar-sub-text: #5d718c;
+    --voiz-sidebar-border: #e1e9f3;
+    --voiz-sidebar-logo-bg: #ffffff;
+    --voiz-sidebar-collapse: #52657d;
+    --voiz-topbar-bg: #ffffff;
+    --voiz-topbar-border: #dce6f1;
+    --voiz-topbar-icon-bg: #edf3f9;
+    --voiz-topbar-icon: #425772;
+    --voiz-topbar-icon-hover: #ffffff;
+    --voiz-topbar-icon-hover-bg: #0284c7;
+    --voiz-card-shadow: 0 8px 24px rgba(25, 50, 85, .08);
+    --voiz-popover-shadow: 0 16px 40px rgba(25, 50, 85, .16);
+    --voiz-input-bg: #ffffff;
+    --voiz-input-focused: #0284c7;
+}
+
+html, body.page-body, body.mainBody {
+    background: var(--voiz-bg) !important;
+    color: var(--voiz-text) !important;
+}
+
+body.page-body .page-container .main-content {
+    min-width: 0 !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 24px 28px 36px !important;
+    background: var(--voiz-bg) !important;
+}
+
+.page-container .sidebar-menu,
+.page-container .sidebar-menu .logo-env,
+.page-container .sidebar-menu #main-menu,
+.page-container .sidebar-menu #main-menu > li > ul {
+    background-image: none !important;
+}
+
+.page-container .sidebar-menu {
+    background-color: var(--voiz-sidebar-bg) !important;
+    border-left-color: var(--voiz-sidebar-border) !important;
+}
+
+body .page-container .sidebar-menu #main-menu > li.active > a,
+body .page-container .sidebar-menu #main-menu > li.opened.active > a {
+    color: var(--voiz-primary) !important;
+    background: var(--voiz-sidebar-active-bg) !important;
+}
+
+body .page-container .sidebar-menu #main-menu > li.active > a::before {
+    background: var(--voiz-primary) !important;
+}
+
+/* Main module chrome ----------------------------------------------------- */
+.neo-module-content,
+.neo-module-content-frame,
+.frameModule,
+.panel,
+.panel-default,
+.well,
+.tabFormTable,
+div.neo-applet {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+    background-image: none !important;
+}
+
+.neo-module-content,
+.neo-module-content-frame,
+.frameModule {
+    border-radius: 14px !important;
+}
+
+input, select, textarea, .form-control {
+    background: var(--voiz-input-bg) !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+    box-shadow: none !important;
+}
+
+input:focus, select:focus, textarea:focus, .form-control:focus {
+    border-color: var(--voiz-primary) !important;
+    box-shadow: 0 0 0 3px var(--voiz-primary-soft) !important;
+}
+
+.btn-primary, .button, input[type="submit"], input[type="button"], button.submit,
+.neo-table-toolbar-button {
+    background: var(--voiz-primary) !important;
+    border-color: var(--voiz-primary) !important;
+    color: var(--voiz-primary-contrast) !important;
+    text-shadow: none !important;
+}
+
+.btn-primary:hover, .button:hover, input[type="submit"]:hover, input[type="button"]:hover,
+button.submit:hover, .neo-table-toolbar-button:hover {
+    background: var(--voiz-primary-hover) !important;
+    border-color: var(--voiz-primary-hover) !important;
+}
+
+/* Tables / reports ------------------------------------------------------- */
+.neo-table-header-row, .neo-table-footer-row, .neo-table-filter-controls,
+.neo-table-ref-table, #neo-table-header-filterrow, .neo-filter-control,
+.neo-table-button-filter-left, .neo-table-button-filter-right,
+table.issabel-standard-table > thead > tr > th,
+table.issabel-standard-table > thead > tr > td,
+table.issabel-standard-table > tfoot > tr > th,
+table.issabel-standard-table > tfoot > tr > td {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+    background-image: none !important;
+}
+
+table.issabel-standard-table, table.issabel-standard-table > tbody,
+table.issabel-standard-table > tbody > tr,
+table.issabel-standard-table > tbody > tr > td,
+table.table_data, table.table_data > tbody > tr > td,
+.neo-table-ref-table td {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text-soft) !important;
+    border-color: var(--voiz-border) !important;
+}
+
+table.issabel-standard-table > tbody > tr:hover > td,
+table.table_data > tbody > tr:hover > td {
+    background: var(--voiz-surface-2) !important;
+}
+
+.neo-table-header-row, .neo-table-footer-row {
+    display: flex !important;
+    align-items: center;
+    min-height: 52px;
+    height: auto !important;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 8px 12px !important;
+}
+
+.neo-table-header-row-filter, .neo-table-header-row-navigation {
+    float: none !important;
+    height: auto !important;
+    padding: 0 !important;
+}
+
+#neo-table-header-filterrow {
+    position: static !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+/* Dashboard -------------------------------------------------------------- */
+#applet_grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+    gap: 18px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+#applet_grid .appletcolumn {
+    display: contents !important;
+}
+
+#applet_grid .appletwindow {
+    display: flex !important;
+    flex-direction: column !important;
+    float: none !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 260px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: var(--voiz-surface) !important;
+    border: 1px solid var(--voiz-border) !important;
+    border-radius: 14px !important;
+    box-shadow: var(--voiz-card-shadow) !important;
+}
+
+#applet_grid .appletwindow > .appletwindow_topbar {
+    position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex: 0 0 auto !important;
+    min-height: 48px !important;
+    height: auto !important;
+    padding: 10px 14px !important;
+    background: var(--voiz-surface-2) !important;
+    border-bottom: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-heading) !important;
+}
+
+#applet_grid .appletwindow > .appletwindow_topbar > .appletwindow_title,
+#applet_grid .appletwindow > .appletwindow_topbar > .appletwindow_widgets {
+    position: static !important;
+    float: none !important;
+    padding: 0 !important;
+    color: inherit !important;
+}
+
+#applet_grid .appletwindow_content {
+    position: static !important;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 14px !important;
+    overflow: auto !important;
+}
+
+#applet_grid .appletwindow_fullcontent {
+    max-height: none !important;
+    overflow: visible !important;
+    color: var(--voiz-text) !important;
+}
+
+#applet_grid .appletwindow_fullcontent table,
+#applet_grid .appletwindow_fullcontent table td,
+#applet_grid .appletwindow_fullcontent table th,
+#applet_grid .appletwindow_fullcontent .gadget,
+#applet_grid .appletwindow_fullcontent .gadget td {
+    background: transparent !important;
+    color: var(--voiz-text-soft) !important;
+    border-color: var(--voiz-border) !important;
+}
+
+#applet_grid .neo-applet-hd-innerbox,
+#applet_grid .neo-applet-hd-innerbox-top,
+#applet_grid .neo-applet-hd-innerbox-bottom {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 10px 0 0 !important;
+    padding: 10px !important;
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-text-soft) !important;
+    border-color: var(--voiz-border) !important;
+    border-radius: 10px !important;
+}
+
+#applet_grid .tabFormTable, #applet_grid .services {
+    width: 100% !important;
+    float: none !important;
+    color: var(--voiz-text-soft) !important;
+}
+
+#applet_grid .status {
+    float: none !important;
+    display: inline-flex !important;
+    width: auto !important;
+    padding: 4px 10px !important;
+    border-radius: 7px !important;
+}
+
+/* FullCalendar, including the calendar module's inline stylesheet. ------- */
+.calendar-env, .calendar-env .calendar-body,
+.calendar-env .calendar-body .fc-content,
+.calendar-env .calendar-body .fc-view {
+    background: var(--voiz-surface) !important;
+    color: var(--voiz-text) !important;
+}
+
+.calendar-env .calendar-body .fc-header h2,
+.calendar-env .calendar-body .fc-header h3,
+.calendar-env .calendar-body .fc-header .fc-button,
+.calendar-env .calendar-body .fc-content .fc-view table thead tr th,
+.calendar-env .calendar-body .fc-content .fc-view table tbody tr td.fc-day {
+    background: var(--voiz-surface-2) !important;
+    color: var(--voiz-text) !important;
+    border-color: var(--voiz-border) !important;
+    text-shadow: none !important;
+}
+
+.calendar-env .calendar-body .fc-header .fc-button:hover,
+.calendar-env .calendar-body .fc-header .fc-button.fc-state-active,
+.calendar-env .calendar-body .fc-content .fc-view table tbody tr td.fc-day.fc-today {
+    background: var(--voiz-primary-soft) !important;
+    color: var(--voiz-primary) !important;
+    border-color: var(--voiz-primary) !important;
+}
+
+.calendar-env .calendar-body .fc-content .fc-view .fc-event {
+    background: var(--voiz-primary) !important;
+    border-color: var(--voiz-primary) !important;
+    color: var(--voiz-primary-contrast) !important;
+    border-radius: 6px !important;
+}
+
+/* Prevent old fixed widths from causing horizontal clipping. */
+img, canvas, svg { max-width: 100%; }
+
+@media (max-width: 991px) {
+    body.page-body .page-container .main-content { padding: 16px !important; }
+    #applet_grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+    #applet_grid .appletwindow { min-height: 200px !important; }
+    .neo-module-content, .neo-module-content-frame { overflow-x: auto !important; }
+    table.issabel-standard-table, table.table_data { min-width: 680px; }
+}
+
+@media (max-width: 480px) {
+    body.page-body .page-container .main-content { padding: 12px !important; }
+    #applet_grid .appletwindow_content { padding: 12px !important; }
+    .neo-table-header-row, .neo-table-footer-row { align-items: stretch; }
+}

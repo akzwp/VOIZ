@@ -7,7 +7,7 @@
         (function () {
             var t = null;
             try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
-            if (t !== 'dark' && t !== 'light') { t = 'light'; }
+            if (t !== 'dark' && t !== 'light') { t = 'dark'; }
             document.documentElement.setAttribute('data-theme', t);
         })();
     </script>
@@ -33,7 +33,7 @@
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/rightbar.css" />
     <!-- Voiz: internal utility engine + redesign layer (always last, replaces purple) -->
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tw.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
     <style>
     .neo-table-header-row { display:none !important; }
     </style>
@@ -47,6 +47,7 @@
 
         {$HEADER}
     {$HEADER_MODULES}
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-repair.css?v=6.0.0">
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body" {$BODYPARAMS}>
 

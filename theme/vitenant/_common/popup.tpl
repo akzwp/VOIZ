@@ -33,7 +33,7 @@
     (function () {
         var t = null;
         try { t = localStorage.getItem('voiz-theme'); } catch (e) { }
-        if (t !== 'dark' && t !== 'light') { t = 'light'; }
+        if (t !== 'dark' && t !== 'light') { t = 'dark'; }
         document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
@@ -41,7 +41,8 @@
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/help.css">
   <!-- Voiz: internal utility engine + redesign layer (always last) -->
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tw.css">
-  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css">
+  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
+  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-repair.css?v=6.0.0">
   <script src="{$WEBCOMMON}js/base.js"></script>
   <script src="{$WEBCOMMON}js/iframe.js"></script>
 </head>
