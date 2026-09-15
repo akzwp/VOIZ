@@ -143,7 +143,7 @@
 <input type="hidden" id="lbl_no_description" value="{$LBL_NO_STICKY}" />
 <input type="hidden" id="version" value="{$VERSION}" />
 <!-- inicio del menú tipo acordeon-->
-<div class="sidebar-menu">
+<div class="sidebar-menu tw-flex tw-flex-col">
     <header class="logo-env">
         <!-- logo -->
         <div class="logo">
@@ -218,9 +218,9 @@
 </div>
 <!-- fin del menú tipo acordeon-->
 <!-- inicio del head principal-->
-<div class="main-content">
+<div class="main-content tw-min-w-0">
     <!-- Voiz topbar: logo / search / actions / user / theme -->
-    <div class="voiz-topbar">
+    <div class="voiz-topbar tw-flex tw-items-center">
         <a href="#" class="voiz-topbar-burger"><i class="fa fa-bars"></i></a>
 
         <div class="voiz-topbar-logo">
@@ -240,7 +240,7 @@
 
         <span class="voiz-topbar-sep"></span>
 
-        <ul class="voiz-topbar-actions list-inline links-list neo-topbar-notification">
+        <ul class="voiz-topbar-actions list-inline links-list neo-topbar-notification tw-flex tw-items-center">
             <li id="header_notification_bar" class="dropdown top-bar-downloads">
                 <a data-toggle="dropdown" class="" href="#" title="Downloads">
                     <i class="fa fa-download"></i>
@@ -275,7 +275,7 @@
                     <li class="caret"></li>
                     <li><a href="#" class="register_link">{$Registered}</a></li>
                     <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
-                    <li><a href="http://www.voipiran.io" target="_blank" rel="noopener"><i class="fa fa-external-link"></i>VOIPIRAN | ویپ ایران</a></li>
+                    <li><a href="http://www.voipiran.io" target="_blank" rel="noopener"><i class="fa fa-external-link"></i>VOIPIRAN | ویپ ایران + AKZ</a></li>
                     <li><a href="https://akzwp.com" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ | akzwp.com</a></li>
                     <li><a href="https://akzwp.ir" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ | akzwp.ir</a></li>
                     <li><a href="#" id="dialogaboutissabel"><i class="fa fa-info-circle"></i>{$ABOUT_ISSABEL2}</a></li>

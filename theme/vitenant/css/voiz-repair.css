@@ -8,103 +8,103 @@
 
 :root,
 [data-theme="dark"] {
-    --voiz-bg: #0b1220;
-    --voiz-bg-soft: #101a2d;
-    --voiz-surface: #121e31;
-    --voiz-surface-2: #18263c;
-    --voiz-surface-3: #243552;
-    --voiz-border: #2b3d59;
-    --voiz-border-strong: #3b5276;
-    --voiz-inset: #0d1728;
-    --voiz-text: #e7eef9;
-    --voiz-text-soft: #b6c5da;
-    --voiz-muted: #7f93af;
-    --voiz-heading: #f7fbff;
-    --voiz-primary: #38bdf8;
-    --voiz-primary-hover: #0ea5e9;
-    --voiz-primary-strong: #0284c7;
-    --voiz-primary-contrast: #06121f;
-    --voiz-primary-soft: rgba(56, 189, 248, .16);
-    --voiz-accent: #a78bfa;
-    --voiz-accent-soft: rgba(167, 139, 250, .15);
-    --voiz-accent-text: #d8ccff;
+    --voiz-bg: #101216;
+    --voiz-bg-soft: #171a1f;
+    --voiz-surface: #1c2026;
+    --voiz-surface-2: #22272e;
+    --voiz-surface-3: #2a3038;
+    --voiz-border: #2d333c;
+    --voiz-border-strong: #3c4450;
+    --voiz-inset: #15181d;
+    --voiz-text: #e6e8eb;
+    --voiz-text-soft: #a8b0bb;
+    --voiz-muted: #6d7683;
+    --voiz-heading: #f2f4f6;
+    --voiz-primary: #ea580c;
+    --voiz-primary-hover: #f97316;
+    --voiz-primary-strong: #c2410c;
+    --voiz-primary-contrast: #ffffff;
+    --voiz-primary-soft: rgba(234, 88, 12, .16);
+    --voiz-accent: #4a84c4;
+    --voiz-accent-soft: rgba(74, 132, 196, .15);
+    --voiz-accent-text: #9fc3ea;
     --voiz-success: #34d399;
     --voiz-danger: #fb7185;
     --voiz-warning: #fbbf24;
-    --voiz-info: #38bdf8;
+    --voiz-info: #22d3ee;
     --voiz-danger-soft: rgba(251, 113, 133, .14);
     --voiz-success-soft: rgba(52, 211, 153, .14);
     --voiz-warning-soft: rgba(251, 191, 36, .15);
-    --voiz-sidebar-bg: #0d1728;
-    --voiz-sidebar-text: #aebed3;
+    --voiz-sidebar-bg: #15181d;
+    --voiz-sidebar-text: #9aa3af;
     --voiz-sidebar-text-act: #ffffff;
-    --voiz-sidebar-item-hover: rgba(56, 189, 248, .08);
-    --voiz-sidebar-active-bg: rgba(56, 189, 248, .15);
-    --voiz-sidebar-sub-bg: #101d30;
-    --voiz-sidebar-sub-text: #91a6c1;
-    --voiz-sidebar-border: #20324d;
-    --voiz-sidebar-logo-bg: #0b1424;
-    --voiz-sidebar-collapse: #aebed3;
-    --voiz-topbar-bg: #0d1728;
-    --voiz-topbar-border: #20324d;
-    --voiz-topbar-icon-bg: #17243a;
-    --voiz-topbar-icon: #c6d4e6;
-    --voiz-topbar-icon-hover: #06121f;
-    --voiz-topbar-icon-hover-bg: #38bdf8;
-    --voiz-card-shadow: 0 10px 30px rgba(2, 8, 23, .24);
-    --voiz-popover-shadow: 0 18px 48px rgba(2, 8, 23, .42);
-    --voiz-input-bg: #0f1b2e;
-    --voiz-input-focused: #38bdf8;
+    --voiz-sidebar-item-hover: rgba(255, 255, 255, .05);
+    --voiz-sidebar-active-bg: rgba(234, 88, 12, .16);
+    --voiz-sidebar-sub-bg: #1b1f25;
+    --voiz-sidebar-sub-text: #8f99a6;
+    --voiz-sidebar-border: #23272e;
+    --voiz-sidebar-logo-bg: #12151a;
+    --voiz-sidebar-collapse: #9aa3af;
+    --voiz-topbar-bg: #171a1f;
+    --voiz-topbar-border: #242930;
+    --voiz-topbar-icon-bg: #23282f;
+    --voiz-topbar-icon: #c3cad3;
+    --voiz-topbar-icon-hover: #ffffff;
+    --voiz-topbar-icon-hover-bg: #ea580c;
+    --voiz-card-shadow: 0 10px 30px rgba(0, 0, 0, .28);
+    --voiz-popover-shadow: 0 18px 48px rgba(0, 0, 0, .5);
+    --voiz-input-bg: #101318;
+    --voiz-input-focused: #ea580c;
 }
 
 [data-theme="light"] {
-    --voiz-bg: #eef4fb;
-    --voiz-bg-soft: #f7faff;
+    --voiz-bg: #eceef1;
+    --voiz-bg-soft: #f5f6f8;
     --voiz-surface: #ffffff;
-    --voiz-surface-2: #f5f8fd;
-    --voiz-surface-3: #e6edf7;
-    --voiz-border: #d4dfed;
-    --voiz-border-strong: #b7c8de;
-    --voiz-inset: #edf3fa;
-    --voiz-text: #1b2a41;
-    --voiz-text-soft: #52657d;
-    --voiz-muted: #7a8da5;
-    --voiz-heading: #10233d;
-    --voiz-primary: #0284c7;
-    --voiz-primary-hover: #0369a1;
-    --voiz-primary-strong: #075985;
+    --voiz-surface-2: #f3f4f7;
+    --voiz-surface-3: #e9ebef;
+    --voiz-border: #d9dce2;
+    --voiz-border-strong: #c3c8d0;
+    --voiz-inset: #eef0f3;
+    --voiz-text: #22262c;
+    --voiz-text-soft: #565e69;
+    --voiz-muted: #878e9a;
+    --voiz-heading: #16191d;
+    --voiz-primary: #c2410c;
+    --voiz-primary-hover: #ea580c;
+    --voiz-primary-strong: #9a3412;
     --voiz-primary-contrast: #ffffff;
-    --voiz-primary-soft: rgba(2, 132, 199, .11);
-    --voiz-accent: #6d4ee6;
-    --voiz-accent-soft: rgba(109, 78, 230, .10);
-    --voiz-accent-text: #4c32b5;
+    --voiz-primary-soft: rgba(194, 65, 12, .10);
+    --voiz-accent: #1e3a5f;
+    --voiz-accent-soft: rgba(30, 58, 95, .09);
+    --voiz-accent-text: #16324f;
     --voiz-success: #059669;
     --voiz-danger: #e11d48;
     --voiz-warning: #b45309;
-    --voiz-info: #0284c7;
+    --voiz-info: #0e7490;
     --voiz-danger-soft: rgba(225, 29, 72, .10);
     --voiz-success-soft: rgba(5, 150, 105, .10);
     --voiz-warning-soft: rgba(180, 83, 9, .12);
     --voiz-sidebar-bg: #ffffff;
-    --voiz-sidebar-text: #52657d;
-    --voiz-sidebar-text-act: #10233d;
-    --voiz-sidebar-item-hover: rgba(2, 132, 199, .07);
-    --voiz-sidebar-active-bg: rgba(2, 132, 199, .10);
-    --voiz-sidebar-sub-bg: #f6f9fd;
-    --voiz-sidebar-sub-text: #5d718c;
-    --voiz-sidebar-border: #e1e9f3;
+    --voiz-sidebar-text: #4b5563;
+    --voiz-sidebar-text-act: #16191d;
+    --voiz-sidebar-item-hover: rgba(194, 65, 12, .07);
+    --voiz-sidebar-active-bg: rgba(194, 65, 12, .10);
+    --voiz-sidebar-sub-bg: #f6f7f9;
+    --voiz-sidebar-sub-text: #59616d;
+    --voiz-sidebar-border: #e8eaee;
     --voiz-sidebar-logo-bg: #ffffff;
-    --voiz-sidebar-collapse: #52657d;
+    --voiz-sidebar-collapse: #6b7280;
     --voiz-topbar-bg: #ffffff;
-    --voiz-topbar-border: #dce6f1;
-    --voiz-topbar-icon-bg: #edf3f9;
-    --voiz-topbar-icon: #425772;
+    --voiz-topbar-border: #e6e8ec;
+    --voiz-topbar-icon-bg: #f0f1f4;
+    --voiz-topbar-icon: #454c55;
     --voiz-topbar-icon-hover: #ffffff;
-    --voiz-topbar-icon-hover-bg: #0284c7;
-    --voiz-card-shadow: 0 8px 24px rgba(25, 50, 85, .08);
-    --voiz-popover-shadow: 0 16px 40px rgba(25, 50, 85, .16);
+    --voiz-topbar-icon-hover-bg: #c2410c;
+    --voiz-card-shadow: 0 8px 24px rgba(16, 24, 40, .08);
+    --voiz-popover-shadow: 0 16px 40px rgba(16, 24, 40, .16);
     --voiz-input-bg: #ffffff;
-    --voiz-input-focused: #0284c7;
+    --voiz-input-focused: #c2410c;
 }
 
 html, body.page-body, body.mainBody {
@@ -239,6 +239,9 @@ table.table_data > tbody > tr:hover > td {
     width: auto !important;
     margin: 0 !important;
 }
+
+/* The report template has a separate compact toolbar; do not duplicate it. */
+.voiz-cdr-page .neo-table-header-row { display: none !important; }
 
 /* Dashboard -------------------------------------------------------------- */
 #applet_grid {
@@ -394,4 +397,210 @@ img, canvas, svg { max-width: 100%; }
     body.page-body .page-container .main-content { padding: 12px !important; }
     #applet_grid .appletwindow_content { padding: 12px !important; }
     .neo-table-header-row, .neo-table-footer-row { align-items: stretch; }
+}
+
+/* Final layout contract -------------------------------------------------- */
+/* The legacy theme declared two pseudo-element arrows for each menu item. */
+body .page-container .sidebar-menu #main-menu li.has-sub > a::before {
+    content: none !important;
+    display: none !important;
+}
+
+body .page-container .sidebar-menu #main-menu > li.has-sub > a::after {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-right: auto !important;
+    padding: 0 !important;
+    border-radius: 5px;
+}
+
+body .page-container .sidebar-menu #main-menu > li > ul {
+    margin: 4px 18px 8px 10px !important;
+    padding: 3px 0 !important;
+    border-right: 1px solid var(--voiz-border) !important;
+}
+
+body .page-container .sidebar-menu #main-menu > li > ul > li > a {
+    min-height: 34px !important;
+    padding: 7px 12px !important;
+}
+
+body .page-container .sidebar-menu #main-menu a,
+body .page-container .sidebar-menu #main-menu a > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Keep icons optically centered inside their clickable parents. */
+.voiz-topbar-actions > li > a > i,
+.voiz-topbar-burger > i,
+.voiz-theme-toggle > i,
+.voiz-topbar-user > a > i,
+.page-container .sidebar-menu #main-menu > li > a > i {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    line-height: 1 !important;
+    vertical-align: middle;
+    transform: none !important;
+}
+
+.voiz-topbar-actions > li,
+.voiz-topbar-actions > li > a,
+.voiz-topbar-burger,
+.voiz-theme-toggle {
+    float: none !important;
+}
+
+.voiz-topbar-actions > li > a,
+.voiz-topbar-burger,
+.voiz-theme-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Forms use a fluid rhythm.  Native legacy tables retain their semantics. */
+.neo-module-content form,
+.neo-module-content .form-horizontal,
+.neo-module-content .filterForm {
+    max-width: 100%;
+}
+
+table.tabForm {
+    width: min(100%, 1040px) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 10px !important;
+}
+
+table.tabForm td {
+    vertical-align: middle !important;
+    padding: 4px 10px !important;
+}
+
+table.tabForm input:not([type="checkbox"]):not([type="radio"]),
+table.tabForm select,
+table.tabForm textarea,
+.neo-module-content input[type="text"],
+.neo-module-content input[type="password"],
+.neo-module-content input[type="email"],
+.neo-module-content input[type="number"],
+.neo-module-content input[type="tel"],
+.neo-module-content select,
+.neo-module-content textarea {
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    min-height: 38px;
+}
+
+table.tabForm textarea,
+.neo-module-content textarea { min-height: 96px; resize: vertical; }
+
+.fila_botonera,
+.neo-module-content .button-bar,
+.neo-module-content .form-actions {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.fila_botonera > *,
+.neo-module-content .button-bar > *,
+.neo-module-content .form-actions > * { margin: 0 !important; }
+
+/* Login gets its own readable, high-contrast surface. */
+body.login-page {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 24px 16px;
+    background: var(--voiz-bg) !important;
+}
+
+body.login-page .login-wrapper {
+    width: min(100%, 420px) !important;
+    max-width: 420px !important;
+    margin: 0 auto !important;
+    padding: 28px !important;
+    background: var(--voiz-surface) !important;
+    border: 1px solid var(--voiz-border) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--voiz-popover-shadow) !important;
+}
+
+body.login-page .login-wrapper .logovoiz { margin: 0 auto 22px !important; }
+body.login-page #login { width: 100% !important; }
+body.login-page #login .form-control,
+body.login-page #login input[type="text"],
+body.login-page #login input[type="password"] {
+    width: 100% !important;
+    height: 44px !important;
+    padding: 0 13px !important;
+    color: var(--voiz-text) !important;
+    background: var(--voiz-input-bg) !important;
+    border: 1px solid var(--voiz-border) !important;
+}
+
+body.login-page #login input[type="submit"] {
+    width: 100% !important;
+    height: 44px !important;
+    margin: 8px 0 0 !important;
+    font-weight: 700 !important;
+}
+
+body.login-page .voiz-login-label,
+body.login-page .fotter,
+body.login-page .copyr,
+body.login-page .copyr p { color: var(--voiz-text-soft) !important; }
+
+/* Modern, viewport-safe overlays. */
+.neo-modal-issabel-popup-box,
+.modal-dialog,
+.ui-dialog {
+    max-width: calc(100vw - 32px) !important;
+    max-height: calc(100dvh - 32px) !important;
+    overflow: auto !important;
+    background: var(--voiz-surface) !important;
+    border: 1px solid var(--voiz-border) !important;
+    color: var(--voiz-text) !important;
+    box-shadow: var(--voiz-popover-shadow) !important;
+}
+
+.neo-modal-issabel-popup-box { inset: 50% auto auto 50% !important; transform: translate(-50%, -50%); }
+.modal-header, .ui-dialog-titlebar, .neo-modal-issabel-popup-title {
+    background: var(--voiz-surface-2) !important;
+    border-color: var(--voiz-border) !important;
+    color: var(--voiz-heading) !important;
+}
+
+@media (max-width: 991px) {
+    body .page-container .sidebar-menu #main-menu > li > a { min-height: 44px !important; }
+    .voiz-topbar { min-height: 58px; height: auto !important; padding: 9px 14px !important; }
+    .voiz-topbar-actions { gap: 4px !important; }
+    .voiz-topbar-actions > li > a { width: 34px !important; height: 34px !important; }
+    table.tabForm td { padding: 4px 6px !important; }
+}
+
+@media (max-width: 767px) {
+    .voiz-topbar-logo kbd,
+    .voiz-topbar-sep,
+    .voiz-user-name,
+    .voiz-user-caret { display: none !important; }
+    .voiz-topbar { gap: 8px !important; }
+    .voiz-topbar-search { order: 5; flex: 1 0 100%; max-width: none !important; }
+    .voiz-topbar-actions { order: 2; margin-right: auto !important; }
+    .voiz-topbar-user { order: 3; }
+    table.tabForm, table.tabForm tbody, table.tabForm tr, table.tabForm td { display: block !important; width: 100% !important; }
+    table.tabForm { border-spacing: 0 !important; }
+    table.tabForm td { padding: 5px 0 !important; }
+    .fila_botonera > *, .neo-module-content .button-bar > *, .neo-module-content .form-actions > * { flex: 1 1 100%; }
+    .neo-modal-issabel-popup-box { width: calc(100vw - 24px) !important; padding: 18px !important; }
+    body.login-page { padding: 12px; }
+    body.login-page .login-wrapper { padding: 22px 18px !important; }
 }

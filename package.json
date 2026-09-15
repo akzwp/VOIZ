@@ -4,7 +4,7 @@
   "private": true,
   "description": "Local Tailwind build for the VOIZ presentation layer",
   "scripts": {
-    "build:css": "tailwindcss -c tailwind.config.cjs -i ui/voiz-repair.css -o theme/vitenant/css/voiz-repair.css --minify",
+    "build:css": "tailwindcss -c tailwind.config.cjs -i ui/voiz-repair.css -o theme/vitenant/css/voiz-tailwind.css --minify",
     "check:ui": "node tools/check-ui.cjs",
     "preview:ui": "node tools/preview-ui.cjs"
   },

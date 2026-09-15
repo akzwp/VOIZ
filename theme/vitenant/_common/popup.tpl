@@ -42,7 +42,7 @@
   <!-- Voiz: internal utility engine + redesign layer (always last) -->
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tw.css">
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
-  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-repair.css?v=6.0.0">
+  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=6.1.0">
   <script src="{$WEBCOMMON}js/base.js"></script>
   <script src="{$WEBCOMMON}js/iframe.js"></script>
 </head>

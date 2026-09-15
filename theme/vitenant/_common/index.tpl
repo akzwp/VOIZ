@@ -53,7 +53,7 @@
         {$HEADER}
     {$HEADER_MODULES}
     <!-- Final theme contract: loaded after module-provided styles. -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-repair.css?v=6.0.0">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=6.1.0">
     <!-- Voiz: Force Farsi calendar language if Calendar object exists -->
     <script type="text/javascript">
     (function () {
@@ -113,7 +113,7 @@
         <footer class="main">
             <span class="voiz-footer-brands">
                 <!-- VOIPIRAN -->
-                <a class="voiz-footer-brand" href="http://www.voipiran.io" target='_blank' rel="noopener">VOIPIRAN | ویپ ایران</a>
+                <a class="voiz-footer-brand" href="http://www.voipiran.io" target='_blank' rel="noopener">VOIPIRAN | ویپ ایران + AKZ</a>
                 <span class="sep">+</span>
                 <!-- AKZ -->
                 <a class="voiz-footer-brand" href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a>

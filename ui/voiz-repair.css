@@ -1,0 +1,16 @@
+/* Internal Tailwind entry point.  No CDN is used anywhere in the theme. */
+@import "../theme/vitenant/css/voiz-repair.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .tw-voiz-control {
+    @apply tw-w-full tw-rounded-lg tw-border tw-px-3 tw-py-2 tw-text-sm;
+  }
+
+  .tw-voiz-stack {
+    @apply tw-flex tw-min-w-0 tw-flex-col tw-gap-3;
+  }
+}

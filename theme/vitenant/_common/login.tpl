@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/custom.css">
         <!-- Voiz: UI/UX layer (loaded last) -->
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
-        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-repair.css?v=6.0.0">
+        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=6.1.0">
 
         <!--[if lt IE 9]><script src="{$WEBPATH}themes/{$THEMENAME}/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -86,7 +86,7 @@
             <div class="fotter">
                 <div class="copyr">
                     <p>
-                        Copyrights © 2017-2026 All Rights Reserved by <a href="http://www.voipiran.io" target="_blank" rel="noopener">VOIPIRAN | ویپ ایران</a>
+                        Copyrights © 2017-2026 All Rights Reserved by <a href="http://www.voipiran.io" target="_blank" rel="noopener">VOIPIRAN | ویپ ایران + AKZ</a>
                     </p>
                     <p class="voiz-login-brands">
                         Powered by <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a><span class="sep">|</span><a href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>
