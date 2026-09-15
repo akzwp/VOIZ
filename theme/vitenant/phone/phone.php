@@ -5,7 +5,7 @@ if(!$extension)
     exit;
 $password = getAsteriskExtensionPassword($extension);
 ?>  
-<html>
+<html dir="rtl" lang="fa">
 
 <head>
     <meta charset="UTF-8" />
@@ -19,9 +19,13 @@ $password = getAsteriskExtensionPassword($extension);
     <script defer src="js/tracer.js"></script>
     <script defer src="config.js"></script>
     <script defer src="phone.js"></script>
+    <link rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.0.0">
+    <script>(function(){var t='dark';try{t=localStorage.getItem('voiz-theme')==='light'?'light':'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);})();</script>
+    <script defer src="/themes/vitenant/js/voiz-ui.js?v=7.0.0"></script>
 </head>
 
-<body onload="documentIsReady()" style="background-color:#373e4a;">
+<body class="voiz-phone" onload="documentIsReady()">
+    <header class="voiz-phone-heading"><h1>تلفن تحت وب</h1><button type="button" class="voiz-theme-toggle" aria-label="تغییر تم روشن و تیره">◐</button></header>
     
     <script>
         const serverName = "<?php echo $_SERVER['SERVER_NAME']; ?>";
@@ -72,7 +76,7 @@ $password = getAsteriskExtensionPassword($extension);
                     <table>
                         <tr>
                             <td>
-                                <input class="form-control form-control-sm" type="text" name="call_to">
+                                <input class="form-control form-control-sm" type="text" name="call_to" aria-label="شماره مقصد" inputmode="tel">
                             </td>
                             <td>
                                 <input class="btn btn-sm btn-primary" id="audio_call_btn" type="button" value="شروع تماس">
@@ -324,6 +328,7 @@ $password = getAsteriskExtensionPassword($extension);
         <video id="local_video" autoplay playsinline></video>
         <video id="remote_video" autoplay playsinline></video>
     </div>
+    <footer class="main voiz-footer-brands">VOIZ · VOIPIRAN + طراحی رابط کاربری © <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ | akzwp.com</a> · <a href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a></footer>
 </body>
 
 </html>

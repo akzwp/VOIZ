@@ -3,7 +3,7 @@
     'use strict';
     var doc = document, root = doc.documentElement, themeKey = 'voiz-theme';
     var menu, sidebar, drawerOpener, modalOpener, modalVisible = false;
-    var uiTimer, frameStyleHref;
+    var uiTimer, frameStyleHref, plotObserver;
     function all(selector, scope) { return Array.prototype.slice.call((scope || doc).querySelectorAll(selector)); }
     function closest(el, selector) { return el && el.nodeType === 1 ? el.closest(selector) : null; }
     function storageGet() { try { return localStorage.getItem(themeKey); } catch (e) { return null; } }
@@ -22,6 +22,7 @@
         });
         syncFrames();
         themeCharts();
+        themePlots();
     }
     function toggleTheme() { applyTheme(currentTheme() === 'dark' ? 'light' : 'dark'); }
     function drawerMode() { return window.matchMedia('(max-width: 991px)').matches; }
@@ -225,6 +226,36 @@
             if (!frame.dataset.voizFrame) { frame.dataset.voizFrame = 'true'; frame.addEventListener('load', syncFrames); }
         });
         syncFrames();
+        initPlotResize();
+    }
+    function themePlots() {
+        if (!window.jQuery) { return; }
+        all('#dashboard-applet-performancegraph').forEach(function (element) {
+            var plot = window.jQuery(element).data('plot');
+            if (!plot || typeof plot.getOptions !== 'function') { return; }
+            var options = plot.getOptions(), colors = getComputedStyle(root);
+            options.grid.tickColor = colors.getPropertyValue('--voiz-border').trim();
+            options.legend.backgroundColor = colors.getPropertyValue('--voiz-surface').trim();
+            if (typeof plot.setupGrid === 'function') { plot.setupGrid(); }
+            if (typeof plot.draw === 'function') { plot.draw(); }
+        });
+    }
+    function initPlotResize() {
+        if (!window.ResizeObserver || !window.jQuery) { return; }
+        if (!plotObserver) {
+            plotObserver = new ResizeObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    var element = entry.target, width = Math.round(entry.contentRect.width);
+                    if (!width || element.dataset.voizPlotWidth === String(width)) { return; }
+                    element.dataset.voizPlotWidth = String(width);
+                    var plot = window.jQuery(element).data('plot');
+                    if (plot && typeof plot.resize === 'function') { plot.resize(); plot.setupGrid(); plot.draw(); }
+                });
+            });
+        }
+        all('#dashboard-applet-performancegraph').forEach(function (element) {
+            if (!element.dataset.voizPlotObserved) { element.dataset.voizPlotObserved = 'true'; plotObserver.observe(element); }
+        });
     }
     function syncFrames() {
         if (!frameStyleHref) { return; }

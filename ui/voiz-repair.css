@@ -3,6 +3,7 @@
 @import "./shell.css";
 @import "./components.css";
 @import "./modules.css";
+@import "./overflow.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

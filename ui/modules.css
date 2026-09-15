@@ -55,6 +55,7 @@ html body :is(.jqplot-table-legend, .legend > div) { background-color: var(--voi
 html body :is(#myChart, .chart-container) { background-color: var(--voiz-surface) !important; color: var(--voiz-text); }
 html body .chart-container { position: relative; width: 100%; min-width: 0; overflow: hidden; margin: 16px 0; padding: 12px; border: 1px solid var(--voiz-border); border-radius: 10px; }
 html body #myChart { max-width: 100%; }
+html body #dashboard-applet-performancegraph { width: 100% !important; min-width: 0; max-width: 100%; }
 html body #loader { border-color: var(--voiz-surface-3); border-top-color: var(--voiz-primary); }
 html body mark { background: var(--voiz-primary-soft); color: var(--voiz-primary-text); }
 html body #msgFilter { display: block; color: var(--voiz-text-soft); font-size: 13px; line-height: 2; margin: 12px 0; overflow-wrap: anywhere; }
@@ -144,6 +145,25 @@ html body .statusbar { min-height: 40px; height: auto; padding: 8px; color: var(
 html body a.pbxtooltip > div { color: var(--voiz-text); background: var(--voiz-surface); border-color: var(--voiz-border); white-space: normal; max-width: min(320px, calc(100vw - 32px)); box-shadow: var(--voiz-popover-shadow); }
 html body span.monitor { color: var(--voiz-info); font-size: 12px; }
 html body.voiz-popup-page { padding: 20px; }
+html body.voiz-phone { min-height: 100vh; padding: 24px; }
+html body.voiz-phone > div, html body.voiz-phone #panels { width: min(100%, 720px); margin-inline: auto; max-width: 100%; background: transparent; }
+html body.voiz-phone :is(.panel, #dialer_panel) { max-width: 100%; width: 100%; padding: 20px; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); }
+html body.voiz-phone #dialer_panel { display: block; margin-top: 16px; }
+html body.voiz-phone #panels { margin-top: 16px; }
+html body.voiz-phone span { background: transparent; color: inherit; white-space: normal; overflow-wrap: anywhere; }
+html body.voiz-phone :is(.badge, .btn) { margin: 4px; }
+html body.voiz-phone #call_form table { table-layout: fixed; width: 100%; }
+html body.voiz-phone #call_form table td { padding: 6px; }
+html body.voiz-phone #call_form table td:first-child { width: 65%; }
+html body.voiz-phone #call_form input[name="call_to"] { width: 100%; direction: ltr; }
+html body.voiz-phone #setting input { width: 100%; margin-block: 6px; }
+html body.voiz-phone :is(#call_log_ul li, #message_ul li) { color: var(--voiz-text); background: var(--voiz-surface-2); border: 1px solid var(--voiz-border); border-radius: 8px; padding: 8px; overflow-wrap: anywhere; }
+html body.voiz-phone #keypad_table { width: min(320px, 100%); margin-inline: auto; }
+html body.voiz-phone #keypad_table :is(button, input) { width: 100%; min-height: 48px; }
+html body.voiz-phone #video_view { width: 100%; }
+html body.voiz-phone #video_view video { max-width: 100%; }
+html body.voiz-phone .voiz-phone-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 0 auto 20px; max-width: 720px; }
+html body.voiz-phone .voiz-phone-heading h1 { margin: 0; }
 @media (max-width: 1199px) {
   html body #applet_grid { gap: 16px; }
   html body #applet_grid > .appletcolumn { gap: 16px; }
@@ -151,6 +171,8 @@ html body.voiz-popup-page { padding: 20px; }
   html body .calendar-env .calendar-sidebar { flex: 1 1 100%; width: 100%; }
 }
 @media (max-width: 767px) {
+  html body.voiz-phone { padding: 12px; }
+  html body.voiz-phone :is(.panel, #dialer_panel) { padding: 12px; }
   html body .voiz-pbx-layout, html body .voiz-pbx-layout > tbody, html body .voiz-pbx-layout > tbody > tr, html body .voiz-pbx-layout > tbody > tr > td { display: block; width: 100%; }
   html body .voiz-pbx-navigation { margin-bottom: 16px; }
   html body #applet_grid { grid-template-columns: minmax(0, 1fr); }

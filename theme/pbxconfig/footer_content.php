@@ -51,3 +51,15 @@ $html .= '<a target="_blank" href="' . $amp_conf['BRAND_IMAGE_SPONSOR_LINK_FOOT'
 */
 echo $html;
 ?>
+<link rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.0.0">
+<script>
+(function () {
+    var theme = 'dark';
+    try { theme = localStorage.getItem('voiz-theme') === 'light' ? 'light' : 'dark'; } catch (e) {}
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.classList.add('voiz-embedded');
+    window.addEventListener('storage', function (e) {
+        if (e.key === 'voiz-theme') document.documentElement.setAttribute('data-theme', e.newValue === 'light' ? 'light' : 'dark');
+    });
+})();
+</script>

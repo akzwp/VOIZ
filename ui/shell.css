@@ -9,11 +9,11 @@ html body #neo-contentbox, html body #neo-contentbox-maincolumn {
   width: 100% !important; min-width: 0; margin: 0 !important; padding: 0 !important;
   float: none !important; background: none !important; border: 0 !important;
 }
-html body #neo-contentbox { flex: 1 0 auto; }
+html body #neo-contentbox { flex: 1 0 auto; overflow: visible; }
 html body .neo-module-content, html body .neo-module-content-frame {
   min-width: 0; max-width: 100%; width: 100%; padding: 20px; margin: 0;
   background: var(--voiz-surface); border: 1px solid var(--voiz-border); border-radius: var(--voiz-radius);
-  color: var(--voiz-text); overflow-wrap: anywhere;
+  color: var(--voiz-text); overflow-wrap: anywhere; overflow: visible; display: flow-root;
 }
 html body .neo-module-content:has(#applet_grid) { border: 0; background: none; padding: 0; }
 html body .sidebar-menu {
