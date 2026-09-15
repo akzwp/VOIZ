@@ -1,14 +1,4 @@
-<style>
-.nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
-}
-.table-striped > tbody > tr.selected > td,
-.table-striped > tbody > tr.selected > th {
-background-color: #522b76;
-background-image: linear-gradient(#cccccc, #b3b3b3, #8c8c8c, #737373);
-}
-</style>
+
 
 <script>
 var cdrs = {$CDR};
@@ -21,44 +11,7 @@ var module = "{$module_name}";
 {$customJS}
 </script>
 
-<style>
-        #loader {
-            border: 8px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 8px solid #522b76;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
 
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .center {
-            position: relative;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-        }
-
-.table th, .table td {
-        font-size: 90%;
-    }
-
-mark {
-      background: purple;
-      color: white;
-}
-#myChart{
-               background-color:white; 
-               }
-
-</style>
 
 
 </br>

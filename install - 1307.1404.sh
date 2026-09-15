@@ -106,7 +106,7 @@ function add_persian_sounds() {
 }
 
 function add_vitenant_theme() {
-    echo "------------Installing VOIPIRAN Theme-----------------"
+    echo "-----Installing VOIPIRAN + AKZ UI Theme | akzwp.com | akzwp.ir-----"
     sleep 1
     [ -f theme/favicon.ico ] || { echo "Favicon not found."; exit 1; }
     cp -f theme/favicon.ico "$WWW_DIR/html"
@@ -368,7 +368,7 @@ function optimize_menus() {
 }
 
 function welcome() {
-    whiptail --title "VOIZ Installation" --msgbox "Powered by VOIPIRAN.io..." 8 78
+    whiptail --title "VOIZ Installation | VOIPIRAN + AKZ" --msgbox "Powered by VOIPIRAN.io\nUI design and customization: Copyright (c) AKZ\nhttps://voipiran.io\nhttps://akzwp.com | https://akzwp.ir\nOriginal project credits and GPL license are preserved." 12 78
 }
 
 function menu-order() {

@@ -1,0 +1,113 @@
+/* Font paths resolve from the compiled themes/vitenant/css directory. */
+@font-face { font-family: Vazirmatn; src: url('../fonts/vazirmatn/Vazirmatn-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: Vazirmatn; src: url('../fonts/vazirmatn/Vazirmatn-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: Vazirmatn; src: url('../fonts/vazirmatn/Vazirmatn-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: Vazirmatn; src: url('../fonts/vazirmatn/Vazirmatn-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --voiz-bg: #111214;
+  --voiz-bg-soft: #17181b;
+  --voiz-surface: #1c1d21;
+  --voiz-surface-2: #232529;
+  --voiz-surface-3: #2d3035;
+  --voiz-border: #36393f;
+  --voiz-border-strong: #676d77;
+  --voiz-input-bg: #16171a;
+  --voiz-inset: #16171a;
+  --voiz-text: #eceef2;
+  --voiz-heading: #fafafa;
+  --voiz-text-soft: #c0c4cd;
+  --voiz-muted: #a0a6b1;
+  --voiz-primary: #b9471f;
+  --voiz-primary-hover: #a43a17;
+  --voiz-primary-strong: #953314;
+  --voiz-primary-contrast: #fff;
+  --voiz-primary-text: #ffb38f;
+  --voiz-primary-soft: #36251f;
+  --voiz-accent: #afbed1;
+  --voiz-accent-text: #c5d4e8;
+  --voiz-accent-soft: #242e3c;
+  --voiz-success: #7cddb2;
+  --voiz-success-soft: #18372c;
+  --voiz-danger: #ffadb0;
+  --voiz-danger-soft: #3d2328;
+  --voiz-warning: #edc877;
+  --voiz-warning-soft: #392f1e;
+  --voiz-info: #a7c8f1;
+  --voiz-sidebar-bg: #191a1d;
+  --voiz-sidebar-text: #c0c4cd;
+  --voiz-sidebar-border: var(--voiz-border);
+  --voiz-topbar-bg: #191a1d;
+  --voiz-topbar-icon-bg: var(--voiz-surface-2);
+  --voiz-topbar-icon: var(--voiz-text-soft);
+  --voiz-card-shadow: 0 2px 8px rgb(0 0 0 / 8%);
+  --voiz-popover-shadow: 0 18px 48px rgb(0 0 0 / 32%);
+  --voiz-radius: 12px;
+  --voiz-radius-sm: 8px;
+  --voiz-sidebar-width: 264px;
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --voiz-bg: #f0efeb;
+  --voiz-bg-soft: #f6f5f2;
+  --voiz-surface: #fffefa;
+  --voiz-surface-2: #f2f1ed;
+  --voiz-surface-3: #e8e7e2;
+  --voiz-border: #d8d8d1;
+  --voiz-border-strong: #878b90;
+  --voiz-input-bg: #fffefa;
+  --voiz-inset: #eeede8;
+  --voiz-text: #233246;
+  --voiz-heading: #152d48;
+  --voiz-text-soft: #4e5b6b;
+  --voiz-muted: #626b76;
+  --voiz-primary: #a83e1a;
+  --voiz-primary-hover: #8e3213;
+  --voiz-primary-strong: #7e2e13;
+  --voiz-primary-text: #9c3816;
+  --voiz-primary-soft: #f8e9df;
+  --voiz-accent: #1e3a5f;
+  --voiz-accent-text: #1e3a5f;
+  --voiz-accent-soft: #e8edf3;
+  --voiz-success: #186143;
+  --voiz-success-soft: #e4f1e9;
+  --voiz-danger: #a52237;
+  --voiz-danger-soft: #fbe9ec;
+  --voiz-warning: #815510;
+  --voiz-warning-soft: #fbf0d6;
+  --voiz-info: #244f82;
+  --voiz-sidebar-bg: #faf9f5;
+  --voiz-sidebar-text: #4e5b6b;
+  --voiz-topbar-bg: #fffefa;
+  --voiz-card-shadow: 0 2px 8px rgb(23 35 51 / 4%);
+  --voiz-popover-shadow: 0 18px 48px rgb(23 35 51 / 15%);
+}
+html { min-height: 100%; font-size: 16px; background: var(--voiz-bg); }
+html body { margin: 0; background: var(--voiz-bg) !important; color: var(--voiz-text) !important; font: 400 14px/1.8 Vazirmatn, Tahoma, sans-serif !important; text-align: start; }
+html[dir="rtl"] body { direction: rtl; }
+*, *::before, *::after { box-sizing: border-box; }
+html :where(input, button, select, textarea, label, table, td, th, .ui-widget) { font-family: Vazirmatn, Tahoma, sans-serif !important; }
+html :where(h1, h2, h3, h4, h5, h6, .moduleTitle, .module_title) { color: var(--voiz-heading); line-height: 1.5; }
+html :where(h1, h2) { font-size: clamp(1.15rem, 1.3vw, 1.55rem); font-weight: 700; }
+html a { color: var(--voiz-accent-text); text-decoration: none; }
+html a:hover { color: var(--voiz-primary-text); }
+html :where(a, button, input, select, textarea, [tabindex]):focus-visible { outline: 2px solid var(--voiz-primary-text); outline-offset: 3px; }
+html :where(input[type="tel"], input[type="email"], input[type="url"], input[type="number"], code, pre, .confdir, .voiz-ltr) { direction: ltr; text-align: left; unicode-bidi: isolate; }
+html :where(img, video) { max-width: 100%; height: auto; }
+html :where(canvas, svg) { max-width: 100%; }
+html :where(small, .text-muted, .letra12, .letra10, .letra11, .description) { color: var(--voiz-muted); }
+html :where(.letra12, .letra10, .letra11, .letranodec, .letra12blue) { font-size: 13px; font-family: inherit; }
+html :where(hr, .neo-divisor) { border: 0; border-top: 1px solid var(--voiz-border); background: none; height: 1px; margin: 16px 0; }
+html [hidden], html input[type="hidden"], html .neo-display-none { display: none !important; }
+.voiz-sr-only { @apply tw-sr-only; }
+.voiz-skip-link { position: fixed; top: -100px; right: 16px; z-index: 10000; padding: 12px 18px; background: var(--voiz-surface); }
+.voiz-skip-link:focus { top: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  html *, html *::before, html *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+@media print {
+  .sidebar-menu, .voiz-topbar, .voiz-sidebar-overlay, .voiz-login-theme { display: none !important; }
+  html body .page-container .main-content { margin: 0 !important; width: 100% !important; }
+  html, html body { background: white !important; color: black !important; }
+}

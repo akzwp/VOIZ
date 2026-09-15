@@ -5,7 +5,7 @@
 <div class="collapse multi-collapse" id="filters">
     <br/>
     <form id="formFilter" method="POST" action="">
-        <table width="99%" border="0" cellspacing="0" cellpadding="0" align="center">
+        <table class="voiz-form-table" width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
             <tr class="letra12">
                 <td align="right">{$date_start_shamsi.LABEL}:</td>
                 <td align="left" nowrap>{$date_start_shamsi.INPUT}</td>

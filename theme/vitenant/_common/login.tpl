@@ -24,29 +24,17 @@
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-theme.css">
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms.css">
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/font-awesome-animation.min.css">
-        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/custom.css">
         <!-- Voiz: UI/UX layer (loaded last) -->
-        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
-        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=6.1.0">
-
-        <!--[if lt IE 9]><script src="{$WEBPATH}themes/{$THEMENAME}/js/ie8-responsive-file-warning.js"></script><![endif]-->
+        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.0.0">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
 
         {$HEADER_LIBS_JQUERY}
     </head>
     <body class="page-body login-page" data-url="">
 
         <!-- theme toggle -->
-        <div class="voiz-login-theme">
-            <a href="#" onclick="VoizUI.toggleTheme(); return false;" title="تغییر تم روشن/تیره">
-                <i class="fa fa-moon-o"></i>
-            </a>
-        </div>
+        <div class="voiz-login-theme"><button type="button" class="voiz-theme-toggle voiz-icon-button" aria-label="تغییر تم روشن و تیره" aria-pressed="false"><i class="fa fa-moon-o" aria-hidden="true"></i></button></div>
 
         <!-- کانتینر اصلی: لوگو + فرم + فوتر -->
         <div class="login-wrapper">
@@ -58,9 +46,10 @@
                 </a>
             </div>
 
+            <div class="voiz-login-intro"><h1>ورود به پنل مدیریت</h1><p>برای مدیریت ارتباطات، وارد حساب خود شوید.</p></div>
             <!-- فرم لاگین -->
             <div id="login">
-                <div class="form-login-error" id="login-error">
+                <div class="form-login-error" id="login-error" role="alert">
                     <h3>ورود ناموفق</h3>
                     <p>نام کاربری یا رمز عبور اشتباه است.</p>
                 </div>
@@ -69,11 +58,11 @@
                     <fieldset>
                         <div class="voiz-login-field">
                             <label class="voiz-login-label" for="input_user"><i class="fa fa-user"></i>نام کاربری</label>
-                            <input type="text" class="form-control" name="input_user" id="input_user" placeholder="نام کاربری" autocomplete="off" />
+                            <input type="text" class="form-control" name="input_user" id="input_user" placeholder="نام کاربری" autocomplete="username" autocapitalize="none" spellcheck="false" required />
                         </div>
                         <div class="voiz-login-field">
                             <label class="voiz-login-label" for="input_pass"><i class="fa fa-lock"></i>رمز عبور</label>
-                            <input type="password" class="form-control" name="input_pass" id="input_pass" placeholder="رمز عبور" autocomplete="off" />
+                            <input type="password" class="form-control" name="input_pass" id="input_pass" placeholder="رمز عبور" autocomplete="current-password" required />
                         </div>
                         <div class="voiz-login-field">
                             <input name="submit_login" type="submit" value="ورود" />
@@ -86,10 +75,10 @@
             <div class="fotter">
                 <div class="copyr">
                     <p>
-                        Copyrights © 2017-2026 All Rights Reserved by <a href="http://www.voipiran.io" target="_blank" rel="noopener">VOIPIRAN | ویپ ایران + AKZ</a>
+                        © VOIZ · <a href="http://www.voipiran.io" target="_blank" rel="noopener">VOIPIRAN | ویپ ایران</a>
                     </p>
                     <p class="voiz-login-brands">
-                        Powered by <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a><span class="sep">|</span><a href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>
+                        طراحی رابط کاربری © <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ · akzwp.com</a><span class="sep">|</span><a href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>
                     </p>
                 </div>
             </div>
@@ -111,7 +100,7 @@
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-login.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-custom.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-demo.js"></script>
-        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/voiz-ui.js"></script>
+        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/voiz-ui.js?v=7.0.0"></script>
 
         <!-- نمایش خطا -->
         <script type="text/javascript">

@@ -1,0 +1,173 @@
+/* Shared controls. Hidden default-submit sentinels keep their zero dimensions. */
+html body :is(input:not([type]), input[type="text"], input[type="password"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], input[type="search"], input[type="date"], input[type="time"], input[type="datetime-local"], select, textarea, .form-control) {
+  max-width: 100%; min-width: 0; min-height: 42px; height: auto; padding: 9px 12px;
+  font-size: 14px !important; line-height: 1.6; border: 1px solid var(--voiz-border-strong) !important;
+  border-radius: 8px; background: var(--voiz-input-bg) !important; color: var(--voiz-text) !important;
+  box-shadow: none !important; text-shadow: none; vertical-align: middle;
+}
+html body select { padding-inline-end: 28px; }
+html body textarea { min-height: 110px; width: 100%; resize: vertical; }
+html body input::placeholder, html body textarea::placeholder { color: var(--voiz-muted); opacity: 1; }
+html body :is(input, select, textarea):focus { border-color: var(--voiz-primary-text) !important; }
+html body :is(input, select, textarea):disabled { background: var(--voiz-surface-3) !important; color: var(--voiz-muted) !important; cursor: not-allowed; opacity: .75; }
+html body :is(input, textarea)[readonly] { background: var(--voiz-surface-2) !important; }
+html body input[type="checkbox"], html body input[type="radio"] { width: 18px; height: 18px; min-height: 0; padding: 0; margin: 4px; accent-color: var(--voiz-primary); vertical-align: middle; flex-shrink: 0; }
+html body input[type="file"] { max-width: 100%; color: var(--voiz-text-soft); padding: 8px; border: 1px dashed var(--voiz-border-strong); border-radius: 8px; }
+html body input::file-selector-button { padding: 7px 12px; border: 0; border-radius: 6px; margin-inline-end: 10px; background: var(--voiz-surface-3); color: var(--voiz-text); }
+html body :is(.btn, .button, button.submit, input[type="submit"]:not([value=""]), input[type="button"], input[type="reset"], .neo-table-toolbar-button, .neo-table-action, .dt-button) {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 40px; max-width: 100%; padding: 8px 14px; margin-bottom: 0;
+  border: 1px solid var(--voiz-border-strong); border-radius: 8px; background: var(--voiz-surface-2);
+  color: var(--voiz-text); font-size: 13px; font-weight: 600; line-height: 1.6;
+  cursor: pointer; text-shadow: none; box-shadow: none; white-space: normal; text-align: center;
+}
+html body :is(.btn-primary, .button, button.submit, input[type="submit"]:not([value=""]), .neo-table-action) { background: var(--voiz-primary) !important; border-color: var(--voiz-primary) !important; color: var(--voiz-primary-contrast) !important; }
+html body :is(.btn-primary, .button, button.submit, input[type="submit"]:not([value=""])):hover { background: var(--voiz-primary-hover) !important; }
+html body :is(.btn-default, .btn-secondary, .neo-table-toolbar-button, .dt-button):hover { background: var(--voiz-surface-3) !important; color: var(--voiz-heading) !important; }
+html body :is(.btn-danger, .btn-delete) { color: var(--voiz-danger) !important; background: var(--voiz-danger-soft) !important; border-color: var(--voiz-danger) !important; }
+html body :is(.btn-success, .btn-warning, .btn-info) { color: var(--voiz-text); background: var(--voiz-surface-3); }
+html body :is(button, .btn, .button, .dt-button):disabled, html body .disabled { cursor: not-allowed; opacity: .5; }
+html body .btn-link { background: transparent; color: var(--voiz-accent-text); }
+html body :is(label, .control-label, .letra12 b) { color: var(--voiz-text); font-weight: 500; }
+html body :is(.required, .has-error .help-block, .error, .field_error) { color: var(--voiz-danger); }
+html body :is(.has-error input, .has-error select, input[aria-invalid="true"]) { border-color: var(--voiz-danger) !important; }
+html body :is(.form-group, .voiz-login-field) { margin-bottom: 18px; }
+html body :is(.form-horizontal, .filterForm, form, fieldset) { min-width: 0; max-width: 100%; }
+html body :is(.filterForm, .tabForm, .tabFormTable, .frameModule, .panel, .well, .moduleTitle, .celda_default) { color: var(--voiz-text) !important; background-color: var(--voiz-surface) !important; background-image: none !important; border-color: var(--voiz-border) !important; }
+html body :is(.panel, .well, .frameModule, fieldset) { border-radius: var(--voiz-radius); }
+html body :is(.panel-heading, .panel-footer, .panel-title, .table_title_row) { background: var(--voiz-surface-2); border-color: var(--voiz-border); color: var(--voiz-heading); }
+html body :is(.panel-heading, .panel-footer) { padding: 12px 16px; }
+html body .panel-body { padding: 16px; }
+html body fieldset { border-color: var(--voiz-border); }
+html body legend { color: var(--voiz-heading); border-color: var(--voiz-border); font-size: 15px; font-weight: 600; padding: 6px 10px; width: auto; }
+html body :is(table.tabForm, table.voiz-form-table) { width: 100% !important; max-width: 100%; table-layout: auto; border-collapse: separate; border-spacing: 0 10px; }
+html body :is(table.tabForm, table.voiz-form-table) > tbody > tr > td { padding: 6px 10px; font-size: 14px; vertical-align: middle; color: var(--voiz-text); white-space: normal; }
+html body :is(table.tabForm, table.voiz-form-table) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]), select, textarea) { width: 100%; }
+html body :is(.fila_botonera, .button-bar, .form-actions, .voiz-actions) { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+html body :is(.nav-tabs, .nav-pills) { display: flex; flex-wrap: wrap; gap: 4px; border-color: var(--voiz-border); padding: 0; }
+html body :is(.nav-tabs, .nav-pills) > li { float: none; }
+html body :is(.nav-tabs, .nav-pills) > li > a { min-height: 42px; color: var(--voiz-text-soft); background: var(--voiz-surface-2); border-color: var(--voiz-border); border-radius: 8px 8px 0 0; }
+html body :is(.nav-tabs, .nav-pills) > li.active > a { color: var(--voiz-primary-text); background: var(--voiz-primary-soft); border-color: var(--voiz-primary); }
+
+/* Scroll the data region, leaving filters, buttons and pagination usable. */
+.voiz-table-scroll, .voiz-table-wrap, .table-responsive { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; border-radius: 8px; }
+html body :is(table.issabel-standard-table, table.tabla_listado, table.dataTable, table.table, table.table_data, table.listDataTable) {
+  width: 100%; border-collapse: collapse; border: 1px solid var(--voiz-border); color: var(--voiz-text); background: var(--voiz-surface); font-size: 13px;
+}
+html body :is(table.issabel-standard-table, table.tabla_listado, table.dataTable, table.table, table.table_data, table.listDataTable) > :is(thead, tbody, tfoot) > tr > :is(td, th) {
+  padding: 12px 14px !important; background: var(--voiz-surface) !important; background-image: none !important;
+  color: var(--voiz-text-soft) !important; border-color: var(--voiz-border) !important; font-size: 13px !important; line-height: 1.7;
+  vertical-align: middle; text-align: start; word-break: normal; overflow-wrap: normal;
+}
+html body :is(table.issabel-standard-table, table.dataTable, table.table, table.listDataTable) > :is(thead, tfoot) > tr > :is(td, th),
+html body table.tabla_listado tr.primera_fila > td { background: var(--voiz-surface-2) !important; color: var(--voiz-heading) !important; font-weight: 600; white-space: nowrap; }
+html body :is(table.issabel-standard-table, table.dataTable, table.table, table.tabla_listado) > tbody > tr:hover > td { background: var(--voiz-surface-2) !important; }
+html body :is(table.issabel-standard-table, table.dataTable, table.table) > tbody > tr.selected > td { background: var(--voiz-accent-soft) !important; color: var(--voiz-heading) !important; }
+html body :is(.neo-table-header-row, .neo-table-footer-row) { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; height: auto !important; min-height: 58px; padding: 12px !important; border: 1px solid var(--voiz-border); background: var(--voiz-surface-2) !important; color: var(--voiz-text-soft); box-shadow: none; }
+html body :is(.neo-table-header-row-filter, .neo-table-header-row-navigation, .neo-table-footer-row-navigation) { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; float: none !important; height: auto !important; padding: 0 !important; max-width: 100%; color: var(--voiz-text-soft); background: none; }
+html body .neo-table-header-row-navigation { margin-inline-start: auto; }
+html body :is(.neo-table-button-filter-left, .neo-table-button-filter-right, .neo-table-filter-controls, .neo-table-ref-table, #neo-table-header-filterrow) { background: var(--voiz-surface-2) !important; color: var(--voiz-text) !important; border-color: var(--voiz-border) !important; height: auto; }
+html body #neo-table-header-filterrow { position: static !important; width: 100% !important; margin: 0; }
+html body :is(.neo-table-button-filter-left, .neo-table-button-filter-right) { padding: 8px; min-height: 40px; cursor: pointer; }
+html body :is(.dataTables_wrapper, .dataTables_scroll, .dataTables_scrollHead, .dataTables_scrollBody) { width: 100%; min-width: 0; max-width: 100%; color: var(--voiz-text); background: var(--voiz-surface) !important; border-color: var(--voiz-border); }
+html body .dataTables_wrapper { padding: 0; }
+html body :is(.dataTables_length, .dataTables_filter, .dt-buttons, .dataTables_info, .dataTables_paginate) { padding: 12px 0; max-width: 100%; color: var(--voiz-text-soft) !important; background: transparent !important; }
+html body :is(.dataTables_length, .dataTables_filter) label { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; }
+html body .dataTables_filter input { max-width: min(100%, 240px); }
+html body .dataTables_length select { width: auto; min-width: 76px; }
+html body .dt-buttons { display: flex; gap: 6px; flex-wrap: wrap; float: none; }
+html body .dataTables_wrapper .dataTables_paginate .paginate_button { border: 1px solid var(--voiz-border) !important; border-radius: 6px; padding: 6px 12px; min-height: 36px; background: var(--voiz-surface-2) !important; color: var(--voiz-text) !important; margin: 2px; box-shadow: none; }
+html body .dataTables_wrapper .dataTables_paginate .paginate_button.current { background: var(--voiz-primary) !important; color: #fff !important; border-color: var(--voiz-primary) !important; }
+html body .dataTables_wrapper .dataTables_paginate .paginate_button.disabled { color: var(--voiz-muted) !important; opacity: .6; }
+html body :is(.pagination, .pager) { display: flex; flex-wrap: wrap; gap: 4px; padding: 0; }
+html body .pagination > li > :is(a, span) { color: var(--voiz-text-soft); background: var(--voiz-surface-2); border-color: var(--voiz-border); border-radius: 6px; min-height: 36px; }
+html body .pagination > .active > :is(a, span) { color: white; background: var(--voiz-primary); }
+
+/* Overlay geometry is kept separate from plugin visibility/position logic. */
+html body .dropdown-menu { min-width: 220px; max-width: calc(100vw - 24px); padding: 6px; border: 1px solid var(--voiz-border); border-radius: 10px; background: var(--voiz-surface); color: var(--voiz-text); box-shadow: var(--voiz-popover-shadow); text-align: start; z-index: 1100; }
+html body .dropdown-menu > li > a { padding: 10px 12px; min-height: 40px; white-space: normal; color: var(--voiz-text); }
+html body .dropdown-menu > li > a:hover { background: var(--voiz-primary-soft); color: var(--voiz-primary-text); }
+html body .dropdown-menu :is(p, ul) { color: var(--voiz-text-soft); padding: 8px; margin: 0; }
+html body .dropdown-menu .caret { display: none; }
+html body .voiz-topbar .dropdown-menu { right: auto; left: 0; max-height: 65vh; overflow-y: auto; }
+html body :is(.ui-dialog, .modal-content, .neo-modal-issabel-popup-box, .swal2-popup, .sweet-alert) {
+  max-width: calc(100vw - 24px) !important; border: 1px solid var(--voiz-border) !important; border-radius: 14px !important;
+  background: var(--voiz-surface) !important; color: var(--voiz-text) !important; box-shadow: var(--voiz-popover-shadow) !important; font-family: Vazirmatn, Tahoma, sans-serif;
+}
+html body .modal-dialog { max-width: calc(100vw - 24px); margin: 24px auto; }
+html body :is(.modal-content, .ui-dialog, .neo-modal-issabel-popup-box) { max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); overflow-y: auto; }
+html body .neo-modal-issabel-popup-box { display: none; position: fixed !important; width: min(600px, calc(100vw - 24px)); top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%); margin: 0 !important; padding: 0; z-index: 2000; }
+html body .neo-modal-issabel-popup-blockmask { position: fixed; inset: 0; z-index: 1990; background: rgb(0 0 0 / 60%); }
+html body :is(.modal-header, .ui-dialog-titlebar, .neo-modal-issabel-popup-title) { padding: 16px 20px; border: 0; border-bottom: 1px solid var(--voiz-border); background: var(--voiz-surface-2) !important; color: var(--voiz-heading) !important; text-shadow: none; }
+html body :is(.modal-body, .ui-dialog-content, .neo-modal-issabel-popup-content, .swal2-content, .swal2-html-container) { padding: 20px; color: var(--voiz-text-soft) !important; background: transparent; overflow-wrap: anywhere; }
+html body :is(.modal-footer, .ui-dialog-buttonpane) { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; border-color: var(--voiz-border); padding: 12px 20px; background: var(--voiz-surface-2); }
+html body :is(.close, .swal2-close) { opacity: 1; color: var(--voiz-text-soft); text-shadow: none; }
+html body .neo-modal-issabel-popup-close { position: absolute; top: 10px; left: 10px; right: auto; width: 34px; height: 34px; border: 1px solid var(--voiz-border); border-radius: 8px; color: var(--voiz-text); background: var(--voiz-surface); cursor: pointer; }
+html body .neo-modal-issabel-popup-close::after { content: '×'; display: grid; place-items: center; height: 100%; font-size: 24px; }
+html body :is(.swal2-title, .sweet-alert h2) { color: var(--voiz-heading); }
+html body .swal2-styled.swal2-confirm { background: var(--voiz-primary); }
+html body :is(.div_msg_errors, .alert, .form-login-error) { padding: 16px; margin: 0 0 18px; border-radius: 10px; box-shadow: none; line-height: 1.8; }
+html body .div_msg_errors { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; background: var(--voiz-danger-soft); border: 1px solid var(--voiz-danger); color: var(--voiz-danger); }
+html body .div_msg_errors_title { width: 100%; padding: 0; background: transparent; color: inherit; border: 0; }
+html body .div_msg_errors_content { flex: 1; min-width: 0; padding: 0; margin: 0 !important; background: transparent; color: var(--voiz-text); border: 0; }
+html body .div_msg_errors_dismiss { order: 3; position: static; margin-inline-start: auto; }
+html body .div_msg_errors_dismiss button { width: 34px; height: 34px; border: 0; border-radius: 7px; color: var(--voiz-danger); background: transparent; }
+html body :is(.alert-danger, .alert-error, .form-login-error, #toast-container .toast-error) { background-color: var(--voiz-danger-soft); border: 1px solid var(--voiz-danger); color: var(--voiz-danger); }
+html body :is(.alert-warning, #toast-container .toast-warning) { background-color: var(--voiz-warning-soft); border: 1px solid var(--voiz-warning); color: var(--voiz-warning); }
+html body :is(.alert-success, #toast-container .toast-success) { background-color: var(--voiz-success-soft); border: 1px solid var(--voiz-success); color: var(--voiz-success); }
+html body :is(.alert-info, #toast-container .toast-info) { background-color: var(--voiz-accent-soft); border: 1px solid var(--voiz-info); color: var(--voiz-info); }
+html body #toast-container { max-width: calc(100vw - 24px); }
+html body #toast-container > div { width: min(360px, calc(100vw - 24px)); border-radius: 10px; opacity: 1; box-shadow: var(--voiz-popover-shadow); font-size: 13px; line-height: 1.8; }
+html body .toast-close-button { color: inherit; text-shadow: none; opacity: 1; }
+html body :is(.label, .badge) { border-radius: 6px; padding: 4px 8px; font-size: 12px; line-height: 1.5; white-space: normal; }
+html body :is(.label-success, .badge-success) { color: var(--voiz-success); background: var(--voiz-success-soft); }
+html body :is(.label-danger, .badge-danger) { color: var(--voiz-danger); background: var(--voiz-danger-soft); }
+html body :is(.label-warning, .badge-warning) { color: var(--voiz-warning); background: var(--voiz-warning-soft); }
+html body :is(.label-info, .badge-info) { color: var(--voiz-info); background: var(--voiz-accent-soft); }
+html body :is(.select2-container, .chosen-container) { max-width: 100%; font-family: inherit; }
+html body :is(.select2-choice, .select2-choices, .select2-selection, .select2-dropdown, .select2-drop, .chosen-single, .chosen-choices, .chosen-drop, .ui-autocomplete, .ui-menu) { color: var(--voiz-text) !important; background: var(--voiz-input-bg) !important; border-color: var(--voiz-border-strong) !important; box-shadow: none !important; text-shadow: none; }
+html body :is(.ui-state-default, .ui-widget-header, .ui-state-active) { background: var(--voiz-surface-2); border-color: var(--voiz-border); color: var(--voiz-text); }
+html body :is(.ui-state-hover, .select2-highlighted, .chosen-results .highlighted) { background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important; }
+html body #neo-sticky-note { max-width: calc(100vw - 24px); background: var(--voiz-surface); color: var(--voiz-text); border: 1px solid var(--voiz-border); border-radius: 12px; box-shadow: var(--voiz-popover-shadow); }
+
+/* Login is independent of the legacy login animation/layout. */
+html body.login-page { display: grid; place-items: center; min-height: 100vh; min-height: 100dvh; padding: 72px 16px 32px; }
+html body.login-page .login-wrapper { width: min(100%, 448px); max-width: 448px; padding: 36px; margin: 0; background: var(--voiz-surface); border: 1px solid var(--voiz-border); border-radius: 20px; box-shadow: var(--voiz-card-shadow); }
+html body.login-page .logovoiz { margin: 0 0 20px; padding: 0; text-align: center; }
+html body.login-page .logovoiz img { width: 128px; height: 80px; object-fit: contain; margin: 0 auto; }
+html body.login-page h1 { margin: 0 0 6px; font-size: 23px; }
+.voiz-login-intro { margin-bottom: 28px; text-align: center; }
+.voiz-login-intro p { margin: 0; color: var(--voiz-muted); font-size: 13px; }
+html body.login-page #login { width: 100%; padding: 0; margin: 0; float: none; }
+html body.login-page fieldset { border: 0; padding: 0; margin: 0; }
+.voiz-login-label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+html body.login-page #login :is(input[type="text"], input[type="password"]) { width: 100%; min-height: 48px; text-align: start; }
+.voiz-password-wrap { position: relative; }
+html body.login-page #login .voiz-password-wrap input { padding-inline-end: 48px; }
+html body .voiz-pass-toggle { position: absolute; left: 4px; top: 4px; width: 40px; height: 40px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 6px; background: transparent; color: var(--voiz-muted); cursor: pointer; }
+html body.login-page #login input[type="submit"] { min-height: 48px; width: 100%; margin-top: 6px; font-size: 15px; }
+.voiz-login-theme { position: absolute; top: 20px; left: 20px; }
+html body.login-page .form-login-error { display: none; }
+html body.login-page .form-login-error.show { display: block; }
+.form-login-error h3 { color: var(--voiz-danger); margin: 0 0 6px; font-size: 15px; }
+.form-login-error p { margin: 0; }
+html body.login-page :is(.fotter, .copyr) { position: static; padding: 0; background: none; width: 100%; text-align: center; }
+html body.login-page .fotter { border-top: 1px solid var(--voiz-border); margin-top: 24px; padding-top: 20px; }
+html body.login-page .copyr p { color: var(--voiz-muted); font-size: 12px; line-height: 2; margin: 4px 0; }
+.voiz-login-brands { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 767px) {
+  html body :is(table.tabForm, table.voiz-form-table),
+  html body :is(table.tabForm, table.voiz-form-table) > tbody,
+  html body :is(table.tabForm, table.voiz-form-table) > tbody > tr,
+  html body :is(table.tabForm, table.voiz-form-table) > tbody > tr > td { display: block; width: 100% !important; }
+  html body :is(table.tabForm, table.voiz-form-table) > tbody > tr > td { padding: 5px 0; }
+  html body :is(table.tabForm, table.voiz-form-table) > tbody > tr { margin-bottom: 12px; }
+  html body :is(table.tabForm, table.voiz-form-table) > tbody > tr > td:empty { display: none; }
+  html body :is(.dataTables_filter, .dataTables_length, .dataTables_info, .dataTables_paginate) { float: none !important; text-align: start !important; }
+  html body .voiz-topbar .dropdown-menu { position: fixed; top: 70px; right: 12px; left: 12px; width: auto; }
+  html body :is(.modal-body, .ui-dialog-content, .neo-modal-issabel-popup-content) { padding: 14px; }
+}
+@media (max-width: 480px) {
+  html body.login-page .login-wrapper { padding: 28px 22px; }
+  html body :is(input, select, textarea, .form-control) { font-size: 16px !important; }
+}

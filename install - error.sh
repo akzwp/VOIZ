@@ -29,7 +29,7 @@ fi
 issabel_ver=$([ "$php_version" -eq 5 ] && echo 5 || echo 4)
 
 # Welcome message with Queue Dashboard note
-whiptail --title "VOIZ Installation" --msgbox "Powered by VOIPIRAN.io - Starting the amazing installation!\nNote: Live Queue Dashboard is available on port 5000 after installation." 10 78 || {
+whiptail --title "VOIZ Installation | VOIPIRAN + AKZ" --msgbox "Powered by VOIPIRAN.io\nUI design and customization: Copyright (c) AKZ\nhttps://voipiran.io\nhttps://akzwp.com | https://akzwp.ir\nOriginal project credits and GPL license are preserved.\nNote: Live Queue Dashboard is available on port 5000 after installation." 14 78 || {
     echo "Warning: whiptail failed, continuing without GUI" >> "${LOG_FILE}"
 }
 

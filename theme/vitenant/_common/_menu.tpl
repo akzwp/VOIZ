@@ -143,34 +143,22 @@
 <input type="hidden" id="lbl_no_description" value="{$LBL_NO_STICKY}" />
 <input type="hidden" id="version" value="{$VERSION}" />
 <!-- inicio del menú tipo acordeon-->
-<div class="sidebar-menu tw-flex tw-flex-col">
+<nav id="voiz-sidebar" class="sidebar-menu tw-flex tw-flex-col" aria-label="منوی اصلی">
     <header class="logo-env">
-        <!-- logo -->
-        <div class="logo">
-            <a href="#">
-                <img src="{$WEBPATH}themes/{$THEMENAME}/images/logov.png" width="40" alt="" />
-            </a>
-        </div>
-        <!-- logo collapse icon -->
-        <div class="sidebar-collapse">
-            <a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
-                <i class="entypo-menu"></i>
-            </a>
-        </div>
-        <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
-        <div class="sidebar-mobile-menu visible-xs">
-            <a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
-                <i class="entypo-menu"></i>
-            </a>
-        </div>
+        <a href="index.php" class="voiz-brand">
+            <img src="{$WEBPATH}themes/{$THEMENAME}/images/logov.png" width="32" height="38" alt="" />
+            <span><strong dir="ltr">VOIZ</strong><small>پنل مدیریت ارتباطات</small></span>
+        </a>
+        <button type="button" class="voiz-sidebar-close voiz-icon-button" aria-label="بستن منو"><i class="fa fa-times" aria-hidden="true"></i></button>
     </header>
+    <div class="voiz-sidebar-label">دسترسی به بخش‌ها</div>
     <ul id="main-menu" class="main-menu">
         <!-- add class "multiple-expanded" to allow multiple submenus to open -->
         <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
         <!--recorremos el arreglo del menu nivel primario-->
         {foreach from=$arrMainMenu key=idMenu item=menu name=menuMain}
             {if $idMenu eq $idMainMenuSelected}
-                <li class="active opened active">
+                <li class="active opened">
                 {else}
                 <li>
                 {/if}
@@ -184,7 +172,7 @@
                     <!--recorremos el arreglo del menu nivel secundario-->
                     {foreach from=$menu.children key=idSubMenu item=subMenu}
                         {if $idSubMenu eq $idSubMenuSelected}
-                            <li class="active opened active">
+                            <li class="active opened">
                             {else}
                             <li>
                             {/if}
@@ -215,13 +203,14 @@
         {/foreach}
         {$SHORTCUT}
     </ul>
-</div>
+    <div class="voiz-sidebar-credit">طراحی رابط کاربری · <a href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a></div>
+</nav>
 <!-- fin del menú tipo acordeon-->
 <!-- inicio del head principal-->
 <div class="main-content tw-min-w-0">
     <!-- Voiz topbar: logo / search / actions / user / theme -->
     <div class="voiz-topbar tw-flex tw-items-center">
-        <a href="#" class="voiz-topbar-burger"><i class="fa fa-bars"></i></a>
+        <button type="button" class="voiz-topbar-burger" aria-controls="voiz-sidebar" aria-expanded="false" aria-label="باز کردن منو"><i class="fa fa-bars" aria-hidden="true"></i></button>
 
         <div class="voiz-topbar-logo">
             <a href="#">
@@ -233,16 +222,16 @@
         <div class="voiz-topbar-search">
             <form method="get" action="">
                 <i class="fa fa-search voiz-search-icon"></i>
-                <input type="text" id="search_module_issabel" name="search_module_issabel" placeholder="{$MODULES_SEARCH}" aria-label="{$MODULES_SEARCH}"/>
-                <button type="submit"><i class="entypo-search"></i></button>
+                <input type="text" id="search_module_issabel" name="search_module_issabel" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="voiz-search-results" placeholder="{$MODULES_SEARCH}" aria-label="{$MODULES_SEARCH}"/>
+                <button type="submit" aria-label="جستجو در منوها"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
             </form>
         </div>
 
         <span class="voiz-topbar-sep"></span>
 
         <ul class="voiz-topbar-actions list-inline links-list neo-topbar-notification tw-flex tw-items-center">
-            <li id="header_notification_bar" class="dropdown top-bar-downloads">
-                <a data-toggle="dropdown" class="" href="#" title="Downloads">
+            <li id="header_downloads_bar" class="dropdown top-bar-downloads">
+                <a data-toggle="dropdown" class="" href="#" title="دریافت ابزارها" aria-label="دریافت ابزارها">
                     <i class="fa fa-download"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -253,36 +242,37 @@
                 </ul>
             </li>
             <li class="dropdown top-bar-webmin">
-                <a id="webmin_link" href="#" onclick="gotowebmin(); return false;" target="_blank" title="Webmin">
+                <a id="webmin_link" href="#" onclick="gotowebmin(); return false;" target="_blank" title="Webmin" aria-label="Webmin">
                     <i class="fa fa-cog"></i>
                 </a>
             </li>
             <li class="dropdown top-bar-webphone">
-                <a id="webphone_link" href="https://{$SERVER_NAME}/phone" target="_blank" rel="noopener" title="Webphone">
+                <a id="webphone_link" href="https://{$SERVER_NAME}/phone" target="_blank" rel="noopener" title="تلفن تحت وب" aria-label="تلفن تحت وب">
                     <i class="fa fa-phone"></i>
                 </a>
             </li>
             <li class="dropdown top-bar-queue">
-                <a id="queue_dashboard_link" href="#" onclick="gotoQueueDashboard(); return false;" class="" title="Queue Dashboard">
+                <a id="queue_dashboard_link" href="#" onclick="gotoQueueDashboard(); return false;" class="" title="داشبورد صف" aria-label="داشبورد صف">
                     <i class="fa fa-bar-chart"></i>
                 </a>
             </li>
-            <li id="header_notification_bar" class="dropdown top-bar-info">
-                <a data-toggle="dropdown" class="" href="#">
+            <li id="header_info_bar" class="dropdown top-bar-info">
+                <a data-toggle="dropdown" class="" href="#" aria-label="اطلاعات و سازندگان" title="اطلاعات و سازندگان">
                     <i class="fa fa-info-circle"></i>
                 </a>
                 <ul class="dropdown-menu">
                     <li class="caret"></li>
                     <li><a href="#" class="register_link">{$Registered}</a></li>
                     <li><a href="#" id="viewDetailsRPMs"><i class="fa fa-cube"></i>{$VersionDetails}</a></li>
-                    <li><a href="http://www.voipiran.io" target="_blank" rel="noopener"><i class="fa fa-external-link"></i>VOIPIRAN | ویپ ایران + AKZ</a></li>
+                    <li><a href="http://www.voipiran.io" target="_blank" rel="noopener"><i class="fa fa-external-link"></i>VOIPIRAN | ویپ ایران</a></li>
+                    <li class="dropdown-header">طراحی رابط کاربری © AKZ</li>
                     <li><a href="https://akzwp.com" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ | akzwp.com</a></li>
                     <li><a href="https://akzwp.ir" target="_blank" rel="noopener"><i class="fa fa-globe"></i>AKZ | akzwp.ir</a></li>
                     <li><a href="#" id="dialogaboutissabel"><i class="fa fa-info-circle"></i>{$ABOUT_ISSABEL2}</a></li>
                 </ul>
             </li>
             <li id="header_notification_bar" class="dropdown">
-                <a data-toggle="dropdown" class="" href="#">
+                <a data-toggle="dropdown" class="" href="#" aria-label="اعلان‌ها" title="اعلان‌ها">
                     <i id="notibell" class="fa fa-bell-o {$ANIMATE_NOTIFICATION}"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -345,9 +335,9 @@
             </ul>
         </div>
 
-        <a href="#" class="voiz-theme-toggle" onclick="VoizUI.toggleTheme(); return false;" title="تغییر تم روشن/تیره">
+        <button type="button" class="voiz-theme-toggle" aria-label="تغییر تم روشن و تیره" aria-pressed="false">
             <i class="fa fa-moon-o"></i>
-        </a>
+        </button>
     </div>
     <!-- Breadcrumb 3 -->
     <ol class="breadcrumb bc-2">
@@ -376,7 +366,7 @@
         </li>
     </ol>
     <!-- contenido del modulo-->
-    <div id="neo-contentbox">
+    <div id="neo-contentbox" role="main" tabindex="-1">
         <div id="neo-contentbox-maincolumn">
             <input type="hidden" id="issabel_framework_module_id" value="{if empty($idSubMenu2Selected)}{$idSubMenuSelected}{else}{$idSubMenu2Selected}{/if}" />
             <input type="hidden" id="issabel_framework_webCommon" value="{$WEBCOMMON}" />

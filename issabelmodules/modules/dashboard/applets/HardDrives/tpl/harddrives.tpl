@@ -1,7 +1,7 @@
 <link rel="stylesheet" media="screen" type="text/css" href="modules/{$module_name}/applets/HardDrives/tpl/css/styles.css" />
 <script type='text/javascript' src='modules/{$module_name}/applets/HardDrives/js/javascript.js'></script>
 {foreach from=$part item=particion}
-<div>
+<div class="voiz-drive">
     <div id="dashboard-applet-hd-usage" style="width:160px; height:160px;"></div>
     <script>
         {literal}

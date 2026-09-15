@@ -22,8 +22,6 @@
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-theme-rtl.css"> <!--  Voiz -->
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms-rtl.css"> <!--  Voiz -->
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/font-awesome-animation.min.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/custom.css">
-    <!-- voipiran msm <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/rtl.css"> -->  <!--  Voiz -->
     
 
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/styles.css" />
@@ -36,11 +34,9 @@
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/table.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/rightbar.css" />
     <!-- voipiran msm -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/rtl.css">   <!--  Voiz -->
     <!-- voipiran msm \-->
     <!-- Voiz: UI/UX layer (loaded last). NOTE: css/purple.css is intentionally NOT loaded -
          the redesign layer (voiz-ui.css) fully replaces its look. -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
 
     {$HEADER_LIBS_JQUERY}
         <!--<script type='text/javascript' src="{$WEBCOMMON}js/base.js"></script>-->
@@ -53,7 +49,7 @@
         {$HEADER}
     {$HEADER_MODULES}
     <!-- Final theme contract: loaded after module-provided styles. -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=6.1.0">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.0.0">
     <!-- Voiz: Force Farsi calendar language if Calendar object exists -->
     <script type="text/javascript">
     (function () {
@@ -89,18 +85,19 @@
     </script>
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body" {$BODYPARAMS}>
+    <a class="voiz-skip-link" href="#neo-contentbox">رفتن به محتوای اصلی</a>
     <div class="page-container">
         <div id="voiz-sidebar-overlay" class="voiz-sidebar-overlay"></div>
 
         {$MENU} <!-- Viene del tpl menu.tlp-->
                     {if !empty($mb_message)}
-                    <div class="div_msg_errors" id="message_error">
+                    <div class="div_msg_errors" id="message_error" role="alert">
                     {if !empty($mb_title)}
                         <div class="div_msg_errors_title">
                             <b>&nbsp;{$mb_title}</b>
                         </div>
                     {/if}
-                        <div class="div_msg_errors_dismiss"><i class="fa fa-lg fa-remove" onclick="hide_message_error();"></i></div>
+                        <div class="div_msg_errors_dismiss"><button type="button" aria-label="بستن پیام خطا" onclick="hide_message_error();"><i class="fa fa-times" aria-hidden="true"></i></button></div>
                         <div class="div_msg_errors_content" {if empty($mb_title)}style="margin-left: 0;"{/if}>{$mb_message}</div>
                     </div>
                     {/if}
@@ -113,10 +110,10 @@
         <footer class="main">
             <span class="voiz-footer-brands">
                 <!-- VOIPIRAN -->
-                <a class="voiz-footer-brand" href="http://www.voipiran.io" target='_blank' rel="noopener">VOIPIRAN | ویپ ایران + AKZ</a>
+                <a class="voiz-footer-brand" href="http://www.voipiran.io" target='_blank' rel="noopener">VOIPIRAN | ویپ ایران</a>
                 <span class="sep">+</span>
                 <!-- AKZ -->
-                <a class="voiz-footer-brand" href="https://akzwp.com" target="_blank" rel="noopener">AKZ</a>
+                <a class="voiz-footer-brand" href="https://akzwp.com" target="_blank" rel="noopener">© AKZ · akzwp.com</a>
                 <span class="sep">|</span>
                 <a class="voiz-footer-brand" href="https://akzwp.ir" target="_blank" rel="noopener">akzwp.ir</a>
                 <span class="sep">·</span>
@@ -148,9 +145,9 @@ $(document).ready(function(e) {
 {/literal}{/if}
 
         <!-- Neo Progress Bar -->
-        <div class="neo-modal-issabel-popup-box">
-            <div class="neo-modal-issabel-popup-title"></div>
-            <div class="neo-modal-issabel-popup-close"></div>
+        <div class="neo-modal-issabel-popup-box" role="dialog" aria-modal="true" aria-labelledby="voiz-modal-title" tabindex="-1">
+            <div class="neo-modal-issabel-popup-title" id="voiz-modal-title"></div>
+            <button type="button" class="neo-modal-issabel-popup-close" aria-label="بستن پنجره"></button>
             <div class="neo-modal-issabel-popup-content"></div>
         </div>
         <div class="neo-modal-issabel-popup-blockmask"></div>
@@ -201,7 +198,7 @@ $(document).ready(function(e) {
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-login.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-custom.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-demo.js"></script>
-        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/voiz-ui.js"></script>
+        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/voiz-ui.js?v=7.0.0"></script>
     </div>
 </body>
 </html>

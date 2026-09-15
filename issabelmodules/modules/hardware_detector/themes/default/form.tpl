@@ -19,26 +19,19 @@
         <td align="right" nowrap><span class="letra12"><span  class="required">*</span> {$REQUIRED_FIELD}</span></td>
     </tr>
 </table>
-<table class="tabForm" style="font-size: 16px;" width="100%" >
-    <input type="hidden" name="idCard" value="{$DESC_ID}" />
-
-    <label id="port_desc">{$CARD} # {$ID}: {$TIPO} {$ADICIONAL}</label>
-    <div id="form" style='background-color:yellow'>
-    <!--<table border="0" width="40%" cellspacing="0" style="border:1px solid black">-->
+<input type="hidden" name="idCard" value="{$DESC_ID}" />
+<p id="port_desc">{$CARD} # {$ID}: {$TIPO} {$ADICIONAL}</p>
+<table class="tabForm" width="100%">
         {foreach key=key item=echocancel name=arrPortsEchoInfo from=$arrPortsEcho}
         <tr class="letra12">
-            <td> </td>
-            <td> </td>
-            <td width="10%" align="left"><b>{$key}</b>  {$echocancel.name_port}: </td>
+            <td><label for="typeecho_{$key}"><b>{$key}</b> {$echocancel.name_port}:</label></td>
             <td width="50%" align="left">
                 <select id='typeecho_{$key}' name='typeecho_{$key}'>
                     {html_options options=$type_echo_names selected=$echocancel.type_echo}
                 </select>
+                <input type="hidden" value="{$echocancel.type_echo}" name="tmpTypeEcho{$key}" />
             </td>
-            <input type="hidden" value="{$echocancel.type_echo}" name="tmpTypeEcho{$key}" />
         </tr>
         {/foreach}
-    <!--</table>-->
-    </div>
 </table>
 <input class="button" type="hidden" name="id" value="{$ID}" />

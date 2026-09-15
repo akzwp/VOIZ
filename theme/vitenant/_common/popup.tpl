@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {*
   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4:
   Codificación: UTF-8
@@ -40,13 +41,11 @@
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/styles.css">
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/help.css">
   <!-- Voiz: internal utility engine + redesign layer (always last) -->
-  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tw.css">
-  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
-  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=6.1.0">
+  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.0.0">
   <script src="{$WEBCOMMON}js/base.js"></script>
   <script src="{$WEBCOMMON}js/iframe.js"></script>
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body class="voiz-popup-page" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 {$CONTENT}
 </body>
 </html>

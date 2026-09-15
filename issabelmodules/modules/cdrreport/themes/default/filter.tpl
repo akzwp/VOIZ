@@ -4,7 +4,7 @@
 </a>
 <div class="collapse multi-collapse" id="filters">
   <form id="formFilter" method="POST" action="" class="p-3">
-    <table class="table table-bordered" style="width: 100%; margin: 0 auto;">
+    <table class="voiz-form-table" style="width: 100%; margin: 0 auto;">
       <tbody>
         <tr class="letra12">
           <td style="width: 10%; text-align: right;">{$date_start.LABEL}:</td>

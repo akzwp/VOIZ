@@ -134,7 +134,7 @@ function add_vitenant_theme() {
     yes | cp -rf theme/pbxconfig/footer_content.php "$WWW_DIR/html/admin/views" 2>/dev/null
     chmod 644 "$WWW_DIR/html/admin/views/footer_content.php" 2>/dev/null
     chown -R asterisk:asterisk "$WWW_DIR/html/admin/views/footer_content.php" 2>/dev/null
-    echo "**VOIPIRAN Theme Installed." >> "$LOG_FILE"
+    echo "**VOIPIRAN + AKZ UI Theme Installed. AKZ: https://akzwp.com | https://akzwp.ir" >> "$LOG_FILE"
 }
 
 function edit_issabel_modules() {
@@ -362,7 +362,7 @@ function optimize_menus() {
 }
 
 function welcome() {
-    whiptail --title "VOIZ Installation" --msgbox "Powered by VOIPIRAN.io\nWebsites:\n - https://voipiran.io\n - https://voiz.ir\nProject Manager: Hamed Kouhfallah" 12 78
+    whiptail --title "VOIZ Installation | VOIPIRAN + AKZ" --msgbox "Powered by VOIPIRAN.io\nProject Manager: Hamed Kouhfallah\nUI design and customization: Copyright (c) AKZ\nWebsites:\n - https://voipiran.io\n - https://voiz.ir\n - https://akzwp.com\n - https://akzwp.ir\nOriginal project credits and GPL license are preserved." 16 78
 }
 
 function menu-order() {
@@ -433,6 +433,8 @@ echo -e "${CYAN} ╚████╔╝ ╚██████╔╝██║█�
 echo -e "${CYAN}  ╚═══╝   ╚═════╝ ╚═╝╚═╝     ╚═╝╚══╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝${NC}"
 echo -e "${MAGENTA}###############################################################${NC}"
 echo -e "${MAGENTA}                    https://voipiran.io                    ${NC}"
+echo -e "${MAGENTA}   UI design and customization: Copyright (c) AKZ          ${NC}"
+echo -e "${MAGENTA}   https://akzwp.com  |  https://akzwp.ir                   ${NC}"
 echo -e "${MAGENTA}###############################################################${NC}"
 
 # اجرای تابع اولیه

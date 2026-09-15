@@ -1,6 +1,6 @@
 {
   "name": "voiz-akz-ui",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "private": true,
   "description": "Local Tailwind build for the VOIZ presentation layer",
   "scripts": {
@@ -9,6 +9,8 @@
     "preview:ui": "node tools/preview-ui.cjs"
   },
   "devDependencies": {
+    "jsdom": "26.1.0",
+    "jsmart": "4.0.0",
     "tailwindcss": "3.4.17"
   }
 }

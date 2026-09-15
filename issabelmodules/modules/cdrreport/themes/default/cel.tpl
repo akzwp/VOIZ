@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-theme-rtl.css">
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms-rtl.css">
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/font-awesome-animation.min.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/custom.css">
 
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/styles.css" />
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/widgets.css" />
@@ -32,8 +31,6 @@
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/table.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="{$WEBPATH}themes/{$THEMENAME}/rightbar.css" />
     <!-- Voiz: internal utility engine + redesign layer (always last, replaces purple) -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tw.css">
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-ui.css?v=6.0.0">
     <style>
     .neo-table-header-row { display:none !important; }
     </style>
@@ -47,7 +44,7 @@
 
         {$HEADER}
     {$HEADER_MODULES}
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=6.1.0">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.0.0">
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body voiz-cdr-page" {$BODYPARAMS}>
 

@@ -1,6 +1,6 @@
 /** Build-time only. Preflight is disabled for Issabel's legacy widgets. */
 module.exports = {
-  content: ['./theme/vitenant/_common/*.tpl', './issabelmodules/modules/**/themes/default/*.tpl', './theme/vitenant/js/voiz-ui.js', './ui/**/*.css', './tools/fixtures/*.html'],
+  content: ['./theme/vitenant/_common/*.tpl', './issabelmodules/modules/**/*.tpl', './theme/vitenant/js/voiz-ui.js', './ui/**/*.css'],
   prefix: 'tw-',
   corePlugins: { preflight: false },
   theme: {

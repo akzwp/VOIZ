@@ -1,31 +1,8 @@
-<style>
-  td{
-    direction:ltr;
-    text-align:left;
-  }
-  table{
-    direction : ltr;
-  }
-  
-  /* all headers color  */
-  #nav ul li{
-    background:  #8bc34a;
-    /*padding : 0 4px 0 0 ; */
-  }
-  /* active header color  */
-  #nav ul li a.current{
-    color : white;
-    background : #535454;
-  }
+{* Scoped UI lives in the local VOIZ Tailwind bundle. *}
 
-  #nav ul li a{
-    padding-right: 10px;
-  }
-</style>
-
-<table cellspacing="0" cellpadding="0" border="0" width="100%" >
+<table class="voiz-pbx-layout" cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
-    <td valign="top" width="220" style="text-align:left;direction:rtl;">
+    <td class="voiz-pbx-navigation" valign="top">
       <div id="nav">
         <div id="nav-setup" class="tabs-container">
 

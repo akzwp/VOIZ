@@ -3,7 +3,7 @@
 <html>
 
 <head>
-	<title>VOIPIRAN WebPhone</title>
+	<title>VOIPIRAN + AKZ | WebPhone</title>
 	<link rel="stylesheet" href="<?= $layout ?>" />
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Expires" content="-1">
@@ -28,7 +28,8 @@
 
 			<!-- Logo -->
 			<section id="logo">
-				<img id="logo_img" src="images/voipiran_logo.png">
+				<img id="logo_img" src="images/voipiran_logo.png" alt="VOIPIRAN">
+				<p style="font:12px/1.8 sans-serif;text-align:center;color:#fff;">UI &copy; <a href="https://akzwp.com" target="_blank" rel="noopener" style="color:inherit">AKZ | akzwp.com</a> · <a href="https://akzwp.ir" target="_blank" rel="noopener" style="color:inherit">akzwp.ir</a></p>
 			</section>
 			<!-- End Logo -->
 

@@ -10,9 +10,9 @@
             <div class='appletwindow_topbar voiz-flex voiz-items-center voiz-flex--sb voiz-gap-2'>
                 <div class='appletwindow_title voiz-text-md voiz-font-semibold voiz-flex voiz-items-center voiz-gap-2'>{$applet.name}</div>
                 <div class='appletwindow_widgets voiz-flex voiz-items-center voiz-gap-2'>
-                    <a class='appletrefresh voiz-icon voiz-icon--muted'>
+                    <button type="button" class="appletrefresh" aria-label="{$applet.name|escape:html} — {$LABEL_LOADING|escape:html}">
                         <i class="fa fa-refresh"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class='appletwindow_content' id='{$applet.code}'>
@@ -28,9 +28,9 @@
             <div class='appletwindow_topbar voiz-flex voiz-items-center voiz-flex--sb voiz-gap-2'>
                 <div class='appletwindow_title voiz-text-md voiz-font-semibold voiz-flex voiz-items-center voiz-gap-2'>{$applet.name}</div>
                 <div class='appletwindow_widgets voiz-flex voiz-items-center voiz-gap-2'>
-                    <a class='appletrefresh voiz-icon voiz-icon--muted'>
+                    <button type="button" class="appletrefresh" aria-label="{$applet.name|escape:html} — {$LABEL_LOADING|escape:html}">
                         <i class="fa fa-refresh"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class='appletwindow_content' id='{$applet.code}'>
