@@ -512,12 +512,25 @@
         var card = doc.createElement('div');
         card.className = 'voiz-jalali-card';
         card.setAttribute('aria-label', 'تقویم جلالی');
+        function toFa(value) { return String(value).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
+        /* Issabel's Persian calendar shows Persian weekday letters and digits in
+           the Gregorian mini datepicker; match that display (text only). */
+        function persianizeMini() {
+            var map = { su: 'ج', mo: 'ش', tu: 'ی', we: 'د', th: 'س', fr: 'چ', sa: 'پ' };
+            all('.calendar-sidebar .ui-datepicker-calendar thead th').forEach(function (th) {
+                var key = th.textContent.trim().toLowerCase().slice(0, 2);
+                if (map[key]) { th.textContent = map[key]; }
+            });
+            all('.calendar-sidebar .ui-datepicker-calendar td a').forEach(function (a) {
+                if (/^\d{1,2}$/.test(a.textContent.trim())) { a.textContent = toFa(a.textContent); }
+            });
+        }
         function render() {
             var first = jalaliToGregorian(view.y, view.m, 1);
             var nextMonth = view.m === 12 ? jalaliToGregorian(view.y + 1, 1, 1) : jalaliToGregorian(view.y, view.m + 1, 1);
             var monthLength = Math.round((nextMonth - first) / 86400000);
             var startCol = (first.getDay() + 1) % 7; /* Persian week starts on Saturday. */
-            var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + monthNames[view.m - 1] + ' ' + view.y +
+            var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + monthNames[view.m - 1] + ' ' + toFa(view.y) +
                 '</div><div class="voiz-jalali-nav">' +
                 '<button type="button" data-voiz-jalali="today" title="امروز">امروز</button>' +
                 '<button type="button" data-voiz-jalali="next" title="ماه بعد" aria-label="ماه بعد">‹</button>' +
@@ -530,7 +543,7 @@
                 var classes = 'voiz-jalali-day';
                 if (date.getDay() === 5) { classes += ' voiz-jalali-holiday'; }
                 if (view.y === today.y && view.m === today.m && day === today.d) { classes += ' voiz-jalali-today'; }
-                html += '<div class="' + classes + '">' + day + '</div>';
+                html += '<div class="' + classes + '">' + toFa(day) + '</div>';
             }
             html += '</div><div class="voiz-jalali-foot">تقویم هجری شمسی</div>';
             card.innerHTML = html;
@@ -547,6 +560,7 @@
         });
         render();
         host.insertBefore(card, host.firstChild);
+        persianizeMini();
     }
     function init() {
         var css = doc.querySelector('link[href*="voiz-tailwind.css"]'); frameStyleHref = css && css.href;

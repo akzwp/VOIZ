@@ -36,6 +36,8 @@ html body.voiz-embedded #footer {
 html body.voiz-embedded #footer :is(a, b, span) { color: var(--voiz-muted) !important; }
 html body.voiz-embedded :is(td, th) { color: var(--voiz-text); }
 html body.voiz-embedded th { color: var(--voiz-heading) !important; }
+html body.voiz-embedded :is(#tabs, #menu, .menu) { position: static !important; display: flex; flex-wrap: wrap; gap: 6px; }
+
 
 /* Issue 2 — CDR ("ریز مکالمات") and recordings ("مکالمات ضبط شده")
    DataTables: keep toolbar groups from colliding and make every
@@ -64,6 +66,19 @@ html body .dataTables_wrapper .dataTables_filter input {
   min-width: 180px; width: min(240px, 100%); min-height: 40px; margin: 0;
   border-radius: 8px; background: var(--voiz-input-bg) !important; color: var(--voiz-text) !important;
 }
+html body .dataTables_wrapper .dataTables_length select { min-height: 40px; border-radius: 8px; padding-inline-end: 26px; }
+html body .dataTables_wrapper .dataTables_scroll { border: 1px solid var(--voiz-border); border-radius: 10px; overflow: hidden; }
+html body .dataTables_wrapper .dataTables_scrollHead { background: var(--voiz-surface-2) !important; border: 0 !important; }
+html body .dataTables_wrapper .dataTables_scrollHead th {
+  padding: 12px 10px !important; color: var(--voiz-heading) !important; font-weight: 600; white-space: nowrap;
+  border-bottom: 1px solid var(--voiz-border) !important;
+}
+html body .dataTables_wrapper .dataTables_scrollBody :is(td, th) { padding: 10px; vertical-align: middle; border-bottom: 1px solid var(--voiz-border) !important; }
+html body .dataTables_wrapper .dataTables_info { padding: 10px 12px 4px !important; color: var(--voiz-muted) !important; font-size: 12.5px; }
+html body .dataTables_wrapper .dataTables_paginate { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 8px 12px 12px !important; }
+/* Recordings page legacy paints (original template restored in v7.1) */
+html body :is(#myChart, canvas.chartjs) { background: var(--voiz-surface) !important; border-radius: 8px; }
+html body mark { background: var(--voiz-primary) !important; color: #fff !important; border-radius: 4px; padding: 0 4px; }
 
 /* Issue 4 — GeoIP Map tooltips (and any framed map tooltip):
    keep the country label inside its bubble, LTR, on one line. */
@@ -74,6 +89,7 @@ html body :is(.voiz-embedded, .neo-module-content) :is(
   padding: 7px 12px; border-radius: 8px; font-size: 13px; line-height: 1.6;
   background: var(--voiz-surface-3) !important; color: var(--voiz-heading) !important;
   border: 1px solid var(--voiz-border-strong) !important; box-shadow: var(--voiz-popover-shadow) !important;
+}
 
 /* Issues 5 / 13 / 14 — PBX Configuration pages (تنظیمات تلفنی،
    تنظیمات دسته‌ای/QR Configurations، تنظیم گوشی‌ها). The FreePBX
@@ -88,7 +104,6 @@ html body.voiz-embedded :is(.page-content, .well, .well-small, .panel, .panel-bo
 }
 html body.voiz-embedded :is(.page-header, h1, h2, h3, h4, h5, h6, .section-title, legend) { color: var(--voiz-heading) !important; }
 html body.voiz-embedded :is(td, th, label, span, p, li, div, strong, b) { text-shadow: none; }
-/* FreePBX section headings must never overflow their card (QR page). */
 html body.voiz-embedded :is(.section-header, .panel-heading, .box-header, .page-title, h1, h2, h3) {
   max-width: 100%; overflow-wrap: anywhere; white-space: normal; height: auto !important;
 }
@@ -112,7 +127,6 @@ html body.voiz-embedded .btn-primary, html body.voiz-embedded button[type="submi
   background: var(--voiz-primary) !important; border-color: var(--voiz-primary) !important; color: #fff !important;
 }
 html body.voiz-embedded :is(.grid, .list-view) { width: 100%; overflow-x: auto; }
-/* Old hard-coded light boxes / dark text on dark embedded pages. */
 html body.voiz-embedded :is([style*="background:#fff"], [style*="background:#FFFFFF"], [style*="background: #fff"], [style*="background: white"], [style*="background-color:#fff"], [style*="background-color: #fff"], [style*="background-color: white"]) {
   background: var(--voiz-surface) !important; color: var(--voiz-text) !important;
 }
@@ -129,24 +143,89 @@ html body .neo-module-content img[src*="Icon-user"] { max-width: 120px; height: 
 html body .neo-module-content :is(#tr_from_csv td) { padding: 10px; }
 html body .neo-module-content input[name="address_book_options"], html body .neo-module-content input[name="address_book_status"] { margin-inline-end: 8px; }
 
-
-
-/* Issue 9 — Calendar (FullCalendar) restyle + Jalali companion card. */
-html body .calendar-env { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; }
+/* Issue 9 — Calendar: Issabel-standard layout (month grid + right sidebar)
+   plus the Jalali companion card rendered by voiz-ui.js. Display only. */
+html body .calendar-env { display: flex; flex-wrap: wrap; gap: 18px; align-items: stretch; }
+html[dir="rtl"] body .calendar-env .calendar-sidebar { order: -1; } /* Issabel keeps the sidebar on the right */
 html body .calendar-env .calendar-sidebar {
-  position: static !important; float: none !important; width: min(300px, 100%) !important; flex: 0 0 auto;
-  margin: 0 !important; padding: 16px !important; background: var(--voiz-surface) !important;
-  border: 1px solid var(--voiz-border); border-radius: 12px; box-shadow: var(--voiz-card-shadow);
+  position: static !important; float: none !important; width: 300px !important; max-width: 100%;
+  flex: 0 0 300px; margin: 0 !important; padding: 16px !important;
+  background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border);
+  border-radius: 12px; box-shadow: var(--voiz-card-shadow);
 }
 html body .calendar-env .calendar-body { flex: 1 1 480px; min-width: 0; }
-html body .calendar-env .calendar-main { background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border); border-radius: 12px; overflow: hidden; }
-html body .calendar-env .fc-header { background: var(--voiz-surface-2) !important; padding: 12px 14px; border-bottom: 1px solid var(--voiz-border); }
-html body .calendar-env .fc-header :is(a, button) { border-radius: 8px; }
+html body .calendar-env .calendar-body .fc {
+  background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border);
+  border-radius: 12px; overflow: hidden;
+}
+/* Header bar: view switcher / title / today + arrows (table cells, like the
+   original Issabel header). */
+html body .calendar-env .fc-header {
+  width: 100%; background: var(--voiz-surface-2) !important; margin: 0;
+  border-bottom: 1px solid var(--voiz-border);
+}
+html body .calendar-env .fc-header > tbody > tr > td { padding: 12px 10px; background: none; border: 0; vertical-align: middle; white-space: nowrap; }
+html body .calendar-env .fc-header .fc-header-center { text-align: center; }
+html body .calendar-env .fc-header .fc-header-left { text-align: start; }
+html body .calendar-env .fc-header .fc-header-right { text-align: end; }
+html body .calendar-env .fc-header h2 { margin: 0; font-size: 17px; color: var(--voiz-heading); }
+html body .calendar-env .fc-header :is(a, button) {
+  min-height: 36px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--voiz-border);
+  background: var(--voiz-surface-3); color: var(--voiz-text); cursor: pointer;
+}
+html body .calendar-env .fc-header :is(a, button):hover { border-color: var(--voiz-primary-text); color: var(--voiz-primary-text); }
+html body .calendar-env .fc-header .fc-state-active {
+  background: var(--voiz-primary) !important; border-color: var(--voiz-primary) !important; color: #fff !important;
+}
+
+/* Month grid. */
+html body .fc table { width: 100%; table-layout: fixed; }
 html body .fc :is(th, td.fc-day-header) { background: var(--voiz-surface-2) !important; color: var(--voiz-text-soft) !important; border: 0 !important; padding: 9px 6px; }
-html body .fc :is(td.fc-widget-content) { background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border) !important; color: var(--voiz-text); }
+html body .fc :is(td.fc-widget-content, td.fc-day) { background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border) !important; color: var(--voiz-text); }
 html body .fc .fc-other-month { background: var(--voiz-bg-soft) !important; color: var(--voiz-muted) !important; }
+html body .fc .fc-day-number { padding: 4px 8px; font-weight: 600; color: var(--voiz-text-soft); }
 html body .fc .fc-today { background: var(--voiz-primary-soft) !important; }
-html body .fc .fc-event { border-radius: 6px; border: 0; padding: 2px 6px; font-size: 12px; }
+html body .fc .fc-today .fc-day-number { color: var(--voiz-primary-text); }
+html body .fc .fc-event {
+  display: block; margin: 3px 6px; border-radius: 6px; border: 0; padding: 3px 8px; font-size: 12px;
+  background: var(--voiz-primary) !important; color: #fff !important; overflow-wrap: anywhere;
+}
+html body .fc .fc-event :is(.fc-event-title, span) { color: inherit; }
+
+/* Sidebar: create button, mini jQuery-UI datepicker, download links. */
+html body .calendar-sidebar > :is(.btn, .button, button[type="button"]) { width: 100%; min-height: 44px; }
+html body .calendar-sidebar .ui-datepicker {
+  width: 100% !important; margin: 16px 0 0 !important; padding: 0 !important;
+  border: 1px solid var(--voiz-border); border-radius: 10px;
+  background: var(--voiz-surface-2) !important; color: var(--voiz-text); font-family: inherit;
+}
+html body .calendar-sidebar .ui-datepicker-header {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px;
+  border-bottom: 1px solid var(--voiz-border); background: none !important; border-radius: 10px 10px 0 0;
+}
+html body .calendar-sidebar :is(.ui-datepicker-prev, .ui-datepicker-next) {
+  width: 32px; height: 32px; min-height: 32px; border-radius: 8px; cursor: pointer;
+  background: var(--voiz-surface-3) !important; border: 1px solid var(--voiz-border); color: var(--voiz-text);
+}
+html body .calendar-sidebar :is(.ui-datepicker-month, .ui-datepicker-year) { flex: 1 1 96px; min-width: 0; min-height: 38px; border-radius: 8px; }
+html body .calendar-sidebar .ui-datepicker-calendar { width: 100% !important; table-layout: fixed; margin: 0 !important; }
+html body .calendar-sidebar .ui-datepicker-calendar :is(th, td) { padding: 3px 0; text-align: center; border: 0 !important; background: none !important; }
+html body .calendar-sidebar .ui-datepicker-calendar th { color: var(--voiz-muted) !important; font-size: 11px; font-weight: 600; }
+html body .calendar-sidebar .ui-datepicker-calendar :is(a, .ui-state-default) {
+  display: grid; place-items: center; min-width: 28px; min-height: 28px; margin: 0 auto;
+  border-radius: 7px; border: 0 !important; background: none !important; color: var(--voiz-text) !important;
+}
+html body .calendar-sidebar .ui-datepicker-calendar :is(.ui-state-hover, .ui-state-focus) {
+  background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important;
+}
+html body .calendar-sidebar .ui-datepicker-calendar .ui-state-active { background: var(--voiz-primary) !important; color: #fff !important; font-weight: 700; }
+html body .calendar-sidebar .ui-datepicker .ui-state-highlight { background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important; }
+html body .calendar-sidebar > a[href] {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+  margin-top: 14px; padding: 12px 14px; border: 1px solid var(--voiz-border); border-radius: 10px;
+  background: var(--voiz-surface-2); color: var(--voiz-text);
+}
+
 /* Jalali companion card (markup rendered by voiz-ui.js; CSS only here). */
 .voiz-jalali-card { width: 100%; padding: 16px; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); box-shadow: var(--voiz-card-shadow); direction: rtl; user-select: none; }
 .voiz-jalali-card + .voiz-jalali-card { margin-top: 16px; }
@@ -162,9 +241,6 @@ html body .fc .fc-event { border-radius: 6px; border: 0; padding: 2px 6px; font-
 .voiz-jalali-day.voiz-jalali-holiday { color: var(--voiz-danger); }
 .voiz-jalali-day.voiz-jalali-today { background: var(--voiz-primary); color: #fff; font-weight: 700; }
 .voiz-jalali-foot { margin-top: 10px; font-size: 12px; color: var(--voiz-muted); text-align: center; }
-
-}
-
 
 /* Issue 10 — Call monitoring panel (مونیتورینگ تماس). */
 html body .pbxpanel { border: 1px solid var(--voiz-border) !important; border-radius: 12px; background: var(--voiz-bg-soft) !important; padding: 10px !important; }
@@ -189,9 +265,6 @@ html body #controlPanelApplication :is(.panel-area, .area, fieldset) { border: 1
 html body #controlPanelApplication :is(h3, h4, .area-title) { color: var(--voiz-heading) !important; }
 html body #controlPanelApplication img.icon { opacity: .9; }
 
-html body .dataTables_wrapper .dataTables_length select { min-height: 40px; border-radius: 8px; padding-inline-end: 26px; }
-html body .dataTables_wrapper .dataTables_scroll { border: 1px solid var(--voiz-border); border-radius: 10px; overflow: hidden; }
-
 /* Issue 11 — FOP2 (Operator Panel + FOP2 Manager frames). */
 html body.voiz-embedded :is(.TabPage, .fop2-sidebar, .sidebar, .navmenu, .nav-stacked) {
   background: var(--voiz-sidebar-bg) !important; border-color: var(--voiz-border) !important; color: var(--voiz-sidebar-text) !important;
@@ -209,10 +282,8 @@ html body.voiz-embedded :is(.panel, .card, .box, .widget) {
 }
 html body.voiz-embedded :is(.panel-title, .card-title, .box-title, .widget-title) { color: var(--voiz-heading) !important; }
 html body.voiz-embedded :is(.alert-info, .alert-success) { background: var(--voiz-success-soft) !important; color: var(--voiz-success) !important; border-color: var(--voiz-success) !important; border-radius: 10px; }
-html body.voiz-embedded :is(.alert-warning) { background: var(--voiz-warning-soft) !important; color: var(--voiz-warning) !important; border-color: var(--voiz-warning) !important; border-radius: 10px; }
+html body.voiz-embedded .alert-warning { background: var(--voiz-warning-soft) !important; color: var(--voiz-warning) !important; border-color: var(--voiz-warning) !important; border-radius: 10px; }
 html body.voiz-embedded .stat :is(.stat-value, .stat-number, .count) { color: var(--voiz-heading) !important; }
-
-html body .dataTables_wrapper .dataTables_scrollHead { background: var(--voiz-surface-2) !important; border: 0 !important; }
 
 /* Issue 12 — Hardware detection text contrast (یافتن سخت‌افزار). */
 html body .voiz-hardware :is(td, th, label, span, div, legend, p) { color: var(--voiz-text); }
@@ -267,20 +338,17 @@ html body.voiz-embedded .nav-tabs > :is(.active, li.active) > :is(a, a:hover, a:
 @media (max-width: 767px) {
   html body.voiz-embedded :is(#left, #right) { grid-template-columns: minmax(0, 1fr); }
   html body.voiz-embedded table { table-layout: fixed; }
-  html body .calendar-env .calendar-sidebar { width: 100% !important; }
+  html body .calendar-env .calendar-sidebar { width: 100% !important; flex: 1 1 100%; }
   html body .voiz-jalali-grid { gap: 2px; }
   html body .voiz-jalali-day { min-height: 28px; }
 }
 
-html body .dataTables_wrapper .dataTables_scrollHead th {
-  padding: 12px 10px !important; color: var(--voiz-heading) !important; font-weight: 600; white-space: nowrap;
-  border-bottom: 1px solid var(--voiz-border) !important;
-}
-html body .dataTables_wrapper .dataTables_scrollBody :is(td, th) { padding: 10px; vertical-align: middle; border-bottom: 1px solid var(--voiz-border) !important; }
-html body .dataTables_wrapper .dataTables_info { padding: 10px 12px 4px !important; color: var(--voiz-muted) !important; font-size: 12.5px; }
-html body .dataTables_wrapper .dataTables_paginate { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 8px 12px 12px !important; }
-/* Recordings page legacy paints (original template restored in v7.1) */
-html body :is(#myChart, canvas.chartjs) { background: var(--voiz-surface) !important; border-radius: 8px; }
-html body mark { background: var(--voiz-primary) !important; color: #fff !important; border-radius: 4px; padding: 0 4px; }
 
-html body.voiz-embedded :is(#tabs, #menu, .menu) { position: static !important; display: flex; flex-wrap: wrap; gap: 6px; }
+
+
+
+
+
+
+
+

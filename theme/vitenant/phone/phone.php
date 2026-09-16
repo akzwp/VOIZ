@@ -19,9 +19,9 @@ $password = getAsteriskExtensionPassword($extension);
     <script defer src="js/tracer.js"></script>
     <script defer src="config.js"></script>
     <script defer src="phone.js"></script>
-    <link rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.1">
+    <link rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.2">
     <script>(function(){var t='dark';try{t=localStorage.getItem('voiz-theme')==='light'?'light':'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);})();</script>
-    <script defer src="/themes/vitenant/js/voiz-ui.js?v=7.1.1"></script>
+    <script defer src="/themes/vitenant/js/voiz-ui.js?v=7.1.2"></script>
 </head>
 
 <body class="voiz-phone" onload="documentIsReady()">

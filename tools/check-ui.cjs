@@ -145,6 +145,12 @@ async function run() {
   check(admin.classList.contains('voiz-open'), 'Admin dropdown opens from its own toggle');
   event(w, d, 'keydown', { key: 'Escape' });
   check(!admin.classList.contains('voiz-open'), 'Escape closes the admin dropdown');
+  const cal = domFor(page('calendar'));
+  check(cal.d.querySelector('.calendar-sidebar .voiz-jalali-card'), 'Jalali calendar renders beside the Gregorian one');
+  check(cal.d.querySelectorAll('.voiz-jalali-day').length >= 29, 'Jalali month grid is complete');
+  check(/[۰-۹]/.test(cal.d.querySelector('.voiz-jalali-grid').textContent), 'Jalali digits are Persian');
+  const mini = cal.d.querySelector('.ui-datepicker-calendar thead th');
+  check(!/^[a-z]{2}$/i.test(mini.textContent.trim()), 'Mini datepicker weekday header is Persian');
   const login = domFor(page('login'));
   const password = login.d.querySelector('#input_pass'); password.value = 'fixture-only';
   const toggle = login.d.querySelector('.voiz-pass-toggle'); toggle.click();
