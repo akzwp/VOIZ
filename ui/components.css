@@ -161,7 +161,15 @@ html body :is(.ui-dialog, .modal-content, .neo-modal-issabel-popup-box, .swal2-p
 }
 html body .modal-dialog { max-width: calc(100vw - 24px); margin: 24px auto; }
 html body :is(.modal-content, .ui-dialog, .neo-modal-issabel-popup-box) { max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); overflow-y: auto; }
-html body .neo-modal-issabel-popup-box { display: none; position: fixed !important; width: min(600px, calc(100vw - 24px)); top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%); margin: 0 !important; padding: 0; z-index: 2000; }
+html body .neo-modal-issabel-popup-box { display: none; position: fixed !important; width: min(600px, calc(100vw - 24px)) !important; height: auto !important; min-height: 140px; max-height: min(640px, calc(100dvh - 48px)); top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%) !important; margin: 0 !important; padding: 0 !important; z-index: 2000 !important; overflow-y: auto !important; }
+html body .neo-modal-issabel-popup-title { padding-inline-end: 56px !important; }
+/* The change-password form (and every framework popup) must be readable and
+   roomy: labels above full-width fields, comfortable spacing. */
+html body .neo-modal-issabel-popup-content :is(label, .letra12 b, b) { display: block; margin: 14px 0 6px; color: var(--voiz-text-soft) !important; font-size: 13px; }
+html body .neo-modal-issabel-popup-content :is(input:not([type]), input[type="text"], input[type="password"]) { display: block; width: 100% !important; max-width: 100%; min-height: 44px; }
+html body .neo-modal-issabel-popup-content :is(table.tabForm, .voiz-form-table) { width: 100%; }
+html body .neo-modal-issabel-popup-content td { padding: 6px 8px; }
+html body .neo-modal-issabel-popup-content :is(.button, .btn, input[type="button"], input[type="submit"]) { min-width: 110px; margin-top: 14px; }
 html body .neo-modal-issabel-popup-blockmask { position: fixed; inset: 0; z-index: 1990; background: rgb(0 0 0 / 60%); }
 html body :is(.modal-header, .ui-dialog-titlebar, .neo-modal-issabel-popup-title) { padding: 16px 20px; border: 0; border-bottom: 1px solid var(--voiz-border); background: var(--voiz-surface-2) !important; color: var(--voiz-heading) !important; text-shadow: none; }
 html body :is(.modal-body, .ui-dialog-content, .neo-modal-issabel-popup-content, .swal2-content, .swal2-html-container) { padding: 20px; color: var(--voiz-text-soft) !important; background: transparent; overflow-wrap: anywhere; }

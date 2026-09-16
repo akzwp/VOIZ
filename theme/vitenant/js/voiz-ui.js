@@ -102,14 +102,22 @@
             var parent = current.parentNode;
             while (parent && parent !== menu) { if (parent.tagName === 'LI') { setExpanded(parent, true); } parent = parent.parentNode; }
         }
-        // Capture precedes Neon's direct GSAP handler, avoiding double toggles.
+        // Capture precedes Neon's direct GSAP handlers, avoiding double toggles.
+        // Category rows toggle; leaf links must still navigate, so legacy bubble
+        // handlers (which call preventDefault and kill navigation) are cut off
+        // with stopPropagation from this capture listener.
         menu.addEventListener('click', function (event) {
             var control = closest(event.target, 'a, .voiz-menu-toggle');
             if (!control || !menu.contains(control)) { return; }
             var li = control.parentNode;
             if (submenuFor(li) && li.classList.contains('has-sub')) {
                 event.preventDefault(); event.stopImmediatePropagation(); toggleCategory(li);
-            } else if (drawerMode()) { closeSidebar(false); }
+                return;
+            }
+            if (control.tagName === 'A') {
+                event.stopPropagation(); /* navigation stays enabled, legacy handlers are silenced */
+                if (drawerMode()) { closeSidebar(false); }
+            }
         }, true);
         menu.addEventListener('keydown', function (event) {
             var li = closest(event.target, 'li');
@@ -130,6 +138,13 @@
         window.fit_main_content_height = function () { /* CSS owns page height. */ };
         var page = doc.querySelector('.page-container'); if (page) { page.classList.remove('sidebar-collapsed'); }
         closeSidebar(false);
+        /* Belt and braces: whatever opens the drawer, an open drawer must never
+           stay inert (the reported "dead menu" symptom). */
+        if (window.MutationObserver) {
+            new MutationObserver(function () {
+                if (doc.body.classList.contains('voiz-sidebar-open') && sidebar && sidebar.inert) { sidebar.inert = false; }
+            }).observe(doc.body, { attributes: true, attributeFilter: ['class'] });
+        }
         var media = window.matchMedia('(max-width: 991px)');
         if (media.addEventListener) { media.addEventListener('change', function () { closeSidebar(); }); }
         else { media.addListener(function () { closeSidebar(); }); }
@@ -301,16 +316,57 @@
             modal.style.setProperty('left', '50%', 'important');
             modal.style.setProperty('top', '50%', 'important');
             modal.style.setProperty('right', 'auto', 'important');
+            modal.style.setProperty('bottom', 'auto', 'important');
             modal.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+            modal.style.setProperty('height', 'auto', 'important');
+            modal.style.setProperty('min-height', '140px', 'important');
             modal.style.setProperty('max-height', 'min(640px, calc(100vh - 48px))', 'important');
             modal.style.setProperty('overflow-y', 'auto', 'important');
             modal.style.setProperty('width', 'min(600px, calc(100vw - 24px))', 'important');
+            modal.style.setProperty('padding', '0', 'important');
             var inner = modal.querySelector('.neo-modal-issabel-popup-content');
             if (inner) { inner.style.maxHeight = 'none'; inner.style.overflow = 'visible'; }
             var field = modal.querySelector('input[type="password"], input[type="text"]');
             if (field && !modal.contains(doc.activeElement)) { setTimeout(function () { try { field.focus(); } catch (e) { /* Focusing can fail. */ } }, 40); }
         }
         new MutationObserver(center).observe(modal, { attributes: true, attributeFilter: ['style', 'class'] });
+        /* Clicking the dark mask must close the popup (same legacy close call,
+           so any pending state is cleaned up exactly as before). */
+        var mask = doc.querySelector('.neo-modal-issabel-popup-blockmask');
+        if (mask) {
+            mask.addEventListener('click', function () {
+                if (getComputedStyle(modal).display !== 'none' && typeof window.hideModalPopUP === 'function') { window.hideModalPopUP(); }
+            });
+        }
+    }
+    /* Issue: the admin dropdown (change password / logout) must open with its
+       own robust toggle, anchored so it never escapes the viewport, and be
+       closable by outside clicks and Escape. */
+    function initUserMenu() {
+        var user = doc.querySelector('.voiz-topbar-user');
+        var link = user && user.querySelector('.voiz-user-link');
+        if (!user || !link || user.__voizUserMenu) { return; }
+        user.__voizUserMenu = true;
+        link.setAttribute('aria-haspopup', 'true');
+        function close() {
+            user.classList.remove('voiz-open');
+            link.setAttribute('aria-expanded', 'false');
+        }
+        function toggle(event) {
+            event.preventDefault(); event.stopImmediatePropagation();
+            var open = !user.classList.contains('voiz-open');
+            user.classList.toggle('voiz-open', open);
+            link.setAttribute('aria-expanded', String(open));
+        }
+        link.addEventListener('click', toggle, true);
+        doc.addEventListener('click', function (event) {
+            if (user.classList.contains('voiz-open') && !user.contains(event.target)) { close(); }
+        });
+        doc.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && user.classList.contains('voiz-open')) { close(); link.focus(); }
+        });
+        var panel = user.querySelector('.dropdown-menu');
+        if (panel) { all('a', panel).forEach(function (item) { item.addEventListener('click', function () { close(); }); }); }
     }
     function initModal() {
         var modal = doc.querySelector('.neo-modal-issabel-popup-box');
@@ -494,7 +550,7 @@
     }
     function init() {
         var css = doc.querySelector('link[href*="voiz-tailwind.css"]'); frameStyleHref = css && css.href;
-        initMenu(); initSearch(); initPassword(); patchModalCentering(); initModal(); enhanceContent(); applyTheme(storageGet(), false);
+        initMenu(); initSearch(); initPassword(); initUserMenu(); patchModalCentering(); initModal(); enhanceContent(); applyTheme(storageGet(), false);
         initOctets(); initMapTooltips(); initJalali();
         doc.addEventListener('click', function (event) {
             var toggle = closest(event.target, '.voiz-theme-toggle');

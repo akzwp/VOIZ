@@ -140,6 +140,11 @@ async function run() {
   check(!mobile.d.body.classList.contains('voiz-sidebar-open'), 'Escape closes drawer');
   eq(mobile.d.activeElement, burger, 'Drawer returns focus to opener');
   check(!mobile.d.querySelector('.main-content').inert, 'Background focus restored');
+  const admin = d.querySelector('.voiz-topbar-user'), adminLink = d.querySelector('.voiz-user-link');
+  adminLink.click();
+  check(admin.classList.contains('voiz-open'), 'Admin dropdown opens from its own toggle');
+  event(w, d, 'keydown', { key: 'Escape' });
+  check(!admin.classList.contains('voiz-open'), 'Escape closes the admin dropdown');
   const login = domFor(page('login'));
   const password = login.d.querySelector('#input_pass'); password.value = 'fixture-only';
   const toggle = login.d.querySelector('.voiz-pass-toggle'); toggle.click();
