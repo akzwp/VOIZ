@@ -1,5 +1,31 @@
 # 📋 گزارش کامل بازطراحی UI پنل VOIZ
 
+> **نسخه ۷.۱ (به‌روزرسانی):** رفع ۱۶ مشکل UI/UX گزارش‌شده — تمام تغییرات فقط لایه ظاهری.
+>
+> | # | بخش | فیکس |
+> |---|---|---|
+> | ۱ | گزارش پیشرفته صف (Asternic) | `ui/embedded.css` — بازطراحی کامل `#wrapper/#left/#right/#rest/#footer`، چندآیزل‌ها، ریسپانسیو |
+> | ۲ | ریز مکالمات / مکالمات ضبط شده | بازساخت toolbar های DataTables (`dt-buttons`، فیلتر، صفحه‌بندی) بدون تداخل |
+> | ۳ | ضربدر کنار لوگو + پاپ‌آپ تغییر رمز | X فقط در حالت drawer موبایل؛ مودال همیشه مرکز صفحه (`patchModalCentering`)؛ منوی ادمین استاندارد |
+> | ۴ | GeoIP Map تولتیپ | مهار تولتیپ داخل ویوپورت (CSS + `initMapTooltips`) |
+> | ۵ | تنظیمات تلفنی + کنتراست متن | بخش PBX در `embedded.css` + خنثی‌سازی رنگ‌های hardcoded تیره/روشن |
+> | ۶ | سرور DHCP ورودی IP | اکتت‌های ۳رقمی با پرش خودکار، نقطه، paste کامل (`initOctets` + CSS) |
+> | ۷ | دیتای میزکار | قالب‌های `dashboard` و `monitoring` به مارکاپ اصلی ایزابل برگشت؛ گرافیک فقط با CSS (`table#applet_grid`) |
+> | ۸ | دفترچه تلفن افزودن آیتم | فرم `tabForm` استاندارد: لیبل/فیلد هم‌تراز، عرض کنترل‌شده |
+> | ۹ | تقویم + جلالی | استایل FullCalendar + کارت تقویم جلالی (`initJalali`) کنار تقویم میلادی |
+> | ۱۰ | مونیتورینگ تماس | تم‌کردن `.pbxpanel/.pbxelement/.pbxtooltip` |
+> | ۱۱ | FOP2 Manager / پنل اپراتور | بازطراحی embedded سایدبار/کارت/هدر فورک fop2 |
+> | ۱۲ | یافتن سخت‌افزار | کنتراست متن‌ها و fieldset های تمیز در `.voiz-hardware` |
+> | ۱۳ | QR Configurations | مهار سرریز هدرها/بدنه‌ها در صفحات فریم‌شده |
+> | ۱۴ | تنظیم گوشی‌ها | جدول‌های embedded با padding/border یکنواخت و بدون تداخل |
+> | ۱۵ | افزونه‌ها (flexigrid) | بازطراحی `.flexigrid` (toolbar/hDiv/bDiv/pDiv) |
+> | ۱۶ | رادیوباتن/سوییچ (Beta Channel) | ری‌دیزاین سراسری checkbox/radio/switch با CSS خالص |
+>
+> تغییرات: `ui/embedded.css` (جدید)، `ui/components.css`، `ui/shell.css`، `js/voiz-ui.js`، `js/voiz-embedded.js` (جدید)، `theme/pbxconfig/footer_content.php`، بازگردانی ۶ قالب dashboard/monitoring، نسخه کش `v=7.1.0`.
+
+---
+# 📋 گزارش کامل بازطراحی UI پنل VOIZ
+
 > گزارش نهایی کاستومایز تم `vitenant` ایزابل — تمام موارد خواسته‌شده (۱ تا ۱۳) به‌علاوه بررسی و رفع باگ‌های پنهان UI/UX.
 > **هیچ فایل PHP یا منطقی دستکاری نشده است.** تمام تغییرات فقط در لایه‌ی ظاهری (CSS / JS رابط کاربری / Template HTML) است.
 

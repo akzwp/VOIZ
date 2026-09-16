@@ -4,6 +4,7 @@
 @import "./components.css";
 @import "./modules.css";
 @import "./overflow.css";
+@import "./embedded.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,0 +1,286 @@
+/* VOIZ / AKZ — module-specific presentation fixes.
+   Everything here is paint-only: selectors, colors, spacing, wrapping.
+   No request, form target, id or class contract is altered. */
+
+/* Issue 1 — Asternic Call Center Stats ("گزارش پیشرفته صف").
+   The report is framed; the shell injects this stylesheet into the
+   frame so these rules win over asternic's basic.css. */
+html body.voiz-embedded #wrapper, html body.voiz-embedded #main, html body.voiz-embedded #contents {
+  width: auto !important; max-width: 100% !important; min-width: 0 !important;
+  margin: 0 !important; padding: 0 !important; float: none !important;
+  background: none !important; border: 0 !important; overflow: visible !important;
+}
+html body.voiz-embedded #contents { padding: 4px !important; }
+html body.voiz-embedded :is(#left, #right) {
+  float: none !important; width: 100% !important; max-width: 100%; margin: 0 0 20px !important;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; align-items: start;
+}
+html body.voiz-embedded :is(#left, #right) > :is(fieldset, div) { min-width: 0; }
+html body.voiz-embedded :is(#left, #right) table { width: 100% !important; table-layout: fixed; }
+html body.voiz-embedded :is(#left, #right) :is(td, th) { padding: 6px; }
+html body.voiz-embedded :is(#left, #right) select[multiple] {
+  width: 100% !important; max-width: 100% !important; height: 170px !important;
+  padding: 8px; border: 1px solid var(--voiz-border-strong); border-radius: 8px;
+  background: var(--voiz-input-bg); color: var(--voiz-text);
+}
+html body.voiz-embedded :is(#left, #right) select[multiple]:focus { border-color: var(--voiz-primary-text); }
+html body.voiz-embedded :is(#left, #right) :is(input[type="button"], input[type="submit"], button) { min-height: 36px; padding: 6px 10px; font-size: 16px; }
+html body.voiz-embedded #rest { float: none !important; clear: both; width: 100% !important; margin: 0 0 16px !important; }
+html body.voiz-embedded #rest table { width: 100% !important; }
+html body.voiz-embedded #rest :is(td, th) { padding: 6px 8px; color: var(--voiz-text); }
+html body.voiz-embedded #rest select { min-width: 88px; }
+html body.voiz-embedded #footer {
+  float: none !important; width: 100% !important; padding: 14px 0 4px !important;
+  border-top: 1px solid var(--voiz-border); color: var(--voiz-muted) !important; font-size: 12px; text-align: center;
+}
+html body.voiz-embedded #footer :is(a, b, span) { color: var(--voiz-muted) !important; }
+html body.voiz-embedded :is(td, th) { color: var(--voiz-text); }
+html body.voiz-embedded th { color: var(--voiz-heading) !important; }
+
+/* Issue 2 — CDR ("ریز مکالمات") and recordings ("مکالمات ضبط شده")
+   DataTables: keep toolbar groups from colliding and make every
+   control a real, aligned, touchable control. */
+html body .dataTables_wrapper { display: flow-root; }
+html body .dataTables_wrapper > :is(.dt-buttons, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate) {
+  position: static !important; float: none !important;
+}
+html body .dataTables_wrapper > .dt-buttons {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 12px !important; margin: 0 0 4px !important;
+  background: var(--voiz-surface-2); border: 1px solid var(--voiz-border); border-radius: 10px 10px 0 0;
+}
+html body .dataTables_wrapper > .dt-buttons .dt-button {
+  min-height: 38px; padding: 7px 13px; border-radius: 8px; border: 1px solid var(--voiz-border);
+  background: var(--voiz-surface-3); color: var(--voiz-text); font-size: 13px; font-weight: 600;
+}
+html body .dataTables_wrapper > .dt-buttons .dt-button:hover { border-color: var(--voiz-primary-text); color: var(--voiz-primary-text); }
+html body .dataTables_wrapper > .dt-buttons :is(.btn-danger, .btn-delete) {
+  margin-inline-start: auto; background: var(--voiz-danger-soft); border-color: var(--voiz-danger); color: var(--voiz-danger);
+}
+html body .dataTables_wrapper .dataTables_length, html body .dataTables_wrapper .dataTables_filter {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px;
+}
+html body .dataTables_wrapper .dataTables_filter input {
+  min-width: 180px; width: min(240px, 100%); min-height: 40px; margin: 0;
+  border-radius: 8px; background: var(--voiz-input-bg) !important; color: var(--voiz-text) !important;
+}
+
+/* Issue 4 — GeoIP Map tooltips (and any framed map tooltip):
+   keep the country label inside its bubble, LTR, on one line. */
+html body :is(.voiz-embedded, .neo-module-content) :is(
+  .jvectormap-tip, .jvectormap-label, .ammap-tooltip, .map-tooltip,
+  .maptooltip, .country-tooltip, .map-label, .qtip-content, .leaflet-tooltip) {
+  direction: ltr; text-align: center; white-space: nowrap; max-width: none;
+  padding: 7px 12px; border-radius: 8px; font-size: 13px; line-height: 1.6;
+  background: var(--voiz-surface-3) !important; color: var(--voiz-heading) !important;
+  border: 1px solid var(--voiz-border-strong) !important; box-shadow: var(--voiz-popover-shadow) !important;
+
+/* Issues 5 / 13 / 14 — PBX Configuration pages (تنظیمات تلفنی،
+   تنظیمات دسته‌ای/QR Configurations، تنظیم گوشی‌ها). The FreePBX
+   UI is framed; its legacy dark-on-dark text is forced onto the
+   project surfaces. */
+html body.voiz-embedded, html body.voiz-embedded .content, html body.voiz-embedded #content {
+  background: var(--voiz-bg) !important; color: var(--voiz-text) !important;
+}
+html body.voiz-embedded :is(.page-content, .well, .well-small, .panel, .panel-body, .box, .section) {
+  background: var(--voiz-surface) !important; color: var(--voiz-text) !important;
+  border: 1px solid var(--voiz-border); border-radius: 12px;
+}
+html body.voiz-embedded :is(.page-header, h1, h2, h3, h4, h5, h6, .section-title, legend) { color: var(--voiz-heading) !important; }
+html body.voiz-embedded :is(td, th, label, span, p, li, div, strong, b) { text-shadow: none; }
+/* FreePBX section headings must never overflow their card (QR page). */
+html body.voiz-embedded :is(.section-header, .panel-heading, .box-header, .page-title, h1, h2, h3) {
+  max-width: 100%; overflow-wrap: anywhere; white-space: normal; height: auto !important;
+}
+html body.voiz-embedded :is(.section-body, .panel-body, .box-content) { min-width: 0; overflow-wrap: anywhere; }
+html body.voiz-embedded .table { width: 100%; margin-bottom: 0; border: 1px solid var(--voiz-border); border-radius: 10px; border-collapse: separate; border-spacing: 0; overflow: hidden; }
+html body.voiz-embedded .table :is(th, td) { padding: 10px; vertical-align: middle; }
+html body.voiz-embedded .table > :is(thead, tbody) > tr > th {
+  background: var(--voiz-surface-2) !important; color: var(--voiz-heading) !important; border-bottom: 1px solid var(--voiz-border);
+}
+html body.voiz-embedded .table > tbody > tr > td { border-top: 1px solid var(--voiz-border); color: var(--voiz-text); }
+html body.voiz-embedded .table-striped tbody tr:nth-child(odd) td { background: var(--voiz-bg-soft); }
+html body.voiz-embedded .table :is(td, th) { white-space: normal; overflow-wrap: anywhere; }
+html body.voiz-embedded .table img { vertical-align: middle; margin-inline-end: 6px; }
+html body.voiz-embedded :is(input[type="text"], input[type="password"], select, textarea) {
+  background: var(--voiz-input-bg) !important; color: var(--voiz-text) !important; border: 1px solid var(--voiz-border-strong) !important;
+}
+html body.voiz-embedded :is(.btn, button) {
+  border-radius: 8px; border: 1px solid var(--voiz-border-strong); background: var(--voiz-surface-2); color: var(--voiz-text);
+}
+html body.voiz-embedded .btn-primary, html body.voiz-embedded button[type="submit"] {
+  background: var(--voiz-primary) !important; border-color: var(--voiz-primary) !important; color: #fff !important;
+}
+html body.voiz-embedded :is(.grid, .list-view) { width: 100%; overflow-x: auto; }
+/* Old hard-coded light boxes / dark text on dark embedded pages. */
+html body.voiz-embedded :is([style*="background:#fff"], [style*="background:#FFFFFF"], [style*="background: #fff"], [style*="background: white"], [style*="background-color:#fff"], [style*="background-color: #fff"], [style*="background-color: white"]) {
+  background: var(--voiz-surface) !important; color: var(--voiz-text) !important;
+}
+html body.voiz-embedded :is([style*="color:#000"], [style*="color: #000"], [style*="color:black"], [style*="color: black"], [style*="color:#000000"]) { color: var(--voiz-text) !important; }
+
+/* Issue 8 — Address book new-contact form (دفترچه تلفن).
+   Labels and fields become one consistent, aligned column pair. */
+html body .neo-module-content :is(#tr_new_contact, table.tabForm) td:is([align="left"], [align="right"]) { text-align: start !important; }
+html body .neo-module-content table.tabForm label, html body .neo-module-content table.tabForm b { color: var(--voiz-text-soft); font-weight: 600; }
+html body .neo-module-content table.tabForm input[type="text"], html body .neo-module-content table.tabForm input:not([type]) { width: min(100%, 360px); }
+html body .neo-module-content table.tabForm textarea { width: min(100%, 560px); }
+html body .neo-module-content table.tabForm tr > td { padding: 8px 10px; vertical-align: middle; }
+html body .neo-module-content img[src*="Icon-user"] { max-width: 120px; height: auto; border-radius: 10px; background: var(--voiz-surface-2); padding: 6px; border: 1px solid var(--voiz-border); }
+html body .neo-module-content :is(#tr_from_csv td) { padding: 10px; }
+html body .neo-module-content input[name="address_book_options"], html body .neo-module-content input[name="address_book_status"] { margin-inline-end: 8px; }
+
+
+
+/* Issue 9 — Calendar (FullCalendar) restyle + Jalali companion card. */
+html body .calendar-env { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; }
+html body .calendar-env .calendar-sidebar {
+  position: static !important; float: none !important; width: min(300px, 100%) !important; flex: 0 0 auto;
+  margin: 0 !important; padding: 16px !important; background: var(--voiz-surface) !important;
+  border: 1px solid var(--voiz-border); border-radius: 12px; box-shadow: var(--voiz-card-shadow);
+}
+html body .calendar-env .calendar-body { flex: 1 1 480px; min-width: 0; }
+html body .calendar-env .calendar-main { background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border); border-radius: 12px; overflow: hidden; }
+html body .calendar-env .fc-header { background: var(--voiz-surface-2) !important; padding: 12px 14px; border-bottom: 1px solid var(--voiz-border); }
+html body .calendar-env .fc-header :is(a, button) { border-radius: 8px; }
+html body .fc :is(th, td.fc-day-header) { background: var(--voiz-surface-2) !important; color: var(--voiz-text-soft) !important; border: 0 !important; padding: 9px 6px; }
+html body .fc :is(td.fc-widget-content) { background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border) !important; color: var(--voiz-text); }
+html body .fc .fc-other-month { background: var(--voiz-bg-soft) !important; color: var(--voiz-muted) !important; }
+html body .fc .fc-today { background: var(--voiz-primary-soft) !important; }
+html body .fc .fc-event { border-radius: 6px; border: 0; padding: 2px 6px; font-size: 12px; }
+/* Jalali companion card (markup rendered by voiz-ui.js; CSS only here). */
+.voiz-jalali-card { width: 100%; padding: 16px; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); box-shadow: var(--voiz-card-shadow); direction: rtl; user-select: none; }
+.voiz-jalali-card + .voiz-jalali-card { margin-top: 16px; }
+.voiz-jalali-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.voiz-jalali-title { font-weight: 700; font-size: 15px; color: var(--voiz-heading); }
+.voiz-jalali-nav { display: flex; align-items: center; gap: 6px; }
+.voiz-jalali-nav button { min-width: 34px; min-height: 34px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--voiz-border); background: var(--voiz-surface-2); color: var(--voiz-text); font-size: 14px; cursor: pointer; }
+.voiz-jalali-nav button:hover { border-color: var(--voiz-primary-text); color: var(--voiz-primary-text); }
+.voiz-jalali-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.voiz-jalali-grid .voiz-jalali-dow { font-size: 11px; color: var(--voiz-muted); text-align: center; padding: 4px 0; }
+.voiz-jalali-day { min-height: 30px; display: grid; place-items: center; border-radius: 7px; font-size: 12.5px; color: var(--voiz-text); background: none; border: 0; padding: 0; }
+.voiz-jalali-day.voiz-jalali-out { color: var(--voiz-muted); opacity: .45; }
+.voiz-jalali-day.voiz-jalali-holiday { color: var(--voiz-danger); }
+.voiz-jalali-day.voiz-jalali-today { background: var(--voiz-primary); color: #fff; font-weight: 700; }
+.voiz-jalali-foot { margin-top: 10px; font-size: 12px; color: var(--voiz-muted); text-align: center; }
+
+}
+
+
+/* Issue 10 — Call monitoring panel (مونیتورینگ تماس). */
+html body .pbxpanel { border: 1px solid var(--voiz-border) !important; border-radius: 12px; background: var(--voiz-bg-soft) !important; padding: 10px !important; }
+html body .pbxelement {
+  width: auto !important; max-width: 190px; min-width: 150px; height: auto !important; min-height: 32px;
+  padding: 4px 10px !important; border: 1px solid var(--voiz-border) !important; border-radius: 10px !important;
+  background: var(--voiz-surface) !important; color: var(--voiz-text) !important; font-size: 12px !important; line-height: 1.7 !important;
+  box-shadow: none; transition: border-color .15s ease, background .15s ease;
+}
+html body .pbxelement > div { white-space: normal; overflow-wrap: anywhere; }
+html body .pbxelement:hover { border-color: var(--voiz-primary-text) !important; }
+html body .pbxactive { background: var(--voiz-primary-soft) !important; border-color: var(--voiz-primary-text) !important; color: var(--voiz-primary-text) !important; }
+html body ul.lisortable { float: none !important; padding: 6px !important; margin: 0 !important; }
+html body :is(a.pbxtooltip > div, .pbxtooltip div) {
+  background: var(--voiz-surface-3) !important; color: var(--voiz-heading) !important;
+  border: 1px solid var(--voiz-border-strong) !important; border-radius: 8px !important;
+  box-shadow: var(--voiz-popover-shadow) !important; white-space: normal; z-index: 6000;
+}
+html body span.monitor { color: var(--voiz-success) !important; font-size: 10px; }
+html body #controlPanelApplication .statusbar { color: var(--voiz-text-soft); }
+html body #controlPanelApplication :is(.panel-area, .area, fieldset) { border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); padding: 10px; margin: 8px; min-width: 0; }
+html body #controlPanelApplication :is(h3, h4, .area-title) { color: var(--voiz-heading) !important; }
+html body #controlPanelApplication img.icon { opacity: .9; }
+
+html body .dataTables_wrapper .dataTables_length select { min-height: 40px; border-radius: 8px; padding-inline-end: 26px; }
+html body .dataTables_wrapper .dataTables_scroll { border: 1px solid var(--voiz-border); border-radius: 10px; overflow: hidden; }
+
+/* Issue 11 — FOP2 (Operator Panel + FOP2 Manager frames). */
+html body.voiz-embedded :is(.TabPage, .fop2-sidebar, .sidebar, .navmenu, .nav-stacked) {
+  background: var(--voiz-sidebar-bg) !important; border-color: var(--voiz-border) !important; color: var(--voiz-sidebar-text) !important;
+}
+html body.voiz-embedded :is(.TabPage a, .fop2-sidebar a, .sidebar a) { color: var(--voiz-sidebar-text) !important; border-radius: 8px; }
+html body.voiz-embedded :is(.TabPage a:hover, .fop2-sidebar a:hover, .sidebar a:hover, .TabPage .active, .sidebar .active) {
+  background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important;
+}
+html body.voiz-embedded :is(.navbar, .topbar, .header, .page-header) {
+  background: var(--voiz-surface-2) !important; border-bottom: 1px solid var(--voiz-border) !important; color: var(--voiz-heading) !important;
+}
+html body.voiz-embedded :is(.panel, .card, .box, .widget) {
+  background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border) !important; border-radius: 12px !important;
+  color: var(--voiz-text) !important; box-shadow: var(--voiz-card-shadow) !important;
+}
+html body.voiz-embedded :is(.panel-title, .card-title, .box-title, .widget-title) { color: var(--voiz-heading) !important; }
+html body.voiz-embedded :is(.alert-info, .alert-success) { background: var(--voiz-success-soft) !important; color: var(--voiz-success) !important; border-color: var(--voiz-success) !important; border-radius: 10px; }
+html body.voiz-embedded :is(.alert-warning) { background: var(--voiz-warning-soft) !important; color: var(--voiz-warning) !important; border-color: var(--voiz-warning) !important; border-radius: 10px; }
+html body.voiz-embedded .stat :is(.stat-value, .stat-number, .count) { color: var(--voiz-heading) !important; }
+
+html body .dataTables_wrapper .dataTables_scrollHead { background: var(--voiz-surface-2) !important; border: 0 !important; }
+
+/* Issue 12 — Hardware detection text contrast (یافتن سخت‌افزار). */
+html body .voiz-hardware :is(td, th, label, span, div, legend, p) { color: var(--voiz-text); }
+html body .voiz-hardware :is(legend, th, .moduleTitle, h2, h3) { color: var(--voiz-heading) !important; font-weight: 600; }
+html body .voiz-hardware fieldset { border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); padding: 14px 16px; margin: 0 0 14px; }
+html body .voiz-hardware fieldset legend { padding: 0 10px; background: none; }
+html body .voiz-hardware td img { vertical-align: middle; margin-inline-end: 8px; }
+html body .voiz-hardware :is([style*="color:red"], [style*="color: red"], .required) { color: var(--voiz-danger) !important; }
+html body .voiz-hardware div[style*="text-align:center"] { color: var(--voiz-muted); }
+
+/* Issue 15 — Add-ons manager (flexigrid lists). */
+html body .flexigrid { display: flex; flex-direction: column; width: 100% !important; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface) !important; overflow: hidden; }
+html body .flexigrid .tDiv {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px;
+  background: var(--voiz-surface-2) !important; border-bottom: 1px solid var(--voiz-border);
+}
+html body .flexigrid .tDiv :is(label, input, select, button, .btn) { margin: 0; }
+html body .flexigrid .tDiv input[type="text"], html body .flexigrid .tDiv input[type="search"] { min-width: 160px; }
+html body .flexigrid .tDiv .fbutton, html body .flexigrid .tDiv .btn {
+  min-height: 38px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--voiz-border);
+  background: var(--voiz-surface-3); color: var(--voiz-text); cursor: pointer;
+}
+html body .flexigrid .hDiv { background: var(--voiz-surface-2) !important; border-bottom: 1px solid var(--voiz-border); }
+html body .flexigrid .hDiv table { width: 100%; }
+html body .flexigrid .hDiv :is(th, .th) {
+  padding: 10px; color: var(--voiz-heading) !important; font-weight: 600; text-align: start; border: 0 !important; background: none !important;
+}
+html body .flexigrid .bDiv { min-height: 160px; width: 100% !important; overflow: auto; background: var(--voiz-surface) !important; border: 0 !important; }
+html body .flexigrid .bDiv :is(td, .td, div.cell) { color: var(--voiz-text) !important; border: 0 !important; padding: 10px; overflow-wrap: anywhere; background: none !important; }
+html body .flexigrid .bDiv tr:hover :is(td, .td) { background: var(--voiz-surface-2) !important; }
+html body .flexigrid .pDiv {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 10px 12px; background: var(--voiz-surface-2) !important; border-top: 1px solid var(--voiz-border);
+  color: var(--voiz-text-soft); font-size: 12px;
+}
+html body .flexigrid :is(.btnseparator, .pDiv .pGroup) { border-color: var(--voiz-border); }
+html body .flexigrid .bDiv :is(.fbutton, img) { vertical-align: middle; }
+html body .flexigrid :is(.label, .badge) { border-radius: 6px; padding: 2px 8px; }
+
+/* Embedded generic form polish (DHCP server, endpoints, QR and friends). */
+html body.voiz-embedded .form-group, html body.voiz-embedded .control-group { display: flow-root; margin-bottom: 12px; }
+html body.voiz-embedded :is(.help-block, .help-inline, .description) { color: var(--voiz-muted); font-size: 12.5px; }
+html body.voiz-embedded select[multiple] { width: 100%; height: auto; min-height: 120px; padding: 8px; background: var(--voiz-input-bg); color: var(--voiz-text); border: 1px solid var(--voiz-border-strong); border-radius: 8px; }
+html body.voiz-embedded .nav-tabs { border-bottom: 1px solid var(--voiz-border); gap: 4px; display: flex; flex-wrap: wrap; }
+html body.voiz-embedded .nav-tabs > li > a, html body.voiz-embedded .nav-tabs > a {
+  border-radius: 8px 8px 0 0; border: 1px solid transparent; background: none; color: var(--voiz-text-soft);
+}
+html body.voiz-embedded .nav-tabs > :is(.active, li.active) > :is(a, a:hover, a:focus) {
+  background: var(--voiz-surface) !important; border-color: var(--voiz-border) !important; color: var(--voiz-primary-text) !important;
+}
+
+@media (max-width: 767px) {
+  html body.voiz-embedded :is(#left, #right) { grid-template-columns: minmax(0, 1fr); }
+  html body.voiz-embedded table { table-layout: fixed; }
+  html body .calendar-env .calendar-sidebar { width: 100% !important; }
+  html body .voiz-jalali-grid { gap: 2px; }
+  html body .voiz-jalali-day { min-height: 28px; }
+}
+
+html body .dataTables_wrapper .dataTables_scrollHead th {
+  padding: 12px 10px !important; color: var(--voiz-heading) !important; font-weight: 600; white-space: nowrap;
+  border-bottom: 1px solid var(--voiz-border) !important;
+}
+html body .dataTables_wrapper .dataTables_scrollBody :is(td, th) { padding: 10px; vertical-align: middle; border-bottom: 1px solid var(--voiz-border) !important; }
+html body .dataTables_wrapper .dataTables_info { padding: 10px 12px 4px !important; color: var(--voiz-muted) !important; font-size: 12.5px; }
+html body .dataTables_wrapper .dataTables_paginate { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 8px 12px 12px !important; }
+/* Recordings page legacy paints (original template restored in v7.1) */
+html body :is(#myChart, canvas.chartjs) { background: var(--voiz-surface) !important; border-radius: 8px; }
+html body mark { background: var(--voiz-primary) !important; color: #fff !important; border-radius: 4px; padding: 0 4px; }
+
+html body.voiz-embedded :is(#tabs, #menu, .menu) { position: static !important; display: flex; flex-wrap: wrap; gap: 6px; }

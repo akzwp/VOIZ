@@ -44,7 +44,7 @@
 
         {$HEADER}
     {$HEADER_MODULES}
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.0.0">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.0">
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body voiz-cdr-page" {$BODYPARAMS}>
 

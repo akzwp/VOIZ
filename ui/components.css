@@ -11,8 +11,73 @@ html body input::placeholder, html body textarea::placeholder { color: var(--voi
 html body :is(input, select, textarea):focus { border-color: var(--voiz-primary-text) !important; }
 html body :is(input, select, textarea):disabled { background: var(--voiz-surface-3) !important; color: var(--voiz-muted) !important; cursor: not-allowed; opacity: .75; }
 html body :is(input, textarea)[readonly] { background: var(--voiz-surface-2) !important; }
-html body input[type="checkbox"], html body input[type="radio"] { width: 18px; height: 18px; min-height: 0; padding: 0; margin: 4px; accent-color: var(--voiz-primary); vertical-align: middle; flex-shrink: 0; }
+/* (checkbox/radio theming moved below — see "Issue 16".) */
 html body input[type="file"] { max-width: 100%; color: var(--voiz-text-soft); padding: 8px; border: 1px dashed var(--voiz-border-strong); border-radius: 8px; }
+html body input[type="file"] { max-width: 100%; color: var(--voiz-text-soft); padding: 8px; border: 1px dashed var(--voiz-border-strong); border-radius: 8px; }
+
+/* Issue 16: themed radio buttons / checkboxes / switches (Beta Channel and all
+   other toggle controls). Pure presentation: the inputs keep their native
+   behaviour and accent state so forms submit exactly as before. */
+html body input[type="radio"], html body input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none; position: relative;
+  width: 20px; height: 20px; min-height: 0; padding: 0; margin: 5px;
+  border: 2px solid var(--voiz-border-strong); border-radius: 6px;
+  background: var(--voiz-input-bg); cursor: pointer; vertical-align: middle;
+  transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+}
+html body input[type="radio"] { border-radius: 50%; }
+html body input[type="radio"]:hover, html body input[type="checkbox"]:hover { border-color: var(--voiz-primary-text); }
+html body input[type="radio"]:checked {
+  border-color: var(--voiz-primary); background: var(--voiz-primary);
+  box-shadow: inset 0 0 0 4px var(--voiz-input-bg);
+}
+html body input[type="checkbox"]:checked { border-color: var(--voiz-primary); background: var(--voiz-primary); }
+html body input[type="checkbox"]:checked::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 5px;
+  border-left: 2.4px solid #fff; border-bottom: 2.4px solid #fff;
+  transform: translate(-50%, -65%) rotate(-45deg);
+}
+html body input[type="radio"]:focus-visible, html body input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--voiz-primary-text); outline-offset: 3px;
+}
+html body input[type="radio"]:disabled, html body input[type="checkbox"]:disabled { opacity: .45; cursor: not-allowed; }
+/* Radio/checkbox rows must read as one aligned control. */
+html body label > input[type="radio"], html body label > input[type="checkbox"],
+html body td > input[type="radio"] + :is(span, b, label), html body td > input[type="checkbox"] + :is(span, b, label) { vertical-align: middle; }
+html body :is(.switch, .bulma-switch, [class*="switch"]):is(label) { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+html body input[type="checkbox"].switch, html body input[type="checkbox"][class*="switch"] {
+  width: 46px; height: 26px; border-radius: 999px; background: var(--voiz-surface-3); border-color: var(--voiz-border-strong);
+}
+html body input[type="checkbox"].switch::before, html body input[type="checkbox"][class*="switch"]::before {
+  content: ""; position: absolute; top: 50%; inset-inline-start: 3px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--voiz-muted); transform: translateY(-50%); transition: transform .18s ease, background .18s ease;
+}
+html body input[type="checkbox"].switch:checked, html body input[type="checkbox"][class*="switch"]:checked {
+  background: var(--voiz-primary-soft); border-color: var(--voiz-primary); box-shadow: none;
+}
+html body input[type="checkbox"].switch:checked::before, html body input[type="checkbox"][class*="switch"]:checked::before {
+  background: var(--voiz-primary); transform: translateY(-50%) translateX(var(--voiz-switch-shift, 0px));
+}
+html[dir="rtl"] body input[type="checkbox"].switch:checked::before, html[dir="rtl"] body input[type="checkbox"][class*="switch"]:checked::before { --voiz-switch-shift: -20px; }
+html[dir="ltr"] body input[type="checkbox"].switch:checked::before, html[dir="ltr"] body input[type="checkbox"][class*="switch"]:checked::before { --voiz-switch-shift: 20px; }
+html body input[type="checkbox"].switch:checked::after, html body input[type="checkbox"][class*="switch"]:checked::after { content: none; }
+
+/* Issue 6: dotted-quad IP octet inputs (DHCP server and similar network forms).
+   Each octet box becomes a fixed-width, centered, LTR numeric field that is
+   easy to type into; the dot separator is rendered by the module markup. */
+html body input.octet, html body input.octeto,
+html body .voiz-embedded input[maxlength="3"][size="3"],
+html body input[name*="ip"][maxlength="3"], html body input[id*="ip"][maxlength="3"] {
+  direction: ltr; text-align: center; width: 4.6ch; min-width: 4.6ch; max-width: 4.6ch;
+  padding: 9px 4px !important; font-family: Vazirmatn, Consolas, monospace !important;
+  font-size: 15px !important; font-weight: 600; letter-spacing: .5px;
+  border-radius: 8px !important; background: var(--voiz-input-bg) !important;
+  caret-color: var(--voiz-primary-text);
+}
+html body input[maxlength="3"]:focus { border-color: var(--voiz-primary-text) !important; box-shadow: 0 0 0 3px var(--voiz-primary-soft) !important; }
+/* Hide native number spinners inside octets and network forms. */
+html body input[maxlength="3"]::-webkit-outer-spin-button, html body input[maxlength="3"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+html body input[maxlength="3"] { -moz-appearance: textfield; appearance: textfield; }
 html body input::file-selector-button { padding: 7px 12px; border: 0; border-radius: 6px; margin-inline-end: 10px; background: var(--voiz-surface-3); color: var(--voiz-text); }
 html body :is(.btn, .button, button.submit, input[type="submit"]:not([value=""]), input[type="button"], input[type="reset"], .neo-table-toolbar-button, .neo-table-action, .dt-button) {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;

@@ -287,6 +287,31 @@
             if (typeof chart.update === 'function') { chart.update(0); }
         });
     }
+    /* Issue 3: the framework modal (change-password popup) is repositioned by
+       legacy scripts with absolute pixel offsets. Recentre it whenever shown. */
+    function patchModalCentering() {
+        var modal = doc.querySelector('.neo-modal-issabel-popup-box');
+        if (!modal || modal.__voizCentered) { return; }
+        modal.__voizCentered = true;
+        var syncing = false;
+        function center() {
+            if (syncing || getComputedStyle(modal).display === 'none') { return; }
+            syncing = true;
+            window.requestAnimationFrame(function () { syncing = false; });
+            modal.style.setProperty('left', '50%', 'important');
+            modal.style.setProperty('top', '50%', 'important');
+            modal.style.setProperty('right', 'auto', 'important');
+            modal.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
+            modal.style.setProperty('max-height', 'min(640px, calc(100vh - 48px))', 'important');
+            modal.style.setProperty('overflow-y', 'auto', 'important');
+            modal.style.setProperty('width', 'min(600px, calc(100vw - 24px))', 'important');
+            var inner = modal.querySelector('.neo-modal-issabel-popup-content');
+            if (inner) { inner.style.maxHeight = 'none'; inner.style.overflow = 'visible'; }
+            var field = modal.querySelector('input[type="password"], input[type="text"]');
+            if (field && !modal.contains(doc.activeElement)) { setTimeout(function () { try { field.focus(); } catch (e) { /* Focusing can fail. */ } }, 40); }
+        }
+        new MutationObserver(center).observe(modal, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
     function initModal() {
         var modal = doc.querySelector('.neo-modal-issabel-popup-box');
         if (!modal) { return; }
@@ -307,9 +332,170 @@
             trapTab(event, modal);
         });
     }
+    /* Issue 6: dotted-quad octet fields (DHCP server). Move focus between the
+       boxes as the user types; values and field names are untouched. */
+    function findOctetGroup(input) {
+        var container = input.closest('tr') || input.closest('form') || input.parentElement;
+        while (container && container !== doc.body) {
+            var group = all('input[type="text"], input:not([type])', container).filter(function (el) { return el.maxLength === 3; });
+            var ipish = group.length >= 4 && group.some(function (el) {
+                return /ip|dns|gateway|wins|pxe|netmask|subnet|network/i.test(el.name + ' ' + el.id);
+            });
+            if (ipish) { return group; }
+            container = container.parentElement;
+        }
+        return null;
+    }
+    function initOctets() {
+        doc.addEventListener('input', function (event) {
+            var input = event.target;
+            if (!input || input.tagName !== 'INPUT') { return; }
+            var group = findOctetGroup(input);
+            if (!group || group.indexOf(input) === -1) { return; }
+            input.value = input.value.replace(/[^\d]/g, '');
+            if (input.value.length >= input.maxLength) {
+                var next = group[group.indexOf(input) + 1];
+                if (next) { next.focus(); if (next.select) { next.select(); } }
+            }
+        });
+        doc.addEventListener('keydown', function (event) {
+            var input = event.target;
+            if (!input || input.tagName !== 'INPUT') { return; }
+            var group = findOctetGroup(input);
+            if (!group) { return; }
+            var index = group.indexOf(input);
+            if (index < 0) { return; }
+            if (event.key === '.' || event.key === ',') {
+                event.preventDefault();
+                var next = group[index + 1];
+                if (next) { next.focus(); if (next.select) { next.select(); } }
+            } else if (event.key === 'ArrowRight' && input.selectionStart === input.value.length) {
+                var prev = group[index - 1];
+                if (prev && doc.documentElement.dir === 'rtl') { event.preventDefault(); prev.focus(); if (prev.select) { prev.select(); } }
+            } else if (event.key === 'ArrowLeft' && input.selectionStart === 0) {
+                var nxt = group[index + 1];
+                if (nxt) { event.preventDefault(); nxt.focus(); if (nxt.select) { nxt.select(); } }
+            }
+        });
+        doc.addEventListener('paste', function (event) {
+            var input = event.target;
+            if (!input || input.tagName !== 'INPUT') { return; }
+            var group = findOctetGroup(input);
+            if (!group || group.indexOf(input) === -1) { return; }
+            var match = String(event.clipboardData ? event.clipboardData.getData('text') : '').match(/\d{1,3}/g);
+            if (match && match.length >= group.length) {
+                event.preventDefault();
+                group.forEach(function (el, i) { el.value = match[i]; });
+                var last = group[group.length - 1];
+                if (last) { last.focus(); }
+            }
+        });
+    }
+    /* Issue 4: map tooltips (GeoIP Map) can escape the viewport. Nudge any
+       visible tooltip back inside the visible frame. */
+    function initMapTooltips() {
+        var pending = false;
+        var selector = '.jvectormap-tip, .jvectormap-label, .ammap-tooltip, .map-tooltip, .maptooltip, ' +
+            '[class*="tooltip"]:not(script):not(style):not(input)';
+        function clamp() {
+            pending = false;
+            all(selector).forEach(function (tip) {
+                if (!tip.getClientRects().length) { return; }
+                var rect = tip.getBoundingClientRect(), pad = 8, dx = 0, dy = 0;
+                if (rect.left < pad) { dx = pad - rect.left; }
+                else if (rect.right > window.innerWidth - pad) { dx = window.innerWidth - pad - rect.right; }
+                if (rect.top < pad) { dy = pad - rect.top; }
+                else if (rect.bottom > window.innerHeight - pad) { dy = window.innerHeight - pad - rect.bottom; }
+                if (dx || dy) {
+                    if (tip.style.left || tip.style.top) {
+                        tip.style.left = ((parseFloat(tip.style.left) || 0) + dx) + 'px';
+                        tip.style.top = ((parseFloat(tip.style.top) || 0) + dy) + 'px';
+                    } else {
+                        tip.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+                    }
+                }
+            });
+        }
+        doc.addEventListener('mousemove', function () {
+            if (pending) { return; }
+            pending = true;
+            window.requestAnimationFrame(clamp);
+        }, { passive: true });
+    }
+    /* Issue 9: Jalali companion calendar rendered next to the module calendar.
+       Display-only: it never touches the module's own data, forms or events. */
+    function initJalali() {
+        if (!doc.querySelector('.calendar-env') || doc.querySelector('.voiz-jalali-card')) { return; }
+        var host = doc.querySelector('.calendar-env .calendar-sidebar') || doc.querySelector('.calendar-env');
+        if (!host) { return; }
+        var monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+        var dowNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+        function jalaliParts(date) {
+            var parts = {};
+            try {
+                new Intl.DateTimeFormat('en-US-u-ca-persian', { day: 'numeric', month: 'numeric', year: 'numeric' })
+                    .formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
+            } catch (e) { return null; }
+            var y = parseInt(parts.year, 10), m = parseInt(parts.month, 10), d = parseInt(parts.day, 10);
+            return (y && m && d) ? { y: y, m: m, d: d } : null;
+        }
+        function jalaliToGregorian(y, m, d) {
+            var anchor = new Date(2026, 2, 21); /* 1 Farvardin 1405 */
+            var date = new Date(anchor.getTime() + ((y - 1405) * 365 + (m - 1) * 30 + (d - 1)) * 86400000);
+            for (var guard = 0; guard < 90; guard++) {
+                var j = jalaliParts(date);
+                if (!j) { break; }
+                var diff = (y - j.y) * 366 + (m - j.m) * 31 + (d - j.d);
+                if (diff === 0) { break; }
+                date = new Date(date.getTime() + diff * 86400000);
+            }
+            return date;
+        }
+        var today = jalaliParts(new Date()) || { y: 1405, m: 1, d: 1 };
+        var view = { y: today.y, m: today.m };
+        var card = doc.createElement('div');
+        card.className = 'voiz-jalali-card';
+        card.setAttribute('aria-label', 'تقویم جلالی');
+        function render() {
+            var first = jalaliToGregorian(view.y, view.m, 1);
+            var nextMonth = view.m === 12 ? jalaliToGregorian(view.y + 1, 1, 1) : jalaliToGregorian(view.y, view.m + 1, 1);
+            var monthLength = Math.round((nextMonth - first) / 86400000);
+            var startCol = (first.getDay() + 1) % 7; /* Persian week starts on Saturday. */
+            var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + monthNames[view.m - 1] + ' ' + view.y +
+                '</div><div class="voiz-jalali-nav">' +
+                '<button type="button" data-voiz-jalali="today" title="امروز">امروز</button>' +
+                '<button type="button" data-voiz-jalali="next" title="ماه بعد" aria-label="ماه بعد">‹</button>' +
+                '<button type="button" data-voiz-jalali="prev" title="ماه قبل" aria-label="ماه قبل">›</button>' +
+                '</div></div><div class="voiz-jalali-grid">';
+            dowNames.forEach(function (name) { html += '<div class="voiz-jalali-dow">' + name + '</div>'; });
+            for (var i = 0; i < startCol; i++) { html += '<div class="voiz-jalali-day voiz-jalali-out"></div>'; }
+            for (var day = 1; day <= monthLength; day++) {
+                var date = new Date(first.getTime() + (day - 1) * 86400000);
+                var classes = 'voiz-jalali-day';
+                if (date.getDay() === 5) { classes += ' voiz-jalali-holiday'; }
+                if (view.y === today.y && view.m === today.m && day === today.d) { classes += ' voiz-jalali-today'; }
+                html += '<div class="' + classes + '">' + day + '</div>';
+            }
+            html += '</div><div class="voiz-jalali-foot">تقویم هجری شمسی</div>';
+            card.innerHTML = html;
+        }
+        card.addEventListener('click', function (event) {
+            var action = closest(event.target, '[data-voiz-jalali]');
+            if (!action) { return; }
+            event.preventDefault();
+            var what = action.getAttribute('data-voiz-jalali');
+            if (what === 'prev') { view.m--; if (view.m < 1) { view.m = 12; view.y--; } }
+            else if (what === 'next') { view.m++; if (view.m > 12) { view.m = 1; view.y++; } }
+            else { view = { y: today.y, m: today.m }; }
+            render();
+        });
+        render();
+        host.insertBefore(card, host.firstChild);
+    }
     function init() {
         var css = doc.querySelector('link[href*="voiz-tailwind.css"]'); frameStyleHref = css && css.href;
-        initMenu(); initSearch(); initPassword(); initModal(); enhanceContent(); applyTheme(storageGet(), false);
+        initMenu(); initSearch(); initPassword(); patchModalCentering(); initModal(); enhanceContent(); applyTheme(storageGet(), false);
+        initOctets(); initMapTooltips(); initJalali();
         doc.addEventListener('click', function (event) {
             var toggle = closest(event.target, '.voiz-theme-toggle');
             if (toggle) { event.preventDefault(); toggleTheme(); }

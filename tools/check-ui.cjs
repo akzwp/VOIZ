@@ -77,7 +77,7 @@ async function run() {
     eq(shellIds.length, new Set(shellIds).size, name + ': unique shell IDs');
     check(d.querySelector('meta[name="viewport"]'), name + ': viewport set');
     const styles = [...d.querySelectorAll('link[rel="stylesheet"]')];
-    check(styles.some(el => el.href.includes('voiz-tailwind.css?v=7.0.0')), name + ': compiled style connected');
+    check(styles.some(el => el.href.includes('voiz-tailwind.css?v=')), name + ': compiled style connected');
     check(!styles.some(el => /voiz-(ui|tw|repair)\.css/.test(el.href)), name + ': no duplicate legacy UI layer');
     check(![...d.querySelectorAll('script[src],link[rel="stylesheet"]')].some(el => /https?:\/\//.test(el.getAttribute('src') || el.getAttribute('href'))), name + ': no CDN dependency');
     check(d.body.textContent.includes('AKZ') && d.body.textContent.includes('akzwp.com') && d.body.textContent.includes('akzwp.ir'), name + ': both AKZ sites visible');
