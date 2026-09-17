@@ -4,6 +4,40 @@
     var doc = document, root = doc.documentElement, themeKey = 'voiz-theme';
     var menu, sidebar, drawerOpener, modalOpener, modalVisible = false;
     var uiTimer, frameStyleHref, plotObserver;
+    /* Persian locale for the calendar stack (FullCalendar + jQuery-UI datepicker).
+       Runs at script-eval time — before the module's own $(document).ready
+       initialises its widgets — so module code keeps working unchanged while
+       every widget renders Persian. */
+    var faLocale = {
+        monthNames: ['ژانویه', 'فوریه', 'مارس', 'آوریل', 'مه', 'ژوئن', 'ژوئیه', 'اوت', 'سپتامبر', 'اکتبر', 'نوامبر', 'دسامبر'],
+        dayNames: ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'],
+        dayNamesShort: ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش'],
+        buttonText: { today: 'امروز', month: 'ماه', week: 'هفته', day: 'روز' },
+        allDayText: 'تمام روز',
+        firstDay: 1,
+        isRTL: true
+    };
+    function installCalendarLocale() {
+        var $ = window.jQuery;
+        if (!$) { return; }
+        if ($.datepicker && $.datepicker.regional) {
+            $.datepicker.regional.fa = {
+                closeText: 'تأیید', prevText: '‹', nextText: '›', currentText: 'امروز',
+                monthNames: faLocale.monthNames, monthNamesShort: faLocale.monthNames,
+                dayNames: faLocale.dayNames, dayNamesShort: faLocale.dayNamesShort, dayNamesMin: faLocale.dayNamesShort,
+                weekHeader: 'ه', dateFormat: 'yy-mm-dd', firstDay: 1, isRTL: true, showMonthAfterYear: false, yearSuffix: ''
+            };
+            $.datepicker.setDefaults($.datepicker.regional.fa);
+        }
+        if ($.fn && $.fn.fullCalendar && $.fn.fullCalendar.defaults) {
+            var d = $.fn.fullCalendar.defaults;
+            d.monthNames = faLocale.monthNames; d.monthNamesShort = faLocale.monthNames;
+            d.dayNames = faLocale.dayNames; d.dayNamesShort = faLocale.dayNamesShort;
+            d.buttonText = faLocale.buttonText; d.allDayText = faLocale.allDayText;
+            d.firstDay = 1; d.isRTL = true;
+        }
+    }
+    installCalendarLocale();
     function all(selector, scope) { return Array.prototype.slice.call((scope || doc).querySelectorAll(selector)); }
     function closest(el, selector) { return el && el.nodeType === 1 ? el.closest(selector) : null; }
     function storageGet() { try { return localStorage.getItem(themeKey); } catch (e) { return null; } }
@@ -521,7 +555,7 @@
            UI; repersianize after each redraw through the AjaxComplete hook and
            an initial pass. */
         function persianizeMini() {
-            var map = { su: 'ج', mo: 'ش', tu: 'ی', we: 'د', th: 'س', fr: 'چ', sa: 'پ' };
+            var map = { su: 'ی', mo: 'د', tu: 'س', we: 'چ', th: 'پ', fr: 'ج', sa: 'ش' };
             all('#calendar_datepick .ui-datepicker-calendar thead th').forEach(function (th) {
                 var key = th.textContent.trim().toLowerCase().slice(0, 2);
                 if (map[key]) { th.textContent = map[key]; }
@@ -529,9 +563,35 @@
             all('#calendar_datepick .ui-datepicker-calendar td a').forEach(function (a) {
                 if (/^\d{1,2}$/.test(a.textContent.trim())) { a.textContent = toFa(a.textContent); }
             });
+            all('#calendar_datepick select.ui-datepicker-month option').forEach(function (option, index) {
+                if (faLocale.monthNames[index]) { option.textContent = faLocale.monthNames[index]; }
+            });
+            all('#calendar_datepick select.ui-datepicker-year option').forEach(function (option) {
+                if (/^\d{4}$/.test(option.textContent.trim())) { option.textContent = toFa(option.textContent.trim()); }
+            });
+        }
+        /* Live-only pass for FullCalendar headers that were rendered before the
+           locale patch (navigation redraws) — the fixture already ships Persian. */
+        var fcDayMap = { sun: 'ی', mon: 'د', tue: 'س', wed: 'چ', thu: 'پ', fri: 'ج', sat: 'ش' };
+        function persianizeFullCalendar() {
+            all('#calendar_main .fc-day-header').forEach(function (th) {
+                var key = th.textContent.trim().toLowerCase().slice(0, 3);
+                if (fcDayMap[key]) { th.textContent = fcDayMap[key]; }
+            });
+            all('#calendar_main .fc-header h2').forEach(function (title) {
+                var match = /^([A-Za-z]+)\s+(\d{4})$/.exec(title.textContent.trim());
+                if (match) {
+                    var index = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'].indexOf(match[1].toLowerCase());
+                    if (index >= 0) { title.textContent = faLocale.monthNames[index] + ' ' + toFa(match[2]); }
+                }
+            });
+            all('#calendar_main .fc-header .fc-button').forEach(function (button) {
+                var text = button.textContent.trim().toLowerCase();
+                if (faLocale.buttonText[text]) { button.textContent = faLocale.buttonText[text]; }
+            });
         }
         if (window.jQuery) {
-            window.jQuery(doc).ajaxComplete(function () { persianizeMini(); });
+            window.jQuery(doc).ajaxComplete(function () { persianizeMini(); persianizeFullCalendar(); });
         }
         function render() {
             var first = jalaliToGregorian(view.y, view.m, 1);
@@ -569,11 +629,151 @@
         render();
         host.appendChild(card);
         persianizeMini();
+        persianizeFullCalendar();
+    }
+    /* Issue 9c: usable date entry inside the event dialog. Each date field
+       (start/end) gets a Jalali-first picker that writes back the same
+       yyyy-mm-dd text the module already parses. Display/entry aid only —
+       it never touches the form's names or submit values. */
+    function initEventDatePickers() {
+        var dialog = doc.querySelector('#calendar_eventdialog');
+        if (!dialog) { return; }
+        var monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+        var dowNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+        function toFa(value) { return String(value).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
+        function toEn(value) { return String(value).replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); }); }
+        function jalaliParts(date) {
+            var parts = {};
+            try {
+                new Intl.DateTimeFormat('en-US-u-ca-persian', { day: 'numeric', month: 'numeric', year: 'numeric' })
+                    .formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
+            } catch (e) { return null; }
+            var y = parseInt(parts.year, 10), m = parseInt(parts.month, 10), d = parseInt(parts.day, 10);
+            return (y && m && d) ? { y: y, m: m, d: d } : null;
+        }
+        function jalaliToGregorian(y, m, d) {
+            var anchor = new Date(2026, 2, 21); /* 1 Farvardin 1405 */
+            var date = new Date(anchor.getTime() + ((y - 1405) * 365 + (m - 1) * 30 + (d - 1)) * 86400000);
+            for (var guard = 0; guard < 90; guard++) {
+                var j = jalaliParts(date);
+                if (!j) { break; }
+                var diff = (y - j.y) * 366 + (m - j.m) * 31 + (d - j.d);
+                if (diff === 0) { break; }
+                date = new Date(date.getTime() + diff * 86400000);
+            }
+            return date;
+        }
+        function parseField(text) {
+            var m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(toEn(String(text || '').trim()));
+            return m ? new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10)) : null;
+        }
+        var today = jalaliParts(new Date()) || { y: 1405, m: 1, d: 1 };
+        all('input[name="date"], input[name="to"]', dialog).forEach(function (input) {
+            if (closest(input, '.voiz-jdate-wrap')) { return; }
+            var wrap = doc.createElement('div');
+            wrap.className = 'voiz-jdate-wrap';
+            var jalaliBox = doc.createElement('div');
+            jalaliBox.className = 'voiz-jdate-jalali';
+            var jalaliInput = doc.createElement('input');
+            jalaliInput.type = 'text';
+            jalaliInput.readOnly = true;
+            jalaliInput.setAttribute('aria-label', input.getAttribute('aria-label') || 'تاریخ شمسی');
+            jalaliInput.placeholder = '۱۴۰۵/۰۶/۲۴';
+            jalaliBox.appendChild(jalaliInput);
+            var toggle = doc.createElement('button');
+            toggle.type = 'button';
+            toggle.className = 'voiz-jdate-toggle';
+            toggle.textContent = '📅';
+            toggle.setAttribute('aria-label', 'انتخاب تاریخ شمسی');
+            toggle.setAttribute('aria-expanded', 'false');
+            input.parentNode.insertBefore(wrap, input);
+            wrap.appendChild(jalaliBox);
+            wrap.appendChild(input);
+            wrap.appendChild(toggle);
+            function syncFromGregorian() {
+                var g = parseField(input.value);
+                var j = g ? jalaliParts(g) : null;
+                jalaliInput.value = j ? toFa(j.y + '/' + (j.m < 10 ? '0' : '') + j.m + '/' + (j.d < 10 ? '0' : '') + j.d) : '';
+            }
+            var state = { y: today.y, m: today.m, selected: null };
+            var initial = parseField(input.value);
+            if (initial) { var j0 = jalaliParts(initial); if (j0) { state = { y: j0.y, m: j0.m, selected: j0 }; } }
+            var pop = doc.createElement('div');
+            pop.className = 'voiz-jdate-pop';
+            pop.hidden = true;
+            function renderPop() {
+                var first = jalaliToGregorian(state.y, state.m, 1);
+                var nextMonth = state.m === 12 ? jalaliToGregorian(state.y + 1, 1, 1) : jalaliToGregorian(state.y, state.m + 1, 1);
+                var monthLength = Math.round((nextMonth - first) / 86400000);
+                var startCol = (first.getDay() + 1) % 7; /* Persian week starts Saturday. */
+                var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + monthNames[state.m - 1] + ' ' + toFa(state.y) +
+                    '</div><div class="voiz-jalali-nav">' +
+                    '<button type="button" data-voiz-jdate="prev" aria-label="ماه قبل">›</button>' +
+                    '<button type="button" data-voiz-jdate="today">امروز</button>' +
+                    '<button type="button" data-voiz-jdate="next" aria-label="ماه بعد">‹</button>' +
+                    '</div></div><div class="voiz-jalali-grid">';
+                dowNames.forEach(function (name) { html += '<div class="voiz-jalali-dow">' + name + '</div>'; });
+                for (var i = 0; i < startCol; i++) { html += '<div class="voiz-jalali-day voiz-jalali-out"></div>'; }
+                for (var day = 1; day <= monthLength; day++) {
+                    var date = new Date(first.getTime() + (day - 1) * 86400000);
+                    var classes = 'voiz-jalali-day';
+                    if (date.getDay() === 5) { classes += ' voiz-jalali-holiday'; }
+                    if (state.selected && state.y === state.selected.y && state.m === state.selected.m && day === state.selected.d) { classes += ' voiz-jalali-selected'; }
+                    else if (state.y === today.y && state.m === today.m && day === today.d) { classes += ' voiz-jalali-today'; }
+                    html += '<button type="button" class="' + classes + '" data-voiz-jdate="pick" data-day="' + day + '">' + toFa(day) + '</button>';
+                }
+                html += '</div><div class="voiz-jdate-foot"><span>' + jalaliInput.value + '</span>' +
+                    '<button type="button" class="voiz-jdate-apply" data-voiz-jdate="apply">تأیید</button></div>';
+                pop.innerHTML = html;
+            }
+            function openPop() {
+                all('.voiz-jdate-pop', dialog).forEach(function (other) { if (other !== pop) { other.hidden = true; } });
+                renderPop();
+                pop.hidden = false;
+                toggle.setAttribute('aria-expanded', 'true');
+                var rect = toggle.getBoundingClientRect(), wrapRect = wrap.getBoundingClientRect();
+                pop.style.top = (rect.bottom - wrapRect.top + 6) + 'px';
+                pop.style.insetInlineStart = '0';
+                wrap.appendChild(pop);
+            }
+            function closePop() { pop.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }
+            function applySelection() {
+                if (!state.selected) { return; }
+                var g = jalaliToGregorian(state.selected.y, state.selected.m, state.selected.d);
+                var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+                input.value = g.getFullYear() + '-' + pad(g.getMonth() + 1) + '-' + pad(g.getDate());
+                syncFromGregorian();
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+                closePop();
+            }
+            toggle.addEventListener('click', function () { pop.hidden ? openPop() : closePop(); });
+            pop.addEventListener('click', function (event) {
+                var action = closest(event.target, '[data-voiz-jdate]');
+                if (!action) { return; }
+                event.preventDefault();
+                var what = action.getAttribute('data-voiz-jdate');
+                if (what === 'prev') { state.m--; if (state.m < 1) { state.m = 12; state.y--; } renderPop(); }
+                else if (what === 'next') { state.m++; if (state.m > 12) { state.m = 1; state.y++; } renderPop(); }
+                else if (what === 'today') { state = { y: today.y, m: today.m, selected: today }; renderPop(); }
+                else if (what === 'pick') {
+                    state.selected = { y: state.y, m: state.m, d: parseInt(action.getAttribute('data-day'), 10) };
+                    renderPop();
+                }
+                else if (what === 'apply') { applySelection(); }
+            });
+            input.addEventListener('change', syncFromGregorian);
+            syncFromGregorian();
+        });
+        doc.addEventListener('click', function (event) {
+            if (closest(event.target, '.voiz-jdate-wrap')) { return; }
+            all('.voiz-jdate-pop', dialog).forEach(function (pop) { if (!pop.hidden) { pop.hidden = true; } });
+        });
     }
     function init() {
         var css = doc.querySelector('link[href*="voiz-tailwind.css"]'); frameStyleHref = css && css.href;
+        installCalendarLocale();
         initMenu(); initSearch(); initPassword(); initUserMenu(); patchModalCentering(); initModal(); enhanceContent(); applyTheme(storageGet(), false);
-        initOctets(); initMapTooltips(); initJalali();
+        initOctets(); initMapTooltips(); initJalali(); initEventDatePickers();
         doc.addEventListener('click', function (event) {
             var toggle = closest(event.target, '.voiz-theme-toggle');
             if (toggle) { event.preventDefault(); toggleTheme(); }
@@ -596,7 +796,7 @@
         }
         if (window.jQuery) { window.jQuery(doc).on('draw.dt init.dt', function () { enhanceContent(); themeCharts(); }); }
     }
-    window.VoizUI = { applyTheme: applyTheme, toggleTheme: toggleTheme, currentTheme: currentTheme, closeSidebar: closeSidebar, refresh: enhanceContent };
+    window.VoizUI = { applyTheme: applyTheme, toggleTheme: toggleTheme, currentTheme: currentTheme, closeSidebar: closeSidebar, refresh: enhanceContent, fcLocale: faLocale };
     if (window.jQuery) { window.jQuery(init); }
     else if (doc.readyState === 'loading') { doc.addEventListener('DOMContentLoaded', init); }
     else { init(); }

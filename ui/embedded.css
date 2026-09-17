@@ -165,8 +165,75 @@ html body #calendar_main .fc {
 html body .voiz-jalali-card { flex: 0 0 280px; width: 280px; order: -2; } /* keeps its own column beside the toolbar */
 @media (max-width: 1199px) {
   html body #calendar_toolbar, html body .voiz-jalali-card { flex: 1 1 260px; width: auto; }
-  html body #calendar_toolbar ~ td { flex: 1 1 100%; }
+  html body #formCalendar .tabForm #calendar_toolbar ~ td { flex: 1 1 100%; }
 }
+
+/* Issue 9b — Event dialog (#calendar_eventdialog inside a jQuery-UI .ui-dialog).
+   Issabel's calendar_event_dialog.tpl renders align=left tables with inline
+   widths; everything becomes one RTL column: labels above full-width fields. */
+html body .ui-dialog { direction: rtl; }
+html body .ui-dialog .ui-dialog-titlebar { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: auto; height: auto; min-height: 0; padding: 14px 18px; border-bottom: 1px solid var(--voiz-border); }
+html body .ui-dialog .ui-dialog-titlebar-close { display: grid; place-items: center; float: none; flex: 0 0 auto; order: 2; width: 34px; height: 34px; padding: 0; border: 1px solid var(--voiz-border); border-radius: 8px; background: var(--voiz-surface); color: var(--voiz-text); }
+html body .ui-dialog .ui-dialog-titlebar-close .ui-icon { inset: 0; margin: auto; background-image: none; font-size: 0; }
+html body .ui-dialog .ui-dialog-titlebar-close .ui-icon:after { content: '×'; display: grid; place-items: center; width: 100%; height: 100%; font-size: 22px; color: inherit; }
+html body .ui-dialog .ui-dialog-title { float: none; flex: 1 1 auto; order: 1; min-width: 0; text-align: start; color: var(--voiz-heading); font-weight: 700; font-size: 15px; }
+html body .ui-dialog-buttonpane .ui-dialog-buttonset { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; justify-content: flex-start; }
+html body .ui-dialog-buttonpane .ui-dialog-buttonset button { min-width: 110px; }
+html body .voiz-dialog-mask { display: none; position: fixed; inset: 0; z-index: 6090; background: rgb(0 0 0 / 60%); }
+/* The event dialog (whatever opens it) must behave like the modal Issabel makes:
+   centered, above the shell, scrollable — never pushed into the page flow. */
+html body .ui-dialog:has(#calendar_eventdialog), html body .ui-dialog#calendar_eventdialog, html body #calendar_eventdialog.ui-dialog {
+  display: none; position: fixed !important; top: max(24px, calc(50dvh - 340px)) !important; left: 50% !important; right: auto !important;
+  transform: translateX(-50%) !important; width: min(480px, calc(100vw - 24px)) !important; max-height: min(680px, calc(100dvh - 48px));
+  margin: 0 !important; z-index: 6100 !important; overflow-y: auto; padding: 0 !important;
+}
+html body #calendar_eventdialog.ui-dialog > :is(.ui-dialog-titlebar, .ui-dialog-content, table) { transform: none; }
+html body #calendar_eventdialog { direction: rtl; text-align: start; position: relative; }
+html body #calendar_eventdialog :is(table, table.tabForm) { width: 100% !important; table-layout: auto; background: none !important; border: 0 !important; }
+html body #calendar_eventdialog :is(tbody, tr) { display: block; width: 100%; height: auto !important; }
+html body #calendar_eventdialog tr { padding: 4px 0; }
+html body #calendar_eventdialog :is(td, th) { display: block; width: auto !important; padding: 2px 0 !important; text-align: start !important; white-space: normal !important; background: none !important; border: 0 !important; height: auto !important; }
+html body #calendar_eventdialog :is(b, .letra12 b, label) { display: block; margin: 12px 0 6px; color: var(--voiz-text-soft); font-size: 13px; font-weight: 600; }
+html body #calendar_eventdialog :is(input:not([type]), input[type="text"], input[type="tel"], select, textarea) { display: block; width: 100% !important; min-width: 0; max-width: 100% !important; }
+html body #calendar_eventdialog input[name="call_to"] { max-width: 220px !important; direction: ltr; text-align: center; }
+html body #calendar_eventdialog textarea { min-height: 96px; resize: vertical; }
+/* Date/colour pickers keep their native widget geometry; inputs share one row. */
+html body #calendar_eventdialog img.ui-datepicker-trigger { margin: 0 6px; vertical-align: middle; }
+html body #calendar_eventdialog .hasDatepicker { width: calc(100% - 40px) !important; }
+html body #calendar_eventdialog #colorSelector { display: inline-block; width: 36px; height: 36px; padding: 0; border: 1px solid var(--voiz-border-strong); border-radius: 8px; background: var(--voiz-surface-3); overflow: hidden; }
+html body #calendar_eventdialog #colorSelector div { inset: 4px; width: auto; height: auto; }
+/* Reminder / notification toggles and their sub-fields. */
+html body #calendar_eventdialog :is(#divReminder, #divNotification) { display: flex; align-items: center; gap: 10px; margin: 10px 0 2px; }
+html body #calendar_eventdialog :is(.CheckBoxLabelClass, #divReminder label, #divNotification label) { display: inline-flex; align-items: center; gap: 8px; margin: 0; cursor: pointer; }
+html body #calendar_eventdialog :is(.remin, .notif) { padding: 2px 12px; margin: 0 -12px; border-right: 2px solid var(--voiz-border); border-radius: 2px; }
+html body #calendar_eventdialog .counter { color: var(--voiz-muted); font-weight: 400; }
+html body #calendar_eventdialog .countExceeded { color: var(--voiz-danger) !important; font-weight: 700; }
+html body #calendar_eventdialog :is(#listenTTS, #add_phone a) { display: inline-flex; align-items: center; gap: 6px; color: var(--voiz-primary-text); cursor: pointer; }
+html body #calendar_eventdialog #listenTTS img { width: 22px; height: 22px; object-fit: contain; border-radius: 6px; background: var(--voiz-surface-2); padding: 2px; border: 1px solid var(--voiz-border); }
+html body #calendar_eventdialog #listenTTS div { flex: 1 1 100%; } /* textarea inside the anchor flows on its own row */
+html body #calendar_eventdialog #grilla { width: 100% !important; margin-top: 10px; }
+html body #calendar_eventdialog #grilla :is(th, td) { display: table-cell; width: auto !important; padding: 7px 8px !important; text-align: start !important; border-bottom: 1px solid var(--voiz-border) !important; }
+html body #calendar_eventdialog #grilla thead td { color: var(--voiz-muted); font-weight: 600; }
+html body #calendar_eventdialog .delete_email { color: var(--voiz-danger); }
+
+/* Issue 9c — Date entry: a usable Jalali-first picker beside the Gregorian
+   field. The popover (voiz-ui.js) is display-only and writes back the same
+   yyyy-mm-dd text the module already parses. */
+.voiz-jdate-wrap { position: relative; display: flex; align-items: stretch; gap: 6px; width: 100%; }
+.voiz-jdate-wrap .hasDatepicker, .voiz-jdate-wrap input { flex: 1 1 auto; width: auto !important; min-width: 0; direction: ltr; text-align: center; font-variant-numeric: tabular-nums; }
+.voiz-jdate-jalali { flex: 1 1 auto; min-width: 0; }
+.voiz-jdate-jalali > input { width: 100% !important; text-align: center; font-variant-numeric: tabular-nums; }
+.voiz-jdate-toggle { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 42px; padding: 6px 12px; border: 1px solid var(--voiz-border); border-radius: 8px; background: var(--voiz-surface-2); color: var(--voiz-text); font-size: 12px; cursor: pointer; }
+.voiz-jdate-wrap :is(input) { min-height: 42px; }
+.voiz-jdate-toggle:hover { border-color: var(--voiz-primary-text); color: var(--voiz-primary-text); }
+.voiz-jdate-pop { position: absolute; z-index: 6100; width: 292px; max-width: calc(100vw - 24px); padding: 12px; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); color: var(--voiz-text); box-shadow: var(--voiz-popover-shadow); }
+.voiz-jdate-pop .voiz-jalali-grid { gap: 2px; }
+.voiz-jdate-pop .voiz-jalali-day { cursor: pointer; }
+.voiz-jdate-pop .voiz-jalali-day:hover { background: var(--voiz-primary-soft); color: var(--voiz-primary-text); }
+.voiz-jdate-pop .voiz-jalali-day.voiz-jalali-selected { background: var(--voiz-primary); color: #fff; font-weight: 700; }
+.voiz-jdate-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--voiz-border); color: var(--voiz-muted); font-size: 12px; }
+.voiz-jdate-apply { min-height: 34px; padding: 4px 14px; border: 0; border-radius: 8px; background: var(--voiz-primary); color: #fff; font-weight: 600; cursor: pointer; }
+.voiz-jdate-apply:hover { background: var(--voiz-primary-hover); }
 /* FullCalendar header bar: view switcher / title / today + arrows (table
    cells, like the original Issabel header). */
 html body #calendar_main .fc-header {
@@ -242,6 +309,20 @@ html body #calendar_ical_links .content_ical a {
   display: flex; align-items: center; gap: 8px; padding: 12px 14px; color: var(--voiz-text);
 }
 html body #calendar_ical_links .content_ical a:hover { color: var(--voiz-primary-text); background: var(--voiz-primary-soft); }
+/* Mini datepicker must never be squeezed by the toolbar column: cells and
+   selects keep intrinsic width, digits never wrap mid-number. */
+html body #calendar_datepick .ui-datepicker-calendar a,
+html body #calendar_datepick .ui-datepicker-calendar .ui-state-default { white-space: nowrap; }
+html body #calendar_datepick :is(.ui-datepicker-month, .ui-datepicker-year) { white-space: nowrap; }
+/* Persianized FullCalendar: header groups flow RTL, nav buttons stay compact. */
+html body #calendar_main .fc-header { direction: rtl; }
+html body #calendar_main .fc-header td { direction: rtl; }
+html body #calendar_main .fc-header .fc-button { white-space: nowrap; flex: 0 0 auto; }
+html body #calendar_main .fc-header .fc-button + .fc-button { margin-inline-start: -1px; }
+html body #calendar_main .fc-header .fc-header-right { display: flex; align-items: center; gap: 6px; }
+html body #calendar_main .fc-header .fc-header-left { display: flex; align-items: center; gap: 0; }
+html body #calendar_main .fc-header .fc-header-center h2 { white-space: nowrap; }
+html body .fc .fc-day-header { text-align: center !important; }
 
 /* Jalali companion card (markup rendered by voiz-ui.js; CSS only here). */
 .voiz-jalali-card { width: 100%; padding: 16px; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); box-shadow: var(--voiz-card-shadow); direction: rtl; user-select: none; }

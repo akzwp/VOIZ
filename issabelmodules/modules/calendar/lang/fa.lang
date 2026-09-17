@@ -122,7 +122,7 @@ $arrLangModule=array(
 "Notification_Alert" => "اعلام هشدار",
 "Email" => "ايميل",
 "Contact" => "تماس",
-"Export_Calendar" => "تقويم صادره",
+"Export_Calendar" => "خروجی گرفتن از تقویم",
 "error_recording" => "لطفا متن خود را وارد نماييد",
 "Can not create called file" => "فايل تماس هاي گرفته شده نمي تواند ايجاد شود",
 "Organizer" => "سازمان دهنده",
@@ -166,6 +166,7 @@ $arrLangModule=array(
 "Text to Speech" => "تبديل متن به گفتار",
 "Search in Address Book" => "جستجو در دفترچه تلفن",
 "Listen" => "شنيدن",
+"Download ical calendar" => "دريافت تقويم (iCal)",
 "Festival is not up" => "فستيوال فعال نيست",
 );
 ?>
