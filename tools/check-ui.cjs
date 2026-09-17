@@ -146,11 +146,14 @@ async function run() {
   event(w, d, 'keydown', { key: 'Escape' });
   check(!admin.classList.contains('voiz-open'), 'Escape closes the admin dropdown');
   const cal = domFor(page('calendar'));
-  check(cal.d.querySelector('.calendar-sidebar .voiz-jalali-card'), 'Jalali calendar renders beside the Gregorian one');
+  check(cal.d.querySelector('#calendar_toolbar'), 'Issabel toolbar column exists (create button + mini datepicker + iCal)');
+  check(cal.d.querySelector('#calendar_toolbar .voiz-jalali-card'), 'Jalali calendar renders beside the Gregorian one');
+  check(cal.d.querySelector('#calendar_main .fc'), 'FullCalendar month grid keeps the Issabel host element');
   check(cal.d.querySelectorAll('.voiz-jalali-day').length >= 29, 'Jalali month grid is complete');
   check(/[۰-۹]/.test(cal.d.querySelector('.voiz-jalali-grid').textContent), 'Jalali digits are Persian');
-  const mini = cal.d.querySelector('.ui-datepicker-calendar thead th');
+  const mini = cal.d.querySelector('#calendar_datepick .ui-datepicker-calendar thead th');
   check(!/^[a-z]{2}$/i.test(mini.textContent.trim()), 'Mini datepicker weekday header is Persian');
+  check(/[۰-۹]/.test(cal.d.querySelector('#calendar_datepick .ui-datepicker-calendar td a').textContent), 'Mini datepicker day digits are Persian');
   const login = domFor(page('login'));
   const password = login.d.querySelector('#input_pass'); password.value = 'fixture-only';
   const toggle = login.d.querySelector('.voiz-pass-toggle'); toggle.click();

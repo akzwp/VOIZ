@@ -143,38 +143,47 @@ html body .neo-module-content img[src*="Icon-user"] { max-width: 120px; height: 
 html body .neo-module-content :is(#tr_from_csv td) { padding: 10px; }
 html body .neo-module-content input[name="address_book_options"], html body .neo-module-content input[name="address_book_status"] { margin-inline-end: 8px; }
 
-/* Issue 9 — Calendar: Issabel-standard layout (month grid + right sidebar)
-   plus the Jalali companion card rendered by voiz-ui.js. Display only. */
-html body .calendar-env { display: flex; flex-wrap: wrap; gap: 18px; align-items: stretch; }
-html[dir="rtl"] body .calendar-env .calendar-sidebar { order: -1; } /* Issabel keeps the sidebar on the right */
-html body .calendar-env .calendar-sidebar {
-  position: static !important; float: none !important; width: 300px !important; max-width: 100%;
-  flex: 0 0 300px; margin: 0 !important; padding: 16px !important;
-  background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border);
-  border-radius: 12px; box-shadow: var(--voiz-card-shadow);
+/* Issue 9 — Calendar: Issabel's own module markup (calendar_gui.tpl):
+   one tabForm row = #calendar_toolbar (create button, mini datepicker,
+   iCal export) + #calendar_main (FullCalendar). Display-only theming plus
+   the Jalali companion card that voiz-ui.js appends to the toolbar. */
+html body #formCalendar { margin: 0; }
+html body #formCalendar .tabForm { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 18px; width: 100% !important; background: none !important; border: 0 !important; padding: 0 !important; }
+html body #formCalendar .tabForm > tbody, html body #formCalendar .tabForm > tbody > tr { display: contents; }
+html body #calendar_toolbar {
+  display: flex; flex-direction: column; gap: 14px; order: -1; /* toolbar column sits on the right in RTL */
+  flex: 0 0 280px; width: 280px; min-width: 0; padding: 0; background: none !important; border: 0 !important;
 }
-html body .calendar-env .calendar-body { flex: 1 1 480px; min-width: 0; }
-html body .calendar-env .calendar-body .fc {
+html body #formCalendar .tabForm #calendar_toolbar ~ td { flex: 1 1 480px; min-width: 0; padding: 0; background: none !important; border: 0 !important; }
+html body #calendar_buttonbox { margin: 0 !important; }
+html body #calendar_toolbar > :is(#calendar_buttonbox, #calendar_ical_links) { width: 100%; }
+html body #calendar_main { min-width: 0; }
+html body #calendar_main .fc {
   background: var(--voiz-surface) !important; border: 1px solid var(--voiz-border);
   border-radius: 12px; overflow: hidden;
 }
-/* Header bar: view switcher / title / today + arrows (table cells, like the
-   original Issabel header). */
-html body .calendar-env .fc-header {
+html body .voiz-jalali-card { flex: 0 0 280px; width: 280px; order: -2; } /* keeps its own column beside the toolbar */
+@media (max-width: 1199px) {
+  html body #calendar_toolbar, html body .voiz-jalali-card { flex: 1 1 260px; width: auto; }
+  html body #calendar_toolbar ~ td { flex: 1 1 100%; }
+}
+/* FullCalendar header bar: view switcher / title / today + arrows (table
+   cells, like the original Issabel header). */
+html body #calendar_main .fc-header {
   width: 100%; background: var(--voiz-surface-2) !important; margin: 0;
   border-bottom: 1px solid var(--voiz-border);
 }
-html body .calendar-env .fc-header > tbody > tr > td { padding: 12px 10px; background: none; border: 0; vertical-align: middle; white-space: nowrap; }
-html body .calendar-env .fc-header .fc-header-center { text-align: center; }
-html body .calendar-env .fc-header .fc-header-left { text-align: start; }
-html body .calendar-env .fc-header .fc-header-right { text-align: end; }
-html body .calendar-env .fc-header h2 { margin: 0; font-size: 17px; color: var(--voiz-heading); }
-html body .calendar-env .fc-header :is(a, button) {
+html body #calendar_main .fc-header > tbody > tr > td { padding: 12px 10px; background: none; border: 0; vertical-align: middle; white-space: nowrap; }
+html body #calendar_main .fc-header .fc-header-center { text-align: center; }
+html body #calendar_main .fc-header .fc-header-left { text-align: start; }
+html body #calendar_main .fc-header .fc-header-right { text-align: end; }
+html body #calendar_main .fc-header h2 { margin: 0; font-size: 17px; color: var(--voiz-heading); }
+html body #calendar_main .fc-header :is(a, button) {
   min-height: 36px; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--voiz-border);
   background: var(--voiz-surface-3); color: var(--voiz-text); cursor: pointer;
 }
-html body .calendar-env .fc-header :is(a, button):hover { border-color: var(--voiz-primary-text); color: var(--voiz-primary-text); }
-html body .calendar-env .fc-header .fc-state-active {
+html body #calendar_main .fc-header :is(a, button):hover { border-color: var(--voiz-primary-text); color: var(--voiz-primary-text); }
+html body #calendar_main .fc-header .fc-state-active {
   background: var(--voiz-primary) !important; border-color: var(--voiz-primary) !important; color: #fff !important;
 }
 
@@ -192,39 +201,47 @@ html body .fc .fc-event {
 }
 html body .fc .fc-event :is(.fc-event-title, span) { color: inherit; }
 
-/* Sidebar: create button, mini jQuery-UI datepicker, download links. */
-html body .calendar-sidebar > :is(.btn, .button, button[type="button"]) { width: 100%; min-height: 44px; }
-html body .calendar-sidebar .ui-datepicker {
-  width: 100% !important; margin: 16px 0 0 !important; padding: 0 !important;
+/* Toolbar column: create button, mini jQuery-UI datepicker, iCal export. */
+html body #calendar_datepick .ui-datepicker {
+  width: 100% !important; margin: 0 !important; padding: 0 !important;
   border: 1px solid var(--voiz-border); border-radius: 10px;
   background: var(--voiz-surface-2) !important; color: var(--voiz-text); font-family: inherit;
 }
-html body .calendar-sidebar .ui-datepicker-header {
+html body #calendar_datepick .ui-datepicker-header {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 10px;
   border-bottom: 1px solid var(--voiz-border); background: none !important; border-radius: 10px 10px 0 0;
 }
-html body .calendar-sidebar :is(.ui-datepicker-prev, .ui-datepicker-next) {
+html body #calendar_datepick :is(.ui-datepicker-prev, .ui-datepicker-next) {
   width: 32px; height: 32px; min-height: 32px; border-radius: 8px; cursor: pointer;
   background: var(--voiz-surface-3) !important; border: 1px solid var(--voiz-border); color: var(--voiz-text);
 }
-html body .calendar-sidebar :is(.ui-datepicker-month, .ui-datepicker-year) { flex: 1 1 96px; min-width: 0; min-height: 38px; border-radius: 8px; }
-html body .calendar-sidebar .ui-datepicker-calendar { width: 100% !important; table-layout: fixed; margin: 0 !important; }
-html body .calendar-sidebar .ui-datepicker-calendar :is(th, td) { padding: 3px 0; text-align: center; border: 0 !important; background: none !important; }
-html body .calendar-sidebar .ui-datepicker-calendar th { color: var(--voiz-muted) !important; font-size: 11px; font-weight: 600; }
-html body .calendar-sidebar .ui-datepicker-calendar :is(a, .ui-state-default) {
+html body #calendar_datepick :is(.ui-datepicker-month, .ui-datepicker-year) { flex: 1 1 96px; min-width: 0; min-height: 38px; border-radius: 8px; }
+html body #calendar_datepick .ui-datepicker-calendar { width: 100% !important; table-layout: fixed; margin: 0 !important; }
+html body #calendar_datepick .ui-datepicker-calendar :is(th, td) { padding: 3px 0; text-align: center; border: 0 !important; background: none !important; }
+html body #calendar_datepick .ui-datepicker-calendar th { color: var(--voiz-muted) !important; font-size: 11px; font-weight: 600; }
+html body #calendar_datepick .ui-datepicker-calendar :is(a, .ui-state-default) {
   display: grid; place-items: center; min-width: 28px; min-height: 28px; margin: 0 auto;
   border-radius: 7px; border: 0 !important; background: none !important; color: var(--voiz-text) !important;
 }
-html body .calendar-sidebar .ui-datepicker-calendar :is(.ui-state-hover, .ui-state-focus) {
+html body #calendar_datepick .ui-datepicker-calendar :is(.ui-state-hover, .ui-state-focus) {
   background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important;
 }
-html body .calendar-sidebar .ui-datepicker-calendar .ui-state-active { background: var(--voiz-primary) !important; color: #fff !important; font-weight: 700; }
-html body .calendar-sidebar .ui-datepicker .ui-state-highlight { background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important; }
-html body .calendar-sidebar > a[href] {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
-  margin-top: 14px; padding: 12px 14px; border: 1px solid var(--voiz-border); border-radius: 10px;
-  background: var(--voiz-surface-2); color: var(--voiz-text);
+html body #calendar_datepick .ui-datepicker-calendar .ui-state-active { background: var(--voiz-primary) !important; color: #fff !important; font-weight: 700; }
+html body #calendar_datepick .ui-datepicker .ui-state-highlight { background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important; }
+/* iCal export widget keeps its jQuery-UI card shape. */
+html body #calendar_ical_links {
+  width: 100%; padding: 0 !important; border: 1px solid var(--voiz-border) !important;
+  border-radius: 10px !important; background: var(--voiz-surface-2) !important; color: var(--voiz-text);
+  overflow: hidden; box-shadow: none !important;
 }
+html body #calendar_ical_links .ui-datepicker-header {
+  padding: 10px 12px; border-bottom: 1px solid var(--voiz-border); background: none !important;
+  border-radius: 0 !important; font-weight: 600; color: var(--voiz-heading);
+}
+html body #calendar_ical_links .content_ical a {
+  display: flex; align-items: center; gap: 8px; padding: 12px 14px; color: var(--voiz-text);
+}
+html body #calendar_ical_links .content_ical a:hover { color: var(--voiz-primary-text); background: var(--voiz-primary-soft); }
 
 /* Jalali companion card (markup rendered by voiz-ui.js; CSS only here). */
 .voiz-jalali-card { width: 100%; padding: 16px; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface); box-shadow: var(--voiz-card-shadow); direction: rtl; user-select: none; }
@@ -338,7 +355,7 @@ html body.voiz-embedded .nav-tabs > :is(.active, li.active) > :is(a, a:hover, a:
 @media (max-width: 767px) {
   html body.voiz-embedded :is(#left, #right) { grid-template-columns: minmax(0, 1fr); }
   html body.voiz-embedded table { table-layout: fixed; }
-  html body .calendar-env .calendar-sidebar { width: 100% !important; flex: 1 1 100%; }
+  html body #calendar_toolbar, html body #formCalendar .voiz-jalali-card { flex: 1 1 100%; width: 100%; }
   html body .voiz-jalali-grid { gap: 2px; }
   html body .voiz-jalali-day { min-height: 28px; }
 }

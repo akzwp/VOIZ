@@ -51,8 +51,8 @@ $html .= '<a target="_blank" href="' . $amp_conf['BRAND_IMAGE_SPONSOR_LINK_FOOT'
 */
 echo $html;
 ?>
-<link rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.2">
-<script src="/themes/vitenant/js/voiz-embedded.js?v=7.1.2"></script>
+<link rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.3">
+<script src="/themes/vitenant/js/voiz-embedded.js?v=7.1.3"></script>
 <script>
 (function () {
     var theme = 'dark';

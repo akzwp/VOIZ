@@ -478,11 +478,15 @@
             window.requestAnimationFrame(clamp);
         }, { passive: true });
     }
-    /* Issue 9: Jalali companion calendar rendered next to the module calendar.
-       Display-only: it never touches the module's own data, forms or events. */
+    /* Issue 9: Jalali companion calendar rendered beside the module calendar.
+       Display-only: it never touches the module's own data, forms or events.
+       Issabel's calendar_gui.tpl hosts everything in the #calendar_toolbar
+       column (create button, mini datepicker, iCal export). */
     function initJalali() {
-        if (!doc.querySelector('.calendar-env') || doc.querySelector('.voiz-jalali-card')) { return; }
-        var host = doc.querySelector('.calendar-env .calendar-sidebar') || doc.querySelector('.calendar-env');
+        if (doc.querySelector('.voiz-jalali-card')) { return; }
+        var host = doc.querySelector('#calendar_toolbar')
+            || doc.querySelector('.calendar-env .calendar-sidebar')
+            || doc.querySelector('.calendar-env');
         if (!host) { return; }
         var monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
         var dowNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
@@ -513,17 +517,21 @@
         card.className = 'voiz-jalali-card';
         card.setAttribute('aria-label', 'تقویم جلالی');
         function toFa(value) { return String(value).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
-        /* Issabel's Persian calendar shows Persian weekday letters and digits in
-           the Gregorian mini datepicker; match that display (text only). */
+        /* The mini datepicker is re-rendered on every month change by jQuery
+           UI; repersianize after each redraw through the AjaxComplete hook and
+           an initial pass. */
         function persianizeMini() {
             var map = { su: 'ج', mo: 'ش', tu: 'ی', we: 'د', th: 'س', fr: 'چ', sa: 'پ' };
-            all('.calendar-sidebar .ui-datepicker-calendar thead th').forEach(function (th) {
+            all('#calendar_datepick .ui-datepicker-calendar thead th').forEach(function (th) {
                 var key = th.textContent.trim().toLowerCase().slice(0, 2);
                 if (map[key]) { th.textContent = map[key]; }
             });
-            all('.calendar-sidebar .ui-datepicker-calendar td a').forEach(function (a) {
+            all('#calendar_datepick .ui-datepicker-calendar td a').forEach(function (a) {
                 if (/^\d{1,2}$/.test(a.textContent.trim())) { a.textContent = toFa(a.textContent); }
             });
+        }
+        if (window.jQuery) {
+            window.jQuery(doc).ajaxComplete(function () { persianizeMini(); });
         }
         function render() {
             var first = jalaliToGregorian(view.y, view.m, 1);
@@ -559,7 +567,7 @@
             render();
         });
         render();
-        host.insertBefore(card, host.firstChild);
+        host.appendChild(card);
         persianizeMini();
     }
     function init() {

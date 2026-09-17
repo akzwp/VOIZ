@@ -60,8 +60,27 @@ function forms() {
     </tbody></table><div class="form-actions"><button type="button" class="btn btn-primary">ذخیره تغییرات</button><button type="button" class="btn btn-default">انصراف</button><button type="button" class="btn btn-default" data-preview-modal>نمایش پنجره نمونه</button></div></form>`;
 }
 function calendar() {
-  const days = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
-  return `<div class="calendar-env"><div class="calendar-body"><div class="fc fc-rtl"><table class="fc-header"><tbody><tr><td class="fc-header-left"><button class="fc-button fc-state-active">ماه</button><button class="fc-button">هفته</button><button class="fc-button">روز</button></td><td class="fc-header-center"><h2>سپتامبر ۲۰۲۶</h2></td><td class="fc-header-right"><button class="fc-button">امروز</button><button class="fc-button" aria-label="ماه قبل">‹</button><button class="fc-button" aria-label="ماه بعد">›</button></td></tr></tbody></table><div class="fc-content"><div class="fc-view fc-view-month"><table><thead><tr>${days.map(day => `<th>${day}</th>`).join('')}</tr></thead><tbody>${Array.from({ length: 5 }, (_, w) => '<tr>' + days.map((_, d) => { const n = w * 7 + d + 1; return `<td class="fc-day ${n === 15 ? 'fc-today' : ''}" style="height:100px"><div class="fc-day-number">${n > 30 ? n - 30 : n}</div>${n === 15 ? '<a href="#" class="fc-event"><span class="fc-event-title">جلسه تیم پشتیبانی</span></a>' : ''}</td>`; }).join('') + '</tr>').join('')}</tbody></table></div></div></div></div><aside class="calendar-sidebar"><button class="btn btn-primary" type="button">ایجاد رویداد</button><div class="ui-datepicker ui-datepicker-inline" style="margin-top:16px"><div class="ui-datepicker-header"><select class="ui-datepicker-month" aria-label="ماه"><option>سپتامبر</option></select><select class="ui-datepicker-year" aria-label="سال"><option>۲۰۲۶</option></select></div><table class="ui-datepicker-calendar"><thead><tr>${days.map(day => `<th>${day.slice(0, 1)}</th>`).join('')}</tr></thead><tbody>${Array.from({ length: 5 }, (_, w) => '<tr>' + days.map((_, d) => `<td><a href="#" class="ui-state-default ${w * 7 + d === 14 ? 'ui-state-active' : ''}">${w * 7 + d + 1}</a></td>`).join('') + '</tr>').join('')}</tbody></table></div></aside></div>`;
+  /* Mirrors Issabel's modules/calendar/themes/default/calendar_gui.tpl:
+     a tabForm row with #calendar_toolbar (create button, mini datepicker,
+     iCal export) and #calendar_main (FullCalendar month view). */
+  const dow = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+  const grid = Array.from({ length: 5 }, (_, w) => '<tr>' + dow.map((_, c) => {
+    const n = w * 7 + c + 1;
+    const today = n === 15;
+    return `<td class="fc-day${today ? ' fc-today' : ''}"><div class="fc-day-number">${n > 30 ? n - 30 : n}</div>${n === 15 ? '<a href="#" class="fc-event"><span class="fc-event-title">جلسه تیم پشتیبانی</span></a>' : ''}</td>`;
+  }).join('') + '</tr>').join('');
+  const miniDays = [1, 2, 3, 8, 9, 10, 15, 16, 17];
+  return `<form method="POST" style="margin-bottom:0;" name="formCalendar" id="formCalendar">
+  <table class="tabForm" width="100%"><tbody><tr>
+  <td id="calendar_toolbar" width="10%" align="left" valign="top">
+    <div id="calendar_buttonbox" style="margin: 0px 10px 6px 10px; text-align: center;"><button type="button" class="button" id="calendar_newevent"><i class="fa fa-plus"></i>&nbsp;ایجاد رویداد جدید</button></div>
+    <div id="calendar_datepick"><div class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" href="#" aria-label="ماه قبل">‹</a><a class="ui-datepicker-next ui-corner-all" href="#" aria-label="ماه بعد">›</a><select class="ui-datepicker-month" aria-label="ماه"><option>سپتامبر</option></select><select class="ui-datepicker-year" aria-label="سال"><option>۲۰۲۶</option></select></div><table class="ui-datepicker-calendar"><thead><tr>${dow.map(d => `<th>${d}</th>`).join('')}</tr></thead><tbody><tr>${miniDays.map((n, i) => `<td${i === 3 ? ' class="ui-datepicker-days-cell-over"' : ''}><a href="#" class="ui-state-default${n === 15 ? ' ui-state-active ui-state-highlight' : n === 16 ? ' ui-state-highlight' : ''}">${n}</a></td>`).join('')}</tr></tbody></table></div></div>
+    <div id="calendar_ical_links" class="ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all title_size">خروجی گرفتن از تقویم</div><div class="content_ical"><a href="#"><span><i class="fa fa-download"></i>&nbsp;دریافت تقویم (iCal)</span></a></div></div>
+  </td>
+  <td align="right" width="90%">
+    <div id="calendar_main"><div class="fc fc-rtl"><table class="fc-header"><tbody><tr><td class="fc-header-left"><button class="fc-button fc-state-active" type="button">ماه</button><button class="fc-button" type="button">هفته</button><button class="fc-button" type="button">روز</button></td><td class="fc-header-center"><h2>سپتامبر ۲۰۲۶</h2></td><td class="fc-header-right"><button class="fc-button" type="button">امروز</button><button class="fc-button" type="button" aria-label="ماه قبل">‹</button><button class="fc-button" type="button" aria-label="ماه بعد">›</button></td></tr></tbody></table><div class="fc-content"><div class="fc-view fc-view-month"><table><thead><tr>${dow.map(d => `<th class="fc-day-header">${d}</th>`).join('')}</tr></thead><tbody>${grid}</tbody></table></div></div></div></div>
+  </td>
+  </tr></tbody></table></form>`;
 }
 function report() {
   const columns = ['تاریخ', 'تماس‌گیرنده', 'گروه پاسخگو', 'مقصد', 'کانال ورودی', 'صف', 'کانال مقصد', 'وضعیت', 'مدت تماس', 'شناسه', 'گزارش انتظار', 'DID', 'CEL'];

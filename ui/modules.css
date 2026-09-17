@@ -62,7 +62,15 @@ html body #msgFilter { display: block; color: var(--voiz-text-soft); font-size: 
 html body.voiz-cdr-page { padding: 20px; }
 html body.voiz-cdr-page .neo-table-header-row { display: none; }
 
-/* FullCalendar retains its table geometry, including event position layers. */
+/* FullCalendar retains its table geometry, including event position layers.
+   The calendar module's own tabForm row (#formCalendar) is a two-column
+   layout (toolbar column + FullCalendar), so neutralize the global tabForm
+   cell rules and legacy widths that squeeze the toolbar to 10%. */
+html body #formCalendar .tabForm { table-layout: auto !important; width: 100% !important; background: none !important; border: 0 !important; }
+html body #formCalendar .tabForm > tbody > tr > :is(td) { min-width: 0; background: none !important; border: 0 !important; padding: 0 !important; white-space: normal !important; }
+html body #formCalendar .tabForm > tbody > tr > td[width="10%"] { width: 280px !important; }
+html body #formCalendar .tabForm > tbody > tr > td[width="90%"] { width: auto !important; }
+html body :is(.calendar-env, .calendar-sidebar) { display: contents; } /* legacy fixtures only */
 html body .calendar-env { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; width: 100%; margin: 0; }
 html body .calendar-env::before, html body .calendar-env::after { content: none; }
 html body .calendar-env .calendar-body { float: none; flex: 1 1 480px; min-width: 0; width: auto; padding: 0; }
@@ -76,6 +84,7 @@ html body .fc :is(.fc-today, .fc-state-highlight) { background: var(--voiz-prima
 html body .fc :is(.fc-day-number, .fc-day-top) { padding: 6px; color: var(--voiz-text); font-size: 13px; }
 html body .fc :is(.fc-other-month, .fc-past .fc-day-number) { color: var(--voiz-muted); }
 html body .fc :is(.fc-button, button) { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; min-height: 36px; height: auto; padding: 5px 10px; margin: 2px; border: 1px solid var(--voiz-border); border-radius: 7px; background: var(--voiz-surface-2); color: var(--voiz-text); font-family: inherit; text-shadow: none; box-shadow: none; }
+html body #calendar_main .fc :is(.fc-button, button) { margin: 2px; }
 html body .fc :is(.fc-state-active, .fc-button-active) { background: var(--voiz-primary) !important; color: white !important; border-color: var(--voiz-primary); }
 html body .fc .fc-event { background: var(--voiz-primary); color: white; border-color: var(--voiz-primary); border-radius: 4px; padding: 2px 4px; font-size: 12px; line-height: 1.5; word-break: normal; overflow: hidden; }
 html body .fc .fc-event-title { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
@@ -185,5 +194,6 @@ html body.voiz-phone .voiz-phone-heading h1 { margin: 0; }
   html body .fc .fc-header > tbody > tr { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
   html body .fc .fc-header h2 { font-size: 16px; }
   html body .fc :is(th, td.fc-day-header) { font-size: 11px; }
+  html body #calendar_buttonbox :is(.button, .btn) { width: 100%; }
   html body.voiz-cdr-page { padding: 12px; }
 }

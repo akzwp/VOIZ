@@ -21,7 +21,7 @@
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
     {$HEADER_LIBS_JQUERY}
-<link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.2">
+<link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.3">
 </head>
 <body class="page-body login-page login-form-fall" data-url="http://neon.dev">
 
