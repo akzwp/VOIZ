@@ -1,8 +1,12 @@
 $(document).ready(function() {
     var gauges = ['cpugauge', 'memgauge', 'swapgauge'];
     for (var i = 0; i < gauges.length; i++) {
-        $('div#dashboard-applet-'+gauges[i]).data('justgage', new JustGage({
+        // Applet HTML is inserted while hidden. Avoid measuring percentage/min()
+        // widths before layout; scale the finished SVG with its viewBox instead.
+        var gauge = new JustGage({
             id: "dashboard-applet-"+gauges[i],
+            width: 140,
+            height: 140,
             value: $('input#'+gauges[i]+'_value').val() * 100.0,
             min: 0,
             max: 100,
@@ -13,7 +17,9 @@ $(document).ready(function() {
             valueFontColor: '#666666',
             title: $('input#'+gauges[i]+'_label').val(),
             label: "%"
-        }));
+        });
+        gauge.canvas.setViewBox(0, 0, 140, 140, true);
+        $('div#dashboard-applet-'+gauges[i]).data('justgage', gauge);
     }
 
 	if (typeof systemresources_status_timer == 'undefined')

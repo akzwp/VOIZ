@@ -26,10 +26,11 @@ html body #applet_grid .appletwindow_fullcontent { max-height: none; min-width: 
 html body #applet_grid .appletwindow_wait { padding: 30px 10px; text-align: center; color: var(--voiz-muted); }
 html body #applet_grid .ui-sortable-placeholder { visibility: visible !important; min-height: 180px; border: 2px dashed var(--voiz-border-strong); border-radius: 12px; background: var(--voiz-surface-2); }
 html body #applet_grid :is(.gadget, .tabFormTable) { width: 100%; color: var(--voiz-text); background: transparent !important; }
-.voiz-gauges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; gap: 6px; min-width: 0; }
+html body #applet_grid .voiz-gauges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; gap: 6px; min-width: 0; height: auto !important; min-height: 140px; direction: ltr; }
 html body #applet_grid :is(#cpugauge, #memgauge, #swapgauge) { float: none !important; width: 100% !important; min-width: 0; }
 html body #applet_grid [id^="dashboard-applet-"] svg text { fill: var(--voiz-text) !important; font-family: Vazirmatn, sans-serif !important; }
-html body #applet_grid [id$="gauge"] > div { width: min(100%, 140px) !important; margin: auto; }
+html body #applet_grid :is(#dashboard-applet-cpugauge, #dashboard-applet-memgauge, #dashboard-applet-swapgauge) { width: 140px !important; max-width: 100%; height: 140px !important; margin: auto; }
+html body #applet_grid .voiz-gauges svg { display: block; width: 100%; height: 140px; overflow: visible; }
 html body #applet_grid :is(.neo-applet-tline, .neo-applet-hd-report-row) { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; height: auto; width: 100%; padding: 7px 0; overflow: visible; border-bottom: 1px solid var(--voiz-border); }
 html body #applet_grid :is(.neo-applet-titem, .neo-applet-tdesc, .neo-applet-hd-report-row-left, .neo-applet-hd-report-row-right) { position: static; float: none; width: auto; max-width: 100%; height: auto; padding: 0; margin: 0; white-space: normal; overflow-wrap: anywhere; color: var(--voiz-text-soft); }
 .voiz-drive { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
@@ -46,10 +47,39 @@ html body .neo-applet-processes-row > div { position: relative; float: none; wid
 html body .neo-applet-processes-row-name { flex: 1 1 120px; color: var(--voiz-text); }
 html body .neo-applet-processes-row-icon img { width: 25px; height: 25px; object-fit: contain; }
 html body .neo-applet-processes-row-status-msg { font-size: 12px; }
-html body .neo-applet-processes-row-status-icon { display: none; }
+html body #applet_grid .neo-applet-processes-row-status-icon { display: block; flex: 0 0 auto; }
 html body .neo-applet-processes-row-menu { padding: 6px !important; }
 html body .neo-applet-processes-menu { max-width: calc(100vw - 32px); padding: 8px; border: 1px solid var(--voiz-border); background: var(--voiz-surface); color: var(--voiz-text); border-radius: 10px; box-shadow: var(--voiz-popover-shadow); }
 html body .neo_applet_process { margin: 4px; background: var(--voiz-surface-2); color: var(--voiz-text); }
+/* Restore the original applet details without fixed-height clipping or
+   legacy dark text on the dark dashboard surface. */
+html body #applet_grid .appletwindow_fullcontent { display: flow-root; }
+html body #applet_grid .infoActivity {
+  display: grid; grid-template-columns: minmax(100px, 1fr) minmax(0, 3fr);
+  gap: 8px 12px; float: none; clear: both; width: 100%; padding: 0; margin: 0; direction: rtl;
+}
+html body #applet_grid .infoActivity :is(.typeActivity, .detailActivity, .detailText) {
+  float: none; clear: none; width: auto; min-width: 0; margin: 0; padding: 6px 0;
+  color: var(--voiz-text); text-align: right; overflow-wrap: anywhere;
+}
+html body #applet_grid .infoActivity .typeActivity { color: var(--voiz-text-soft); }
+html body #applet_grid .infoActivity font[color="green"] { color: var(--voiz-success); }
+html body #applet_grid .infoActivity font[color="red"] { color: var(--voiz-danger); }
+html body #applet_grid .infoActivity font[color="gray"] { color: var(--voiz-muted); }
+html body #applet_grid .neo-applet-news-row {
+  display: flex; align-items: baseline; gap: 8px; height: auto; min-height: 42px; padding: 10px 0;
+  overflow: visible; white-space: normal; color: var(--voiz-text); border-bottom: 1px solid var(--voiz-border);
+}
+html body #applet_grid .neo-applet-news-row > a { color: var(--voiz-accent-text); min-width: 0; overflow-wrap: anywhere; }
+html body #applet_grid .neo-applet-news-row > a:last-child { flex: 1; }
+html body #applet_grid .neo-applet-news-row > a:hover { color: var(--voiz-primary-text); text-decoration: underline; }
+html body #applet_grid .neo-applet-news-row-date {
+  flex: 0 0 auto; direction: ltr; white-space: nowrap; padding: 2px 6px; border: 1px solid var(--voiz-border);
+  border-radius: 5px; color: var(--voiz-text-soft); background: var(--voiz-surface-2);
+}
+html body #applet_grid .neo-applet-processes-row-menu { display: flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; }
+html[data-theme="dark"] body #applet_grid .neo-applet-processes-row-menu img { filter: brightness(0) invert(.8); }
+
 html body :is(.jqplot-target, .jqplot-axis, .tickLabel, .flot-text, .legendLabel) { color: var(--voiz-text-soft) !important; font-family: Vazirmatn, sans-serif; }
 html body :is(.jqplot-table-legend, .legend > div) { background-color: var(--voiz-surface) !important; border-color: var(--voiz-border) !important; }
 html body :is(#myChart, .chart-container) { background-color: var(--voiz-surface) !important; color: var(--voiz-text); }
