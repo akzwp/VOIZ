@@ -553,50 +553,78 @@
         var date = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4] || 0), Number(m[5] || 0));
         return date.getFullYear() === Number(m[1]) && date.getMonth() === Number(m[2]) - 1 && date.getDate() === Number(m[3]) ? date : null;
     }
-    /* Issue 9: Jalali companion calendar rendered beside the module calendar.
-       Display-only: it never touches the module's own data, forms or events.
-       Issabel's calendar_gui.tpl hosts everything in the #calendar_toolbar
-       column (create button, mini datepicker, iCal export). */
+    /* Both sidebar calendars navigate the same FullCalendar instance. */
     function initJalali() {
         if (doc.querySelector('.voiz-jalali-card')) { return; }
-        var host = doc.querySelector('#calendar_toolbar')
-            || doc.querySelector('.calendar-env .calendar-sidebar')
-            || doc.querySelector('.calendar-env');
-        if (!host) { return; }
-        var monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-        var dowNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
-        var today = jalaliParts(new Date()) || { y: 1405, m: 1, d: 1 };
-        var view = { y: today.y, m: today.m };
-        var card = doc.createElement('div');
-        card.className = 'voiz-jalali-card';
-        card.setAttribute('aria-label', 'تقویم جلالی');
-        function toFa(value) { return String(value).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
-        /* The mini datepicker is re-rendered on every month change by jQuery
-           UI; repersianize after each redraw through the AjaxComplete hook and
-           an initial pass. */
+        var host = doc.querySelector('#calendar_toolbar') || doc.querySelector('.calendar-env .calendar-sidebar') || doc.querySelector('.calendar-env');
+        var today = jalaliParts(new Date());
+        if (!host || !today) { return; }
+        var view = { y: today.y, m: today.m }, selected = gregorianText(new Date());
+        var card = doc.createElement('div'); card.className = 'voiz-jalali-card'; card.setAttribute('aria-label', 'تقویم جلالی');
+        var mini = doc.querySelector('#calendar_datepick'), main = doc.querySelector('#calendar_main'), boundPicker;
+        function fullCalendar() {
+            var $ = window.jQuery;
+            return $ && $.fn.fullCalendar && main && $(main).data('fullCalendar') ? $(main) : null;
+        }
+        function selectDate(date) {
+            if (!date || !isFinite(date.getTime())) { return; }
+            var j = jalaliParts(date); if (!j) { return; }
+            selected = gregorianText(date); view = { y: j.y, m: j.m };
+            var calendar = fullCalendar();
+            if (calendar) {
+                // Pass a Date, never parse a localized label or formatted string.
+                calendar.fullCalendar('gotoDate', date);
+                calendar.fullCalendar('changeView', 'agendaDay');
+            }
+            var $ = window.jQuery;
+            if ($ && $.fn.datepicker && mini && $(mini).data('datepicker')) { $(mini).datepicker('setDate', date); }
+            render(); persianizeMini();
+        }
         function persianizeMini() {
+            if (!mini) { return; }
+            var $ = window.jQuery, instance = $ && $.fn.datepicker && $(mini).data('datepicker');
+            if (instance && instance !== boundPicker) {
+                boundPicker = instance;
+                $(mini).datepicker('option', 'onSelect', function () { selectDate($(this).datepicker('getDate')); });
+            }
             var map = { su: 'ی', mo: 'د', tu: 'س', we: 'چ', th: 'پ', fr: 'ج', sa: 'ش' };
-            all('#calendar_datepick .ui-datepicker-calendar thead th').forEach(function (th) {
+            all('.ui-datepicker-calendar thead th', mini).forEach(function (th) {
                 var key = th.textContent.trim().toLowerCase().slice(0, 2);
                 if (map[key]) { th.textContent = map[key]; }
             });
-            all('#calendar_datepick .ui-datepicker-calendar td a').forEach(function (a) {
-                if (/^\d{1,2}$/.test(a.textContent.trim())) { a.textContent = toFa(a.textContent); }
+            all('.ui-datepicker-calendar td a', mini).forEach(function (a) {
+                // jQuery UI 1.x parses the anchor's HTML to obtain the day number.
+                // Keep ASCII underneath; CSS renders the Persian visual label.
+                var day = toEn(a.textContent.trim());
+                if (/^\d{1,2}$/.test(day)) {
+                    if (a.textContent !== day) { a.textContent = day; }
+                    a.setAttribute('data-voiz-day', toFa(day));
+                    a.setAttribute('aria-label', toFa(day));
+                }
             });
-            all('#calendar_datepick select.ui-datepicker-month option').forEach(function (option, index) {
-                if (faLocale.monthNames[index]) { option.textContent = faLocale.monthNames[index]; }
+            all('select.ui-datepicker-month option', mini).forEach(function (option) {
+                var name = faLocale.monthNames[Number(option.value)];
+                if (name && option.textContent !== name) { option.textContent = name; }
             });
-            all('#calendar_datepick select.ui-datepicker-year option').forEach(function (option) {
-                if (/^\d{4}$/.test(option.textContent.trim())) { option.textContent = toFa(option.textContent.trim()); }
+            all('select.ui-datepicker-year option', mini).forEach(function (option) {
+                var year = toFa(toEn(option.textContent.trim()));
+                if (option.textContent !== year) { option.textContent = year; }
             });
         }
-        /* Live-only pass for FullCalendar headers that were rendered before the
-           locale patch (navigation redraws) — the fixture already ships Persian. */
-        var fcDayMap = { sun: 'ی', mon: 'د', tue: 'س', wed: 'چ', thu: 'پ', fri: 'ج', sat: 'ش' };
-        function persianizeFullCalendar() {
+        function syncMain() {
+            var calendar = fullCalendar();
+            if (calendar) {
+                var date = calendar.fullCalendar('getDate');
+                if (date && isFinite(date.getTime()) && selected !== gregorianText(date)) {
+                    var j = jalaliParts(date);
+                    if (j) { selected = gregorianText(date); view = { y: j.y, m: j.m }; render(); }
+                    if (window.jQuery.fn.datepicker && mini && window.jQuery(mini).data('datepicker')) { window.jQuery(mini).datepicker('setDate', date); }
+                }
+            }
+            var dayMap = { sun: 'ی', mon: 'د', tue: 'س', wed: 'چ', thu: 'پ', fri: 'ج', sat: 'ش' };
             all('#calendar_main .fc-day-header').forEach(function (th) {
                 var key = th.textContent.trim().toLowerCase().slice(0, 3);
-                if (fcDayMap[key]) { th.textContent = fcDayMap[key]; }
+                if (dayMap[key]) { th.textContent = dayMap[key]; }
             });
             all('#calendar_main .fc-header h2').forEach(function (title) {
                 var match = /^([A-Za-z]+)\s+(\d{4})$/.exec(title.textContent.trim());
@@ -609,47 +637,43 @@
                 var text = button.textContent.trim().toLowerCase();
                 if (faLocale.buttonText[text]) { button.textContent = faLocale.buttonText[text]; }
             });
-        }
-        if (window.jQuery) {
-            window.jQuery(doc).ajaxComplete(function () { persianizeMini(); persianizeFullCalendar(); });
+            persianizeMini();
         }
         function render() {
             var first = jalaliToGregorian(view.y, view.m, 1);
-            var nextMonth = view.m === 12 ? jalaliToGregorian(view.y + 1, 1, 1) : jalaliToGregorian(view.y, view.m + 1, 1);
-            var monthLength = Math.round((nextMonth - first) / 86400000);
-            var startCol = (first.getDay() + 1) % 7; /* Persian week starts on Saturday. */
-            var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + monthNames[view.m - 1] + ' ' + toFa(view.y) +
-                '</div><div class="voiz-jalali-nav">' +
-                '<button type="button" data-voiz-jalali="today" title="امروز">امروز</button>' +
-                '<button type="button" data-voiz-jalali="next" title="ماه بعد" aria-label="ماه بعد">‹</button>' +
-                '<button type="button" data-voiz-jalali="prev" title="ماه قبل" aria-label="ماه قبل">›</button>' +
-                '</div></div><div class="voiz-jalali-grid">';
-            dowNames.forEach(function (name) { html += '<div class="voiz-jalali-dow">' + name + '</div>'; });
-            for (var i = 0; i < startCol; i++) { html += '<div class="voiz-jalali-day voiz-jalali-out"></div>'; }
-            for (var day = 1; day <= monthLength; day++) {
-                var date = new Date(first.getTime() + (day - 1) * 86400000);
-                var classes = 'voiz-jalali-day';
-                if (date.getDay() === 5) { classes += ' voiz-jalali-holiday'; }
-                if (view.y === today.y && view.m === today.m && day === today.d) { classes += ' voiz-jalali-today'; }
-                html += '<div class="' + classes + '">' + toFa(day) + '</div>';
+            var next = view.m === 12 ? jalaliToGregorian(view.y + 1, 1, 1) : jalaliToGregorian(view.y, view.m + 1, 1);
+            if (!first || !next) { return; }
+            var count = Math.round((next - first) / 86400000), offset = (first.getDay() + 1) % 7;
+            var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + jalaliMonths[view.m - 1] + ' ' + toFa(view.y) +
+                '</div><div class="voiz-jalali-nav"><button type="button" data-voiz-jalali="prev" aria-label="ماه قبل">›</button>' +
+                '<button type="button" data-voiz-jalali="today">امروز</button><button type="button" data-voiz-jalali="next" aria-label="ماه بعد">‹</button></div></div><div class="voiz-jalali-grid">';
+            calendarDays.forEach(function (day) { html += '<div class="voiz-jalali-dow">' + day + '</div>'; });
+            for (var i = 0; i < offset; i++) { html += '<span aria-hidden="true"></span>'; }
+            for (var day = 1; day <= count; day++) {
+                var date = addCalendarDays(first, day - 1), key = gregorianText(date);
+                var classes = 'voiz-jalali-day' + (date.getDay() === 5 ? ' voiz-jalali-holiday' : '') + (key === gregorianText(new Date()) ? ' voiz-jalali-today' : '');
+                html += '<button type="button" class="' + classes + '" data-voiz-jalali="pick" data-date="' + key + '" aria-pressed="' + (key === selected) + '" aria-label="' + jalaliText(date) + '، ' + key + '">' + toFa(day) + '</button>';
             }
-            html += '</div><div class="voiz-jalali-foot">تقویم هجری شمسی</div>';
-            card.innerHTML = html;
+            card.innerHTML = html + '</div><div class="voiz-jalali-foot">تقویم هجری شمسی</div>';
         }
         card.addEventListener('click', function (event) {
-            var action = closest(event.target, '[data-voiz-jalali]');
-            if (!action) { return; }
-            event.preventDefault();
-            var what = action.getAttribute('data-voiz-jalali');
-            if (what === 'prev') { view.m--; if (view.m < 1) { view.m = 12; view.y--; } }
-            else if (what === 'next') { view.m++; if (view.m > 12) { view.m = 1; view.y++; } }
-            else { view = { y: today.y, m: today.m }; }
-            render();
+            var action = closest(event.target, '[data-voiz-jalali]'); if (!action) { return; }
+            event.preventDefault(); var what = action.getAttribute('data-voiz-jalali');
+            if (what === 'pick') { selectDate(parseCalendarField(action.getAttribute('data-date'))); }
+            else if (what === 'today') { selectDate(dateOnly(new Date())); }
+            else {
+                var index = view.y * 12 + view.m - 1 + (what === 'prev' ? -1 : 1);
+                view = { y: Math.floor(index / 12), m: index % 12 + 1 }; render();
+            }
+            var focus = card.querySelector(what === 'pick' ? '[aria-pressed="true"]' : '[data-voiz-jalali="' + what + '"]');
+            if (focus) { focus.focus(); }
         });
-        render();
-        host.appendChild(card);
-        persianizeMini();
-        persianizeFullCalendar();
+        render(); host.appendChild(card); syncMain();
+        // Redraws also happen from cached navigation, without an Ajax request.
+        if (window.MutationObserver) {
+            if (mini) { new MutationObserver(persianizeMini).observe(mini, { childList: true, subtree: true }); }
+            if (main) { new MutationObserver(syncMain).observe(main, { childList: true, subtree: true }); }
+        }
     }
     function initEventDatePickers() {
         var dialog = doc.querySelector('#calendar_eventdialog');

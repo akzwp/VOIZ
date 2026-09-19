@@ -298,6 +298,36 @@ html body .fc .fc-event {
 }
 html body .fc .fc-event :is(.fc-event-title, span) { color: inherit; }
 
+/* FullCalendar 1.x computes event segments in physical left-to-right,
+   content-box coordinates, even when it reverses the dates for RTL. */
+html body #calendar_main .fc-content,
+html body #calendar_main .fc-content * { box-sizing: content-box !important; }
+html body #calendar_main .fc-content,
+html body #calendar_main .fc-content table { direction: ltr !important; }
+html body #calendar_main .fc-content table { border-spacing: 0; }
+html body #calendar_main .fc-content table.fc-border-separate,
+html body #calendar_main .fc-agenda table { border-collapse: separate; }
+html body #calendar_main .fc-event {
+  margin: 0; padding: 0; border-width: 1px; border-style: solid;
+  line-height: 1.5; overflow: hidden; overflow-wrap: normal; word-break: normal;
+  direction: rtl; text-align: right;
+}
+html body #calendar_main .fc-event-hori { margin: 0 0 2px; border-inline-width: 0; border-radius: 0; }
+html body #calendar_main .fc-event-hori.fc-event-start { border-right-width: 1px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+html body #calendar_main .fc-event-hori.fc-event-end { border-left-width: 1px; border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
+html body #calendar_main .fc-event-hori .fc-event-inner { white-space: nowrap; text-overflow: ellipsis; }
+html body #calendar_main .fc-event-hori .fc-event-title { display: inline; white-space: nowrap; padding: 0 3px; }
+html body #calendar_main .fc-event-time { direction: ltr; unicode-bidi: isolate; padding: 0 3px; }
+html body #calendar_main .fc-event-vert .fc-event-title { display: block; white-space: normal; overflow-wrap: break-word; }
+html body #calendar_main :is(.fc-content, .fc-view, .fc-agenda) { background: var(--voiz-surface) !important; color: var(--voiz-text); }
+html body #calendar_main .fc-agenda :is(.ui-widget-content, .fc-agenda-slots, .fc-agenda-slots td) { background: transparent !important; border-color: var(--voiz-border) !important; }
+html body #calendar_main .fc-agenda :is(.fc-agenda-axis, .fc-agenda-divider, .fc-agenda-divider-inner) { background: var(--voiz-surface-2) !important; color: var(--voiz-muted) !important; }
+html body #calendar_main .fc-agenda-slots :is(th, td) { padding: 0 4px; border-top: 1px solid var(--voiz-border) !important; }
+html body #calendar_main .fc-agenda-slots tr.fc-minor :is(th, td) { border-top-style: dotted !important; }
+html body #calendar_main .fc-agenda-slots td > div { height: 24px; }
+html body #calendar_main .fc-agenda .fc-agenda-axis { width: 54px; direction: ltr; text-align: center; white-space: nowrap; }
+html body #calendar_main .fc-agenda .fc-today { background: var(--voiz-primary-soft) !important; }
+
 /* Toolbar column: create button, mini jQuery-UI datepicker, iCal export. */
 html body #calendar_datepick .ui-datepicker {
   width: 100% !important; margin: 0 !important; padding: 0 !important;
