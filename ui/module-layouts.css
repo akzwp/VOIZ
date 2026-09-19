@@ -1,0 +1,158 @@
+/* Scoped layouts for PBX configuration, contacts, hardware and provisioning. */
+html body.voiz-pbx { direction: rtl; text-align: right; font-family: Vazirmatn, Tahoma, sans-serif; font-size: 14px; line-height: 1.8; }
+html body.voiz-pbx *, html body.voiz-pbx *::before, html body.voiz-pbx *::after { box-sizing: border-box; }
+html body.voiz-pbx :is(#page, #page_body, .content) { width: 100%; min-width: 0; max-width: 100%; margin: 0; }
+html body.voiz-pbx #header { position: sticky !important; inset: 0 0 auto; min-width: 0; width: 100%; z-index: 1000; }
+html body.voiz-pbx #header .navbar { position: relative; inset: auto; min-width: 0; padding: 6px 12px; border-bottom: 1px solid var(--voiz-border); }
+html body.voiz-pbx :is(.navbar, .navbar-menu, .navbar-dropdown) { background: var(--voiz-surface-2) !important; color: var(--voiz-text) !important; box-shadow: none; }
+html body.voiz-pbx :is(.navbar-start, .navbar-end, .navbar-brand) { align-items: center; gap: 4px; }
+html body.voiz-pbx .navbar-start { margin-right: 0; margin-left: auto; }
+html body.voiz-pbx .navbar-end { margin-left: 0; margin-right: auto; }
+html body.voiz-pbx :is(.navbar-item, .navbar-link) { font: inherit; color: var(--voiz-text) !important; text-align: right; white-space: nowrap; }
+html body.voiz-pbx button.navbar-item { border: 0; background: transparent; }
+html body.voiz-pbx .navbar-link { padding: 10px 12px 10px 32px; border-radius: 8px; }
+html body.voiz-pbx .navbar-link::after { right: auto; left: 12px; border-color: var(--voiz-muted); }
+html body.voiz-pbx .navbar-dropdown {
+  right: 0; left: auto; min-width: 230px; width: max-content; max-width: min(600px, calc(100vw - 32px));
+  max-height: min(520px, 70vh); overflow: auto; padding: 8px; border: 1px solid var(--voiz-border); border-radius: 10px; text-align: right;
+}
+html body.voiz-pbx .navbar-dropdown.multicolumn { column-count: 2; column-gap: 12px; }
+html body.voiz-pbx .navbar-dropdown .navbar-item { display: block; padding: 9px 12px; white-space: normal; border-radius: 6px; break-inside: avoid; }
+html body.voiz-pbx .navbar-dropdown :is(.scroll-container, .scroll) { width: auto; height: auto; margin: 0; overflow: visible; white-space: normal; }
+html body.voiz-pbx .navbar :is(.navbar-link:hover, .navbar-link:focus, .navbar-item:hover, .navbar-item:focus, .navbar-item.is-active),
+html body.voiz-pbx .navbar-item.has-dropdown:hover > .navbar-link { background: var(--voiz-primary-soft) !important; color: var(--voiz-primary-text) !important; }
+html body.voiz-pbx #menusearch { width: 190px; max-width: 100%; }
+html body.voiz-pbx #page_body { padding: 20px; }
+html body.voiz-pbx :is(h1, h2, h3, h4, h5, h6, legend, .label) { color: var(--voiz-heading) !important; text-align: start; font-family: inherit; }
+html body.voiz-pbx :is(.box, .infobox, .ui-widget-content, .ui-widget-header, #tab-content, .moduleheader, .moduleinfopane) {
+  background: var(--voiz-surface) !important; background-image: none !important; color: var(--voiz-text) !important; border-color: var(--voiz-border) !important;
+}
+html body.voiz-pbx :is(.infobox, .box) { padding: 16px; border: 1px solid var(--voiz-border); border-radius: 10px; box-shadow: none; }
+html body.voiz-pbx :is(.ui-widget-header, h5, .h5) { background: var(--voiz-surface-2) !important; padding: 10px 14px; border-radius: 8px; box-shadow: none; }
+html body.voiz-pbx :is(.content table, table.box, .alt_table) { max-width: 100%; border-color: var(--voiz-border); background: var(--voiz-surface); }
+html body.voiz-pbx :is(.content table, table.box, .alt_table) :is(td, th) { padding: 10px 12px; color: var(--voiz-text); text-align: start; vertical-align: middle; border-color: var(--voiz-border); }
+html body.voiz-pbx :is(.alt_table tr:nth-child(even), .table.is-striped tbody tr:not(.is-selected):nth-child(2n)) { background: var(--voiz-surface-2); }
+html body.voiz-pbx .voiz-pbx-table-scroll { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; margin-bottom: 16px; }
+html body.voiz-pbx .voiz-pbx-table-scroll > table { min-width: 100%; width: max-content; table-layout: auto; }
+html body.voiz-pbx .rnav { float: left; left: auto; right: auto; max-width: 280px; width: 26%; margin: 0 20px 16px 0; }
+html body.voiz-pbx .rnav :is(ul, a) { max-width: 100%; background: var(--voiz-surface-2); color: var(--voiz-text); border-color: var(--voiz-border); }
+html body.voiz-pbx .rnav a { padding: 8px 12px; white-space: normal; overflow-wrap: anywhere; }
+html body.voiz-pbx .field { min-width: 0; margin-bottom: 18px; }
+html body.voiz-pbx .field-label { text-align: right; margin-right: 0; margin-left: 20px; flex-shrink: 0; }
+html body.voiz-pbx :is(.field-body, .control, .column) { min-width: 0; }
+html body.voiz-pbx .columns { margin-inline: 0; gap: 8px; }
+html body.voiz-pbx .column { padding: 10px; }
+html body.voiz-pbx :is(.input, select, textarea, .chosen-container) { max-width: 100%; }
+html body.voiz-pbx :is(input[type="tel"], input[type="email"], input[type="url"], input[type="number"], input[type="password"], code, pre) { direction: ltr; text-align: left; }
+html body.voiz-pbx .confidential:not(:focus):not(:hover) { color: transparent !important; text-shadow: 0 0 5px var(--voiz-text); }
+html body.voiz-pbx :is(.chosen-single, .chosen-choices, .chosen-drop, .chosen-results) { background: var(--voiz-input-bg) !important; color: var(--voiz-text) !important; border-color: var(--voiz-border-strong) !important; box-shadow: none; }
+html body.voiz-pbx .chosen-single { height: auto; min-height: 42px; padding: 8px 12px; }
+html body.voiz-pbx .chosen-container .chosen-results li.highlighted { background: var(--voiz-primary-soft); color: var(--voiz-primary-text); }
+html body.voiz-pbx .radiotoggle { flex-wrap: wrap; gap: 4px; }
+html body.voiz-pbx .radiotoggle input { position: absolute; left: -9999px; }
+html body.voiz-pbx .radiotoggle input + label { min-height: 38px; padding: 8px 14px; border: 1px solid var(--voiz-border) !important; border-radius: 6px !important; color: var(--voiz-text); background: var(--voiz-surface-2); box-shadow: none; }
+html body.voiz-pbx .radiotoggle input:checked + label { color: var(--voiz-primary-text); background: var(--voiz-primary-soft); border-color: var(--voiz-primary) !important; }
+html body.voiz-pbx .radiotoggle input:focus-visible + label { outline: 2px solid var(--voiz-primary-text); outline-offset: 2px; }
+html body.voiz-pbx :is(.tabs, #tab-content, .tabs > ul) { max-width: 100%; width: 100% !important; }
+html body.voiz-pbx .tabs ul { display: flex; flex-wrap: wrap; margin: 0; border-color: var(--voiz-border); }
+html body.voiz-pbx .tabs a { color: var(--voiz-text); border-color: var(--voiz-border); }
+html body.voiz-pbx .tabs li.is-active a { color: var(--voiz-primary-text); border-color: var(--voiz-primary); }
+html body.voiz-pbx #action-bar { position: sticky; bottom: 0; width: fit-content; max-width: 100%; padding: 12px; margin-top: 16px; white-space: normal; background: var(--voiz-surface-2); border: 1px solid var(--voiz-border); border-radius: 10px; }
+html body.voiz-pbx #dashboard { display: grid; grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr); gap: 20px; }
+html body.voiz-pbx :is(#sysinfo-left, #sysinfo-right) { width: auto !important; min-width: 0; margin: 0; padding: 0; float: none; }
+html body.voiz-pbx .infobox { width: 100%; min-width: 0; resize: none; overflow: visible; }
+html body.voiz-pbx .databox { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: auto; min-height: 34px; padding: 6px 8px; margin: 4px 0; border-color: var(--voiz-border); }
+html body.voiz-pbx .databox :is(.dataname, .datavalue) { position: relative; inset: auto; z-index: 1; min-width: 0; color: var(--voiz-text); }
+html body.voiz-pbx .databox .dataname { overflow-wrap: anywhere; }
+html body.voiz-pbx .databox .datavalue { direction: ltr; flex-shrink: 0; }
+html body.voiz-pbx .databox .bargraph { position: absolute; inset: 0 0 0 auto; height: 100%; opacity: .2; border-radius: 4px; }
+html body.voiz-pbx .databox .graphok { background: var(--voiz-success-soft); color: var(--voiz-success); }
+html body.voiz-pbx .databox .graphwarn { background: var(--voiz-warning-soft); color: var(--voiz-warning); }
+html body.voiz-pbx .databox .grapherror { background: var(--voiz-danger-soft); color: var(--voiz-danger); }
+html body.voiz-pbx #syslog ul { padding: 0; }
+html body.voiz-pbx #syslog ul li { color: var(--voiz-text); padding: 8px 0; border-color: var(--voiz-border); }
+html body.voiz-pbx #syslog ul li > div { padding: 0; }
+html body.voiz-pbx #syslog h4 { padding-inline-end: 52px; text-align: start; color: var(--voiz-text); line-height: 1.9; }
+html body.voiz-pbx #syslog .notification_buttons { right: auto; left: 4px; top: 10px; }
+html body.voiz-pbx .syslog_text { padding: 0; }
+
+/* Contact fields keep their original names, visibility and submission path. */
+html body .voiz-contact-form { width: 100%; max-width: 1100px; margin-inline: auto; table-layout: auto; }
+html body .voiz-contact-form > tbody > tr > td { padding: 8px; }
+html body .voiz-contact-form .tabForm { display: block; table-layout: auto; border-spacing: 0 12px; }
+html body .voiz-contact-form .tabForm > tbody { display: block; width: 100%; }
+html body .voiz-contact-form .tabForm > tbody > tr:not(#tr_new_contact) { width: 100%; }
+html body .voiz-contact-form #tr_new_contact { display: grid; grid-template-columns: 140px minmax(0, 1fr); align-items: start; gap: 24px; }
+html body .voiz-contact-form #tr_new_contact > td { display: block; width: auto !important; padding: 0 !important; }
+html body .voiz-contact-form #tr_new_contact > td:first-child { padding-top: 28px !important; text-align: center !important; }
+html body .voiz-contact-form #tr_new_contact > td:first-child img { width: 110px; height: 110px; max-width: 100%; object-fit: contain; border: 1px solid var(--voiz-border); border-radius: 12px; background: var(--voiz-surface-2); padding: 12px; }
+html body .voiz-contact-fields, html body .voiz-contact-fields > tbody { display: block; width: 100%; }
+html body .voiz-contact-fields > tbody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; }
+html body .voiz-contact-fields > tbody > tr { display: flex; flex-direction: column; min-width: 0; gap: 6px; }
+html body .voiz-contact-fields > tbody > tr > td { display: block; width: 100% !important; padding: 0 !important; text-align: right !important; }
+html body .voiz-contact-fields > tbody > tr:has(textarea), html body .voiz-contact-fields > tbody > tr:has(input[type="file"]), html body .voiz-contact-fields > tbody > tr:has(input[type="radio"]) { grid-column: 1 / -1; }
+html body .voiz-contact-fields > tbody > tr:has(input[type="radio"]) { flex-direction: row; flex-wrap: wrap; gap: 12px 24px; }
+html body .voiz-contact-fields > tbody > tr:has(input[type="radio"]) > td { width: auto !important; }
+html body .voiz-contact-fields :is(input:not([type="radio"]):not([type="checkbox"]):not([type="hidden"]), select, textarea) { width: 100% !important; min-width: 0; max-width: 100% !important; }
+html body .voiz-contact-fields :is(input[name*="phone"], input[name^="fax"], input[name="email"]) { direction: ltr; text-align: left; }
+html body .voiz-module-address_book :is(table.tabla_listado, table.issabel-standard-table) { width: max-content; min-width: 100%; table-layout: auto; }
+html body .voiz-module-address_book :is(table.tabla_listado, table.issabel-standard-table) > tbody > tr > td { min-width: 100px; padding: 12px 16px !important; white-space: nowrap !important; }
+html body .voiz-module-address_book :is(table.tabla_listado, table.issabel-standard-table) > tbody > tr > td:first-child { min-width: 48px; width: 48px; }
+html body .voiz-module-address_book .neo-table-header-row-filter { height: auto !important; padding: 0 !important; }
+
+/* Hardware status retains device colors while the legend follows the theme. */
+html body .voiz-hardware { display: block; direction: rtl; table-layout: auto; border-spacing: 0 12px; }
+html body .voiz-hardware > tbody, html body .voiz-hardware > tbody > tr { display: block; width: 100%; }
+html body .voiz-hardware > tbody > tr:not(.filterForm) > td { display: block; width: 100%; }
+html body .voiz-hardware > tbody > tr.filterForm { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(280px, 1fr); gap: 16px; }
+html body .voiz-hardware > tbody > tr.filterForm > td { display: block; min-width: 0; padding: 16px !important; border-radius: 10px; }
+html body .voiz-hardware > tbody > tr.filterForm > td:nth-child(2):not(:has(.hourglass[style*="display: block"])) { padding: 0 !important; border: 0; }
+html body .voiz-hardware :is(fieldset, .fielform, #optionsAdvance) { width: auto; max-width: 100%; height: auto; padding: 12px; font: inherit; color: var(--voiz-text) !important; }
+html body .voiz-hardware .fielform { margin: 0; }
+html body .voiz-hardware .fielform table { width: 100%; float: none; }
+html body .voiz-hardware .fielform td { padding: 6px; color: var(--voiz-text) !important; text-align: start; }
+html body .voiz-hardware .fielform td:first-child { width: 40px; }
+html body .voiz-hardware .sombreado { color: var(--voiz-heading) !important; font: 600 14px/1.8 Vazirmatn, sans-serif; }
+html body .voiz-hardware :is(td[style*="background-color:white"], table[style*="background-color:white"]) { background-color: var(--voiz-surface-2) !important; border-color: var(--voiz-border) !important; }
+html body .voiz-hardware #optionsAdvance { line-height: 2.4; }
+html body .voiz-hardware .table_navigation_row { background: var(--voiz-surface) !important; border-color: var(--voiz-border); }
+html body .voiz-hardware-empty { padding: 16px; margin-top: 16px; border: 1px solid var(--voiz-border); border-radius: 8px; color: var(--voiz-muted); text-align: center; }
+
+/* The endpoint configurator uses Ember views and its own table classes. */
+html body #endpointConfigApplication { background: var(--voiz-surface) !important; color: var(--voiz-text); min-width: 0; }
+html body #endpointConfigApplication .neo-endpointconfig-header-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; height: auto; min-height: 68px; margin: 0 0 16px; padding: 12px; background: var(--voiz-surface-2); border: 1px solid var(--voiz-border); border-radius: 10px; }
+html body #endpointConfigApplication .neo-endpointconfig-header-row > .ember-view { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
+html body #endpointConfigApplication .neo-endpointconfig-header-row .ember-view .ember-view { position: relative; float: none; }
+html body #endpointConfigApplication .neo-table-header-row-filter { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; float: none; height: auto; width: auto; max-width: 100%; padding: 0; border: 0; background: transparent; }
+html body #endpointConfigApplication .neo-table-header-row-filter input[type="text"] { width: 190px; direction: ltr; text-align: left; }
+html body #endpointConfigApplication .neo-table-action { min-height: 40px; margin: 0; padding: 8px 12px; }
+html body #endpointConfigApplication .neo-table-action[data-voiz-caption]::after { content: attr(data-voiz-caption); font-size: 12px; }
+html body #endpointConfigApplication .neo-endpointconfig-header-row-navigation { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; position: static; float: none; height: auto; margin-inline-start: auto; padding: 6px 0; border: 0; }
+html body #endpointConfigApplication #addonlist { display: block; width: 100%; max-width: 100%; overflow-x: auto; border: 1px solid var(--voiz-border); border-radius: 8px; }
+html body #endpointConfigApplication #addonlist > table { width: 100% !important; min-width: 860px; table-layout: auto !important; border-collapse: collapse; }
+html body #endpointConfigApplication #addonlist :is(td, th) { padding: 12px 16px; min-width: 80px; height: auto; background: var(--voiz-surface); color: var(--voiz-text); border-bottom: 1px solid var(--voiz-border); font: 400 13px/1.8 Vazirmatn, sans-serif; text-align: start; text-indent: 0; white-space: nowrap; }
+html body #endpointConfigApplication #addonlist .neo-table-title-row { background: var(--voiz-surface-2); color: var(--voiz-heading); font-weight: 600; }
+html body #endpointConfigApplication #addonlist td:is(:nth-child(3), :nth-child(4)) { direction: ltr; text-align: left; }
+html body #endpointConfigApplication #addonlist td select { min-width: 160px; width: auto; }
+html body #endpointConfigApplication #addonlist td[colspan] { padding: 28px 16px; text-align: center; }
+html body #endpointConfigApplication #footer { display: flex; height: auto !important; padding: 12px; background: var(--voiz-surface-2) !important; }
+html body #endpointConfigApplication .neo-endpointconfig-submenu { min-width: 220px; max-width: min(420px, 80vw); padding: 12px; background: var(--voiz-surface-2); color: var(--voiz-text); border: 1px solid var(--voiz-border); border-radius: 8px; z-index: 20; }
+
+/* Recordings keep timestamps, numbers and row actions distinct. */
+html body .voiz-module-monitoring #CDRreport td { min-width: 120px; }
+html body .voiz-module-monitoring #CDRreport td:last-child { min-width: 190px; }
+html body .voiz-module-monitoring #CDRreport td :is(button, .btn, a) { vertical-align: middle; }
+html body .voiz-module-monitoring #CDRreport td :is(button, .btn) { margin: 3px; min-height: 36px; }
+html body .voiz-module-monitoring #CDRreport td audio { display: block; width: 260px; max-width: none; margin: 4px 0; }
+@media (max-width: 900px) {
+  html body.voiz-pbx #dashboard { grid-template-columns: minmax(0, 1fr); }
+  html body.voiz-pbx .rnav { float: none; width: 100%; max-width: 100%; margin: 0 0 16px; }
+  html body .voiz-hardware > tbody > tr.filterForm { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 767px) {
+  html body.voiz-pbx #page_body { padding: 12px; }
+  html body.voiz-pbx .navbar-dropdown.multicolumn { column-count: 1; }
+  html body .voiz-contact-form #tr_new_contact { grid-template-columns: minmax(0, 1fr); }
+  html body .voiz-contact-form #tr_new_contact > td:first-child { padding-top: 0 !important; }
+  html body .voiz-contact-fields > tbody { grid-template-columns: minmax(0, 1fr); }
+}

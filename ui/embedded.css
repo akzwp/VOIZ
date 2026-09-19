@@ -80,6 +80,48 @@ html body .dataTables_wrapper .dataTables_paginate { display: flex; flex-wrap: w
 html body :is(#myChart, canvas.chartjs) { background: var(--voiz-surface) !important; border-radius: 8px; }
 html body mark { background: var(--voiz-primary) !important; color: #fff !important; border-radius: 4px; padding: 0 4px; }
 
+/* CDR and recordings share #CDRreport. Only the table scrolls; its controls
+   stay in normal flow, outside Bootstrap's negative-margin row layout. */
+html body #CDRreport_wrapper { display: block; min-width: 0; width: 100%; padding: 0; margin: 16px 0; overflow: visible; }
+html body #CDRreport_wrapper :is(.voiz-report-toolbar, .voiz-report-controls, .voiz-report-footer) {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px 20px; width: 100%; min-width: 0; padding: 12px 0;
+}
+html body #CDRreport_wrapper .voiz-report-toolbar { justify-content: flex-start; border-bottom: 1px solid var(--voiz-border); }
+html body #CDRreport_wrapper :is(.dt-buttons, .dataTables_length, .dataTables_filter, .dataTables_info, .dataTables_paginate) {
+  position: static !important; float: none !important; width: auto; min-width: 0; max-width: 100%; margin: 0; padding: 0 !important;
+}
+html body #CDRreport_wrapper .dt-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+html body #CDRreport_wrapper .dt-buttons > .dt-button { margin: 0; border-radius: 8px; min-height: 40px; }
+html body #CDRreport_wrapper :is(.dataTables_length, .dataTables_filter) label { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0; }
+html body #CDRreport_wrapper .dataTables_filter input { width: 220px; min-width: 0; max-width: 100%; margin: 0; }
+html body #CDRreport_wrapper .dataTables_length select { width: auto; min-width: 76px; margin: 0; }
+html body #CDRreport_wrapper .voiz-report-scroll {
+  width: 100%; min-width: 0; max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain;
+  scrollbar-width: thin; border: 1px solid var(--voiz-border); border-radius: 8px;
+}
+html body #CDRreport {
+  width: max-content !important; min-width: 100%; max-width: none; table-layout: auto !important;
+  border-collapse: separate !important; border-spacing: 0; margin: 0 !important; border: 0;
+}
+html body #CDRreport > :is(thead, tbody) > tr > :is(th, td) {
+  width: auto !important; min-width: 90px; max-width: none; padding: 12px 16px !important;
+  font-size: 13px !important; line-height: 1.8; white-space: nowrap !important;
+  overflow-wrap: normal; word-break: normal; text-align: start; vertical-align: middle;
+}
+html body #CDRreport > thead > tr > th {
+  position: relative; padding-right: 38px !important; background-position: right 10px center;
+}
+html body #CDRreport > thead > tr > th::before,
+html body #CDRreport > thead > tr > th::after { right: 12px !important; left: auto !important; }
+html body #CDRreport td.dataTables_empty { padding: 28px 16px !important; text-align: center; white-space: normal !important; }
+html body #CDRreport_wrapper .dataTables_paginate { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+html body #CDRreport_wrapper .dataTables_paginate :is(.pagination, span) { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+html body #CDRreport_wrapper .pagination > li.paginate_button {
+  display: block; min-height: 0; padding: 0; margin: 0; border: 0 !important; background: transparent !important;
+}
+html body #CDRreport_wrapper .pagination > li > :is(a, span) { min-height: 38px; padding: 8px 12px; border-radius: 6px; }
+
 /* Issue 4 — GeoIP Map tooltips (and any framed map tooltip):
    keep the country label inside its bubble, LTR, on one line. */
 html body :is(.voiz-embedded, .neo-module-content) :is(
@@ -506,6 +548,82 @@ html body .flexigrid .pDiv {
 html body .flexigrid :is(.btnseparator, .pDiv .pGroup) { border-color: var(--voiz-border); }
 html body .flexigrid .bDiv :is(.fbutton, img) { vertical-align: middle; }
 html body .flexigrid :is(.label, .badge) { border-radius: 6px; padding: 2px 8px; }
+
+/* Issabel add-ons use .neo-addons-* cards, not the flexigrid markup above. */
+html body .neo-addons-header-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  height: auto; min-height: 64px; padding: 12px 16px; margin: 0 0 16px;
+  background: var(--voiz-surface-2); border: 1px solid var(--voiz-border); border-radius: 10px;
+}
+html body :is(.neo-addons-header-row-filter, .neo-addons-header-row-navigation) {
+  display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  position: static; float: none; height: auto; min-width: 0; max-width: 100%; padding: 0; border: 0;
+}
+html body .neo-addons-header-row-navigation { margin-inline-start: auto; }
+html body .neo-addons-header-row-filter :is(input, select) { width: 180px; max-width: 100%; margin: 0; }
+html body .neo-addons-header-row-navigation img { box-sizing: content-box !important; padding: 6px; border: 1px solid var(--voiz-border); border-radius: 6px; }
+html body #addonlist { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; min-width: 0; }
+html body #addonlist .neo-addons-row {
+  display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 6px 16px;
+  grid-template-areas: "icon title actions" "icon author actions" ". description description" ". location location" ". note note" ". info info";
+  position: relative; inset: auto; min-width: 0; min-height: 0; padding: 18px;
+  background: var(--voiz-surface); border: 1px solid var(--voiz-border); border-radius: 10px;
+}
+html body #addonlist :where(.neo-addons-row > div) {
+  position: static; inset: auto; float: none; width: auto; max-width: 100%; min-width: 0; height: auto;
+  margin: 0; padding: 0; text-align: start; white-space: normal; overflow-wrap: anywhere;
+}
+html body #addonlist .neo-addons-row-title { grid-area: title; font: 600 16px/1.8 Vazirmatn, sans-serif; color: var(--voiz-heading); }
+html body #addonlist .neo-addons-row-author { grid-area: author; color: var(--voiz-muted); font-size: 12px; font-weight: 400; }
+html body #addonlist .neo-addons-row-icon { grid-area: icon; }
+html body #addonlist .neo-addons-row-icon img { display: block; float: none; width: 60px; height: 60px; margin: 0; object-fit: contain; background: #fff; border-radius: 10px; box-shadow: none; }
+html body #addonlist .neo-addons-row-desc { grid-area: description; color: var(--voiz-text-soft); line-height: 1.9; }
+html body #addonlist .neo-addons-row-location { grid-area: location; color: var(--voiz-text-soft); line-height: 1.9; }
+html body #addonlist .neo-addons-row-note { grid-area: note; color: var(--voiz-muted); line-height: 1.9; }
+html body #addonlist .neo-addons-row-button { grid-area: actions; display: grid; grid-template-columns: minmax(88px, auto) 38px; align-self: start; justify-content: start; gap: 8px 0; }
+html body #addonlist .neo-addons-row-button > div {
+  display: inline-flex; align-items: center; justify-content: center; position: relative; float: none;
+  width: auto; height: auto; min-height: 40px; margin: 0; padding: 8px; font: 500 13px/1.6 Vazirmatn, sans-serif;
+  background: var(--voiz-primary); color: var(--voiz-primary-contrast); border: 1px solid var(--voiz-primary); text-shadow: none; cursor: pointer;
+}
+html body #addonlist .neo-addons-row-button > div[class$="-left"],
+html body #addonlist .neo-addons-row-button > .tooltipInfo { border-start-start-radius: 8px; border-end-start-radius: 8px; border-start-end-radius: 0; border-end-end-radius: 0; }
+html body #addonlist .neo-addons-row-button > div[class$="-right"] { border-start-end-radius: 8px; border-end-end-radius: 8px; border-start-start-radius: 0; border-end-start-radius: 0; }
+html body #addonlist .neo-addons-row-button > :is(.neo-addons-row-button-uninstall-left, .neo-addons-row-button-uninstall-right) { background: var(--voiz-danger-soft); border-color: var(--voiz-danger); color: var(--voiz-danger); }
+html body #addonlist .neo-addons-row-button > div:hover { filter: brightness(1.1); }
+html body #addonlist .neo-addons-row-moreinfo {
+  grid-area: info; justify-self: start; margin-top: 8px; padding: 7px 12px; min-height: 36px;
+  background: var(--voiz-surface-2); color: var(--voiz-text); border: 1px solid var(--voiz-border); border-radius: 6px;
+}
+html body #addonlist + #footer { display: flex; flex-wrap: wrap; align-items: center; min-height: 56px; height: auto !important; padding: 12px; margin-top: 16px; background: var(--voiz-surface-2) !important; border: 1px solid var(--voiz-border); border-radius: 8px; }
+
+/* QR batch's stock .row gutters and fixed select width escape its panel. */
+html body .voiz-qr-config .container-fluid { width: 100%; min-width: 0; padding: 0; }
+html body .voiz-qr-config .row { width: auto; min-width: 0; margin: 0 !important; }
+html body .voiz-qr-config .panel.panel-blue {
+  box-sizing: border-box; width: 100%; max-width: 100%; min-width: 0; margin: 0; padding: 20px;
+  border: 1px solid var(--voiz-border); border-radius: 10px; background: var(--voiz-surface); box-shadow: none;
+}
+html body .voiz-qr-config .panel > .row { display: grid; grid-template-columns: minmax(140px, 1fr) minmax(0, 2fr); align-items: center; gap: 12px 20px; margin-bottom: 20px !important; }
+html body .voiz-qr-config .panel > .row::before,
+html body .voiz-qr-config .panel > .row::after { content: none; }
+html body .voiz-qr-config .panel > .row:last-child { margin-bottom: 0 !important; }
+html body .voiz-qr-config .row > :is(.col-md-4, .col-md-8, .col-md-12) { float: none; width: auto; min-width: 0; padding: 0; overflow-wrap: anywhere; }
+html body .voiz-qr-config .row > .col-md-12 { grid-column: 1 / -1; }
+html body .voiz-qr-config h3 { margin: 0; font-size: 18px; line-height: 1.8; }
+html body .voiz-qr-config .bootstrap-select { width: 100% !important; max-width: 420px; min-width: 0; }
+html body .voiz-qr-config .bootstrap-select > .dropdown-toggle { width: 100%; min-width: 0; max-width: 100%; margin: 0; }
+html body .voiz-qr-config .bootstrap-select .filter-option { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+html body .voiz-qr-config .bootstrap-select .dropdown-menu { min-width: 100%; max-width: 100%; }
+html body .voiz-qr-config :is(#asteriskip, #template) { max-width: 100%; }
+@media (max-width: 767px) {
+  html body #addonlist .neo-addons-row {
+    grid-template-columns: 60px minmax(0, 1fr); padding: 14px;
+    grid-template-areas: "icon title" "icon author" "description description" "location location" "note note" "actions actions" "info info";
+  }
+  html body .voiz-qr-config .panel.panel-blue { padding: 16px; }
+  html body .voiz-qr-config .panel > .row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
 
 /* Embedded generic form polish (DHCP server, endpoints, QR and friends). */
 html body.voiz-embedded .form-group, html body.voiz-embedded .control-group { display: flow-root; margin-bottom: 12px; }

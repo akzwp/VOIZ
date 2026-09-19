@@ -161,7 +161,7 @@
     </td>
   </tr>
 </table>
-<center><h3 style='color:#990033;font-size:14px'>{$CARDS_NOT_FOUNDS}</h3></center>
+{if $CARDS_NOT_FOUNDS}<div class="voiz-hardware-empty">{$CARDS_NOT_FOUNDS}</div>{/if}
 
 {*
 {counter start=1 skip=1 print=false assign=cnt}

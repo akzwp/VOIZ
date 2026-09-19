@@ -51,14 +51,16 @@ $html .= '<a target="_blank" href="' . $amp_conf['BRAND_IMAGE_SPONSOR_LINK_FOOT'
 */
 echo $html;
 ?>
-<link rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.3">
-<script src="/themes/vitenant/js/voiz-embedded.js?v=7.1.3"></script>
+<link id="voiz-frame-theme" rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.5">
+<script id="voiz-pbx-ui" src="/themes/vitenant/js/voiz-embedded.js?v=7.1.5"></script>
 <script>
 (function () {
     var theme = 'dark';
     try { theme = localStorage.getItem('voiz-theme') === 'light' ? 'light' : 'dark'; } catch (e) {}
     document.documentElement.setAttribute('data-theme', theme);
-    document.body.classList.add('voiz-embedded');
+    document.body.classList.add('voiz-embedded', 'voiz-pbx');
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'fa';
     window.addEventListener('storage', function (e) {
         if (e.key === 'voiz-theme') document.documentElement.setAttribute('data-theme', e.newValue === 'light' ? 'light' : 'dark');
     });

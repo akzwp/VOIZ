@@ -62,6 +62,42 @@ html[dir="rtl"] body input[type="checkbox"].switch:checked::before, html[dir="rt
 html[dir="ltr"] body input[type="checkbox"].switch:checked::before, html[dir="ltr"] body input[type="checkbox"][class*="switch"]:checked::before { --voiz-switch-shift: 20px; }
 html body input[type="checkbox"].switch:checked::after, html body input[type="checkbox"][class*="switch"]:checked::after { content: none; }
 
+/* Keep radio sizing and the selected mark native, including keyboard focus. */
+html body input[type="radio"], html body input[type="radio"]:checked {
+  appearance: auto; -webkit-appearance: auto; accent-color: var(--voiz-primary);
+  width: 20px !important; min-width: 20px !important; max-width: 20px !important;
+  height: 20px !important; min-height: 20px; flex: 0 0 20px;
+  padding: 0 !important; border: 0; background: transparent !important; box-shadow: none !important;
+}
+
+/* Issabel's iButton (Beta Channel and other modules) keeps its original input
+   and change callbacks. Replace the sprite skin with a native clickable switch. */
+html body .ibutton-container {
+  display: inline-block; position: relative; vertical-align: middle; overflow: visible;
+  box-sizing: border-box; width: 52px !important; min-width: 52px; max-width: 52px !important;
+  height: 30px !important; padding: 0; border: 1px solid var(--voiz-border-strong);
+  border-radius: 999px; background: var(--voiz-surface-3) !important;
+  direction: ltr; cursor: pointer; transition: background-color .15s ease, border-color .15s ease;
+}
+html body .ibutton-container > div { display: none !important; }
+html body .ibutton-container::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--voiz-text-soft); pointer-events: none;
+  transition: transform .15s ease, background-color .15s ease;
+}
+html body .ibutton-container:has(> input:checked) {
+  background: var(--voiz-primary) !important; border-color: var(--voiz-primary);
+}
+html body .ibutton-container:has(> input:checked)::after { transform: translateX(22px); background: #fff; }
+html body .ibutton-container:has(> input:focus-visible) { outline: 2px solid var(--voiz-primary-text); outline-offset: 3px; }
+html body .ibutton-container:has(> input:disabled) { opacity: .45; cursor: not-allowed; }
+html body .ibutton-container > input:is([type="checkbox"], [type="radio"]) {
+  display: block !important; position: absolute !important; inset: 0 !important; z-index: 4;
+  width: 100% !important; min-width: 0 !important; max-width: 100% !important;
+  height: 100% !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important;
+  opacity: 0 !important; cursor: inherit; pointer-events: auto; border: 0 !important;
+}
+
 /* Issue 6: dotted-quad IP octet inputs (DHCP server and similar network forms).
    Each octet box becomes a fixed-width, centered, LTR numeric field that is
    easy to type into; the dot separator is rendered by the module markup. */
@@ -78,6 +114,21 @@ html body input[maxlength="3"]:focus { border-color: var(--voiz-primary-text) !i
 /* Hide native number spinners inside octets and network forms. */
 html body input[maxlength="3"]::-webkit-outer-spin-button, html body input[maxlength="3"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 html body input[maxlength="3"] { -moz-appearance: textfield; appearance: textfield; }
+/* Keep each DHCP address together and in network byte order inside RTL forms.
+   Explicit sizes override the module's inline 30px width and full-width forms. */
+html body .voiz-ip-group {
+  display: inline-flex; align-items: center; gap: 5px; width: 280px; max-width: 100%;
+  direction: ltr; unicode-bidi: isolate; white-space: nowrap; vertical-align: middle;
+  margin-block: 2px; margin-inline-end: 8px;
+}
+html body .voiz-ip-group > input.voiz-ip-octet {
+  box-sizing: border-box; flex: 1 1 0; width: 0 !important; min-width: 0 !important;
+  max-width: 100% !important; height: 42px; margin: 0; padding: 8px 4px !important;
+  direction: ltr; text-align: center; font-family: Vazirmatn, Consolas, monospace !important;
+  font-size: 15px !important; font-weight: 500; letter-spacing: 0; border-radius: 8px !important;
+}
+html body .voiz-ip-group > b { flex: 0 0 auto; margin: 0; padding: 0; color: var(--voiz-text-soft); }
+html body input[name="in_lease_time"] { width: 110px !important; direction: ltr; text-align: center; }
 html body input::file-selector-button { padding: 7px 12px; border: 0; border-radius: 6px; margin-inline-end: 10px; background: var(--voiz-surface-3); color: var(--voiz-text); }
 html body :is(.btn, .button, button.submit, input[type="submit"]:not([value=""]), input[type="button"], input[type="reset"], .neo-table-toolbar-button, .neo-table-action, .dt-button) {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;

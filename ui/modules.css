@@ -160,7 +160,7 @@ html body .voiz-module-frame { display: block; border: 0; width: 100%; min-width
 /* Embedded PBX keeps technical English fields LTR, with an RTL navigation rail. */
 html body .voiz-pbx-layout { width: 100%; table-layout: fixed; border-spacing: 16px 0; }
 html body .voiz-pbx-navigation { width: 210px; direction: rtl; vertical-align: top; }
-html body #content_pbx { min-width: 0; direction: ltr; text-align: left; overflow-wrap: anywhere; }
+html body #content_pbx { min-width: 0; direction: rtl; text-align: right; overflow-wrap: anywhere; }
 html body #content_pbx :is(table, fieldset, form, .rnav) { max-width: 100%; }
 html body #content_pbx :is(input, select, textarea) { max-width: 100%; }
 html body #nav { width: 100%; }

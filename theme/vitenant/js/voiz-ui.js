@@ -247,10 +247,30 @@
         });
     }
     var dataTables = 'table.issabel-standard-table, table.tabla_listado, table.table, table.dataTable, table.listDataTable, table.table_data';
-    var excludedTables = '.fc, .calendar, .ui-datepicker, .datepicker, #applet_grid, .voiz-hardware, .calendarContainer, #calendar_eventdialog';
+    var excludedTables = '.fc, .calendar, .ui-datepicker, .datepicker, #applet_grid, .voiz-hardware, .voiz-contact-form, #endpointConfigApplication, .calendarContainer, #calendar_eventdialog';
     function enhanceContent() {
+        enhanceNetworkControls();
+        var selectedModule = doc.getElementById('issabel_framework_module_id');
+        var moduleId = selectedModule ? selectedModule.value : new URL(window.location.href).searchParams.get('menu');
+        var moduleContent = doc.querySelector('.neo-module-content');
+        if (moduleContent && /^(address_book|hardware_detector|monitoring)$/.test(moduleId)) {
+            moduleContent.classList.add('voiz-module-' + moduleId);
+        }
+        all('#endpointConfigApplication .neo-table-action').forEach(function (button) {
+            var caption = button.title || (button.parentNode && button.parentNode.title);
+            if (caption) { button.setAttribute('aria-label', caption); button.setAttribute('data-voiz-caption', caption); }
+        });
+        var qrTemplate = doc.getElementById('template');
+        if (qrTemplate && qrTemplate.form && qrTemplate.form.querySelector('#asteriskip')) { qrTemplate.form.classList.add('voiz-qr-config'); }
+        all('.voiz-report-scroll').forEach(function (region) {
+            if (!region.hasAttribute('tabindex')) {
+                region.tabIndex = 0; region.setAttribute('role', 'region');
+                region.setAttribute('aria-label', 'جدول مکالمات؛ برای مشاهده ستون‌ها به طرفین پیمایش کنید');
+            }
+        });
         all(dataTables).forEach(function (table) {
-            if (table.closest(excludedTables)) { return; }
+            // CDR and recordings create their own table-only scroll region.
+            if (table.id === 'CDRreport' || table.closest(excludedTables)) { return; }
             var wrapper = table.closest('.voiz-table-scroll, .voiz-table-wrap, .table-responsive, .dataTables_scrollBody, .dataTables_scrollHead');
             if (!wrapper) { wrapper = doc.createElement('div'); wrapper.className = 'voiz-table-scroll'; table.parentNode.insertBefore(wrapper, table); wrapper.appendChild(table); }
             if (!wrapper.hasAttribute('tabindex')) { wrapper.tabIndex = 0; wrapper.setAttribute('role', 'region'); wrapper.setAttribute('aria-label', 'جدول اطلاعات؛ برای مشاهده ستون‌ها به طرفین پیمایش کنید'); }
@@ -317,6 +337,16 @@
                 if (!page.getElementById('voiz-frame-theme')) {
                     var css = page.createElement('link'); css.id = 'voiz-frame-theme'; css.rel = 'stylesheet'; css.href = frameStyleHref;
                     page.head.appendChild(css); page.body.classList.add('voiz-embedded');
+                }
+                // PBX navigation may replace its content without reloading the frame.
+                if (/\/admin(?:\/|$)/.test(frame.contentWindow.location.pathname)) {
+                    page.body.classList.add('voiz-pbx');
+                    page.documentElement.dir = 'rtl'; page.documentElement.lang = 'fa';
+                    if (!page.getElementById('voiz-pbx-ui')) {
+                        var script = page.createElement('script'); script.id = 'voiz-pbx-ui';
+                        script.src = frameStyleHref.replace(/css\/voiz-tailwind\.css/, 'js/voiz-embedded.js');
+                        page.head.appendChild(script);
+                    }
                 }
             } catch (e) { /* Cross-origin content cannot be themed by the parent. */ }
         });
@@ -422,9 +452,44 @@
             trapTab(event, modal);
         });
     }
+    function enhanceNetworkControls() {
+        all('input[name^="in_"][name$="_1"]').forEach(function (first) {
+            if (!/^in_(ip_ini|ip_fin|dns1|dns2|wins|gw|gwm|next)_1$/.test(first.name) || first.closest('.voiz-ip-group')) { return; }
+            var cell = first.closest('td'), prefix = first.name.slice(0, -1);
+            if (!cell) { return; }
+            var fields = [1, 2, 3, 4].map(function (n) { return cell.querySelector('input[name="' + prefix + n + '"]'); });
+            if (fields.some(function (field) { return !field || field.parentNode !== first.parentNode; })) { return; }
+            var row = cell.parentNode, caption = row.cells && row.cells[0] !== cell ? row.cells[0].textContent.replace(/\*/g, '').trim() : '';
+            var group = doc.createElement('span');
+            group.className = 'voiz-ip-group'; group.dir = 'ltr'; group.setAttribute('role', 'group');
+            if (caption) { group.setAttribute('aria-label', caption); }
+            first.parentNode.insertBefore(group, first);
+            // Move the original inputs and separators, preserving values and listeners.
+            var node = first;
+            while (node) {
+                var next = node.nextSibling; group.appendChild(node);
+                if (node === fields[3]) { break; }
+                node = next;
+            }
+            fields.forEach(function (field, index) {
+                field.classList.add('voiz-ip-octet'); field.dir = 'ltr'; field.setAttribute('inputmode', 'numeric');
+                if (!field.hasAttribute('aria-label') && !field.hasAttribute('aria-labelledby')) {
+                    field.setAttribute('aria-label', (caption || 'IP') + ' ' + (index + 1));
+                }
+            });
+        });
+        all('.ibutton-container > input[type="checkbox"]').forEach(function (input) {
+            input.setAttribute('role', 'switch');
+            if (input.hasAttribute('aria-label') || input.hasAttribute('aria-labelledby') || (input.labels && input.labels.length)) { return; }
+            var cell = input.closest('td'), label = cell && cell.previousElementSibling;
+            if (label && label.textContent.trim()) { input.setAttribute('aria-label', label.textContent.trim()); }
+        });
+    }
     /* Issue 6: dotted-quad octet fields (DHCP server). Move focus between the
        boxes as the user types; values and field names are untouched. */
     function findOctetGroup(input) {
+        var address = input.closest('.voiz-ip-group');
+        if (address) { return all('input.voiz-ip-octet', address); }
         var container = input.closest('tr') || input.closest('form') || input.parentElement;
         while (container && container !== doc.body) {
             var group = all('input[type="text"], input:not([type])', container).filter(function (el) { return el.maxLength === 3; });
@@ -460,11 +525,11 @@
                 var next = group[index + 1];
                 if (next) { next.focus(); if (next.select) { next.select(); } }
             } else if (event.key === 'ArrowRight' && input.selectionStart === input.value.length) {
-                var prev = group[index - 1];
-                if (prev && doc.documentElement.dir === 'rtl') { event.preventDefault(); prev.focus(); if (prev.select) { prev.select(); } }
+                var right = group[index + 1];
+                if (right) { event.preventDefault(); right.focus(); if (right.select) { right.select(); } }
             } else if (event.key === 'ArrowLeft' && input.selectionStart === 0) {
-                var nxt = group[index + 1];
-                if (nxt) { event.preventDefault(); nxt.focus(); if (nxt.select) { nxt.select(); } }
+                var left = group[index - 1];
+                if (left) { event.preventDefault(); left.focus(); if (left.select) { left.select(); } }
             }
         });
         doc.addEventListener('paste', function (event) {

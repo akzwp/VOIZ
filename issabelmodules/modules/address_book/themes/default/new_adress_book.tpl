@@ -1,13 +1,7 @@
-<style>
-    td{
-        text-align:right;
-    }
-</style>
-
 <input type='hidden' name='id' value='{$ID}' />
 <input type='hidden' name='type' value='{$TYPE}' />
 
-<table width="99%" border="0" cellspacing="0" cellpadding="0" align="center">
+<table class="voiz-contact-form" width="99%" border="0" cellspacing="0" cellpadding="0" align="center" dir="rtl">
     <tr>
         <td align="left">
             {if $Show}
@@ -29,9 +23,9 @@
                 <tr class="letra12" {$style_address_options}>
                     <td colspan='2'>
                         <input type="radio" name="address_book_options" id="new_contact" value="new_contact" {$check_new_contact} onclick="Activate_Option_Address_Book()" />
-                        {$new_contact} &nbsp;&nbsp;&nbsp;
+                        <label for="new_contact">{$new_contact}</label> &nbsp;&nbsp;&nbsp;
                         <input type="radio" name="address_book_options" id="address_from_csv" value="address_from_csv" {$check_csv} onclick="Activate_Option_Address_Book()" />
-                        {$address_from_csv}
+                        <label for="address_from_csv">{$address_from_csv}</label>
                     </td>
                 </tr>
                 <tr id="tr_new_contact">
@@ -43,7 +37,7 @@
             {/if}
                     </td>
                     <td>
-                        <table class="letra12" width="100%" cellpadding="4" cellspacing="0"  border="0">                            
+                        <table class="letra12 voiz-contact-fields" width="100%" cellpadding="4" cellspacing="0" border="0">
                             <tr>
                                 <td align="left" width="25%"><b>{$name.LABEL}: {if ($mode ne 'view') and ($TYPE ne 'internal') }<span  class="required">*</span>{/if}</b></td>
                                 <td class="required" align="left">{$name.INPUT}</td>
@@ -128,12 +122,12 @@
                                 <tr>
                                     <td align="right">
                                         <input type="radio" name="address_book_status" id="isPrivate" value="isPrivate" {$check_isPrivate} />
-                                        {$private_contact} &nbsp;&nbsp;&nbsp;
+                                        <label for="isPrivate">{$private_contact}</label> &nbsp;&nbsp;&nbsp;
                                     </td>
                                     <td align="left">
                                         &nbsp;&nbsp;&nbsp;
                                         <input type="radio" name="address_book_status" id="isPublic" value="isPublic" {$check_isPublic} />
-                                        {$public_contact}
+                                        <label for="isPublic">{$public_contact}</label>
                                     </td>
                                 </tr> 
                             {/if}

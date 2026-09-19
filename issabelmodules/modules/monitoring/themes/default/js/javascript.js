@@ -87,7 +87,8 @@ $(document).ready( function () {
           //    { type: 'time-elapsed-dhms', targets: 8 },
           //],
           "order": [[ 0, "desc" ]],
-          responsive: true,
+          responsive: false,
+          autoWidth: false,
           colReorder: true,
           lengthChange: true,
           select: {
@@ -113,9 +114,8 @@ $(document).ready( function () {
               });
           },
           "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
-          "dom": '<"clear"><"top"<"row"<"col-md-12 nopadding"B>><"row"<"col-md-6 nopadding"l><"col-md-6 nopadding"f>>>'+
-              '<"col-md-12 nopadding"rt>'+
-              '<"bottom"<"row"<"col-md-6 nopadding"i><"col-md-6 nopadding"p>>><"clear">',
+          "dom": '<"voiz-report-toolbar"B><"voiz-report-controls"lf>r'+
+              '<"voiz-report-scroll"t><"voiz-report-footer"ip>',
           buttons: [
           {
               className: 'btn-danger',
