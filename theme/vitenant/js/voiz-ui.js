@@ -247,7 +247,7 @@
         });
     }
     var dataTables = 'table.issabel-standard-table, table.tabla_listado, table.table, table.dataTable, table.listDataTable, table.table_data';
-    var excludedTables = '.fc, .calendar, .ui-datepicker, .datepicker, #applet_grid, .voiz-hardware, .calendarContainer';
+    var excludedTables = '.fc, .calendar, .ui-datepicker, .datepicker, #applet_grid, .voiz-hardware, .calendarContainer, #calendar_eventdialog';
     function enhanceContent() {
         all(dataTables).forEach(function (table) {
             if (table.closest(excludedTables)) { return; }
@@ -512,6 +512,47 @@
             window.requestAnimationFrame(clamp);
         }, { passive: true });
     }
+    /* Calendar dates stay local; the original Issabel fields remain Gregorian
+       yyyy-mm-dd HH:mm, as required by datehhmm()/saveEventDialog(). */
+    var jalaliMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+    var calendarDays = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+    var persianDateFormatter;
+    function toFa(value) { return String(value).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
+    function toEn(value) { return String(value).replace(/[۰-۹٠-٩]/g, function (d) { var n = '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); return n < 0 ? '٠١٢٣٤٥٦٧٨٩'.indexOf(d) : n; }); }
+    function datePad(n) { return ('0' + n).slice(-2); }
+    function dateOnly(date) { return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12); }
+    function addCalendarDays(date, days) { var copy = dateOnly(date); copy.setDate(copy.getDate() + days); return copy; }
+    function gregorianText(date) { return date.getFullYear() + '-' + datePad(date.getMonth() + 1) + '-' + datePad(date.getDate()); }
+    function jalaliParts(date) {
+        try {
+            if (!persianDateFormatter) { persianDateFormatter = new Intl.DateTimeFormat('en-US-u-ca-persian', { day: 'numeric', month: 'numeric', year: 'numeric' }); }
+            if (persianDateFormatter.resolvedOptions().calendar !== 'persian') { return null; }
+            var parts = {};
+            persianDateFormatter.formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
+            return { y: Number(parts.year), m: Number(parts.month), d: Number(parts.day) };
+        } catch (e) { return null; }
+    }
+    function jalaliToGregorian(y, m, d) {
+        if (m < 1 || m > 12 || d < 1 || d > 31) { return null; }
+        // Binary search against Intl's Persian calendar also handles leap years.
+        var low = Date.UTC(y + 621, 0, 1) / 86400000, high = Date.UTC(y + 622, 11, 31) / 86400000;
+        while (low <= high) {
+            var middle = Math.floor((low + high) / 2), utc = new Date(middle * 86400000);
+            var date = new Date(utc.getUTCFullYear(), utc.getUTCMonth(), utc.getUTCDate(), 12), j = jalaliParts(date);
+            if (!j) { return null; }
+            var diff = (y - j.y) || (m - j.m) || (d - j.d);
+            if (!diff) { return date; }
+            if (diff > 0) { low = middle + 1; } else { high = middle - 1; }
+        }
+        return null;
+    }
+    function jalaliText(date) { var j = jalaliParts(date); return j ? toFa(j.y + '/' + datePad(j.m) + '/' + datePad(j.d)) : ''; }
+    function parseCalendarField(value) {
+        var m = /^(\d{4})-(\d{1,2})-(\d{1,2})(?: (\d{2}):(\d{2}))?$/.exec(toEn(value).trim());
+        if (!m || Number(m[1]) < 1000 || Number(m[4] || 0) > 23 || Number(m[5] || 0) > 59) { return null; }
+        var date = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4] || 0), Number(m[5] || 0));
+        return date.getFullYear() === Number(m[1]) && date.getMonth() === Number(m[2]) - 1 && date.getDate() === Number(m[3]) ? date : null;
+    }
     /* Issue 9: Jalali companion calendar rendered beside the module calendar.
        Display-only: it never touches the module's own data, forms or events.
        Issabel's calendar_gui.tpl hosts everything in the #calendar_toolbar
@@ -524,27 +565,6 @@
         if (!host) { return; }
         var monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
         var dowNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
-        function jalaliParts(date) {
-            var parts = {};
-            try {
-                new Intl.DateTimeFormat('en-US-u-ca-persian', { day: 'numeric', month: 'numeric', year: 'numeric' })
-                    .formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
-            } catch (e) { return null; }
-            var y = parseInt(parts.year, 10), m = parseInt(parts.month, 10), d = parseInt(parts.day, 10);
-            return (y && m && d) ? { y: y, m: m, d: d } : null;
-        }
-        function jalaliToGregorian(y, m, d) {
-            var anchor = new Date(2026, 2, 21); /* 1 Farvardin 1405 */
-            var date = new Date(anchor.getTime() + ((y - 1405) * 365 + (m - 1) * 30 + (d - 1)) * 86400000);
-            for (var guard = 0; guard < 90; guard++) {
-                var j = jalaliParts(date);
-                if (!j) { break; }
-                var diff = (y - j.y) * 366 + (m - j.m) * 31 + (d - j.d);
-                if (diff === 0) { break; }
-                date = new Date(date.getTime() + diff * 86400000);
-            }
-            return date;
-        }
         var today = jalaliParts(new Date()) || { y: 1405, m: 1, d: 1 };
         var view = { y: today.y, m: today.m };
         var card = doc.createElement('div');
@@ -631,143 +651,206 @@
         persianizeMini();
         persianizeFullCalendar();
     }
-    /* Issue 9c: usable date entry inside the event dialog. Each date field
-       (start/end) gets a Jalali-first picker that writes back the same
-       yyyy-mm-dd text the module already parses. Display/entry aid only —
-       it never touches the form's names or submit values. */
     function initEventDatePickers() {
         var dialog = doc.querySelector('#calendar_eventdialog');
-        if (!dialog) { return; }
-        var monthNames = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-        var dowNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
-        function toFa(value) { return String(value).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; }); }
-        function toEn(value) { return String(value).replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); }); }
-        function jalaliParts(date) {
-            var parts = {};
-            try {
-                new Intl.DateTimeFormat('en-US-u-ca-persian', { day: 'numeric', month: 'numeric', year: 'numeric' })
-                    .formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
-            } catch (e) { return null; }
-            var y = parseInt(parts.year, 10), m = parseInt(parts.month, 10), d = parseInt(parts.day, 10);
-            return (y && m && d) ? { y: y, m: m, d: d } : null;
-        }
-        function jalaliToGregorian(y, m, d) {
-            var anchor = new Date(2026, 2, 21); /* 1 Farvardin 1405 */
-            var date = new Date(anchor.getTime() + ((y - 1405) * 365 + (m - 1) * 30 + (d - 1)) * 86400000);
-            for (var guard = 0; guard < 90; guard++) {
-                var j = jalaliParts(date);
-                if (!j) { break; }
-                var diff = (y - j.y) * 366 + (m - j.m) * 31 + (d - j.d);
-                if (diff === 0) { break; }
-                date = new Date(date.getTime() + diff * 86400000);
+        if (!dialog || dialog.dataset.voizDates) { return; }
+        dialog.dataset.voizDates = 'true';
+        var hasJalali = !!jalaliParts(new Date()), controllers = [], activePicker = null;
+        var table = dialog.querySelector('table');
+        if (table) { table.classList.add('voiz-event-fields'); table.classList.remove('voiz-form-table'); }
+        // Associate Issabel's existing field captions without replacing its controls.
+        all('input:not([type="hidden"]), select, textarea', dialog).forEach(function (field, index) {
+            var row = closest(field, 'tr'), caption = row && row.querySelector('b');
+            if (!field.id) { field.id = 'voiz-event-field-' + index; }
+            if (caption && !field.labels.length) {
+                if (!caption.id) { caption.id = field.id + '-label'; }
+                field.setAttribute('aria-labelledby', caption.id);
             }
-            return date;
+        });
+        var error = doc.createElement('p');
+        error.id = 'voiz-event-date-error'; error.className = 'voiz-date-error'; error.hidden = true;
+        error.setAttribute('role', 'alert');
+        var endRow = closest(dialog.querySelector('input[name="to"]'), 'tr');
+        if (endRow) { endRow.lastElementChild.appendChild(error); }
+        function validateRange() {
+            var start = dialog.querySelector('input[name="date"]'), end = dialog.querySelector('input[name="to"]');
+            var from = start && parseCalendarField(start.value), to = end && parseCalendarField(end.value);
+            var invalid = controllers.some(function (c) { return c.invalid(); });
+            var message = invalid || !from || !to ? 'تاریخ و ساعت معتبر وارد کنید.' : from > to ? 'تاریخ و ساعت پایان باید برابر یا بعد از شروع باشد.' : '';
+            error.textContent = message; error.hidden = !message;
+            controllers.forEach(function (c) { c.markRange(!!message); });
+            return !message;
         }
-        function parseField(text) {
-            var m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(toEn(String(text || '').trim()));
-            return m ? new Date(parseInt(m[1], 10), parseInt(m[2], 10) - 1, parseInt(m[3], 10)) : null;
-        }
-        var today = jalaliParts(new Date()) || { y: 1405, m: 1, d: 1 };
         all('input[name="date"], input[name="to"]', dialog).forEach(function (input) {
-            if (closest(input, '.voiz-jdate-wrap')) { return; }
-            var wrap = doc.createElement('div');
-            wrap.className = 'voiz-jdate-wrap';
-            var jalaliBox = doc.createElement('div');
-            jalaliBox.className = 'voiz-jdate-jalali';
-            var jalaliInput = doc.createElement('input');
-            jalaliInput.type = 'text';
-            jalaliInput.readOnly = true;
-            jalaliInput.setAttribute('aria-label', input.getAttribute('aria-label') || 'تاریخ شمسی');
-            jalaliInput.placeholder = '۱۴۰۵/۰۶/۲۴';
-            jalaliBox.appendChild(jalaliInput);
-            var toggle = doc.createElement('button');
-            toggle.type = 'button';
-            toggle.className = 'voiz-jdate-toggle';
-            toggle.textContent = '📅';
-            toggle.setAttribute('aria-label', 'انتخاب تاریخ شمسی');
-            toggle.setAttribute('aria-expanded', 'false');
+            var endpoint = input.name === 'date' ? 'شروع' : 'پایان';
+            var wrap = doc.createElement('div'); wrap.className = 'voiz-jdate-wrap';
             input.parentNode.insertBefore(wrap, input);
-            wrap.appendChild(jalaliBox);
-            wrap.appendChild(input);
-            wrap.appendChild(toggle);
-            function syncFromGregorian() {
-                var g = parseField(input.value);
-                var j = g ? jalaliParts(g) : null;
-                jalaliInput.value = j ? toFa(j.y + '/' + (j.m < 10 ? '0' : '') + j.m + '/' + (j.d < 10 ? '0' : '') + j.d) : '';
+            // Hide the module's datetimepicker input and its trigger together.
+            // Its name, id and value remain available to existing module code.
+            input.hidden = true; input.tabIndex = -1; wrap.appendChild(input);
+            var nativeTrigger = wrap.nextElementSibling;
+            if (nativeTrigger && nativeTrigger.matches('.ui-datepicker-trigger, .datepicker-button')) { nativeTrigger.hidden = true; }
+            function fieldBox(kind, labelText, type) {
+                var box = doc.createElement('div'); box.className = 'voiz-jdate-' + kind;
+                var label = doc.createElement('label'), field = doc.createElement('input');
+                field.id = 'voiz-' + input.name + '-' + kind; field.type = type || 'text'; field.autocomplete = 'off';
+                field.dir = 'ltr'; label.htmlFor = field.id; label.textContent = labelText;
+                field.setAttribute('aria-label', labelText + ' ' + endpoint);
+                field.setAttribute('aria-describedby', error.id);
+                box.appendChild(label); box.appendChild(field); wrap.appendChild(box);
+                return field;
             }
-            var state = { y: today.y, m: today.m, selected: null };
-            var initial = parseField(input.value);
-            if (initial) { var j0 = jalaliParts(initial); if (j0) { state = { y: j0.y, m: j0.m, selected: j0 }; } }
-            var pop = doc.createElement('div');
-            pop.className = 'voiz-jdate-pop';
-            pop.hidden = true;
-            function renderPop() {
-                var first = jalaliToGregorian(state.y, state.m, 1);
-                var nextMonth = state.m === 12 ? jalaliToGregorian(state.y + 1, 1, 1) : jalaliToGregorian(state.y, state.m + 1, 1);
-                var monthLength = Math.round((nextMonth - first) / 86400000);
-                var startCol = (first.getDay() + 1) % 7; /* Persian week starts Saturday. */
-                var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + monthNames[state.m - 1] + ' ' + toFa(state.y) +
-                    '</div><div class="voiz-jalali-nav">' +
-                    '<button type="button" data-voiz-jdate="prev" aria-label="ماه قبل">›</button>' +
-                    '<button type="button" data-voiz-jdate="today">امروز</button>' +
-                    '<button type="button" data-voiz-jdate="next" aria-label="ماه بعد">‹</button>' +
-                    '</div></div><div class="voiz-jalali-grid">';
-                dowNames.forEach(function (name) { html += '<div class="voiz-jalali-dow">' + name + '</div>'; });
-                for (var i = 0; i < startCol; i++) { html += '<div class="voiz-jalali-day voiz-jalali-out"></div>'; }
-                for (var day = 1; day <= monthLength; day++) {
-                    var date = new Date(first.getTime() + (day - 1) * 86400000);
-                    var classes = 'voiz-jalali-day';
-                    if (date.getDay() === 5) { classes += ' voiz-jalali-holiday'; }
-                    if (state.selected && state.y === state.selected.y && state.m === state.selected.m && day === state.selected.d) { classes += ' voiz-jalali-selected'; }
-                    else if (state.y === today.y && state.m === today.m && day === today.d) { classes += ' voiz-jalali-today'; }
-                    html += '<button type="button" class="' + classes + '" data-voiz-jdate="pick" data-day="' + day + '">' + toFa(day) + '</button>';
+            var jalali = hasJalali ? fieldBox('jalali', 'شمسی') : null;
+            var gregorian = fieldBox('gregorian', 'میلادی');
+            var time = fieldBox('time', 'ساعت', 'time'); time.step = '60';
+            gregorian.placeholder = 'YYYY-MM-DD';
+            if (jalali) { jalali.placeholder = 'سال/ماه/روز'; }
+            var toggle = doc.createElement('button'); toggle.type = 'button'; toggle.className = 'voiz-jdate-toggle';
+            toggle.innerHTML = '<i class="fa fa-calendar" aria-hidden="true"></i><span>انتخاب تاریخ</span>';
+            toggle.setAttribute('aria-label', 'انتخاب تاریخ ' + endpoint); toggle.setAttribute('aria-expanded', 'false');
+            var pop = doc.createElement('div'); pop.id = 'voiz-date-picker-' + input.name;
+            pop.className = 'voiz-jdate-pop'; pop.hidden = true; pop.setAttribute('role', 'group'); pop.setAttribute('aria-label', 'تقویم انتخاب تاریخ ' + endpoint);
+            toggle.setAttribute('aria-controls', pop.id); wrap.appendChild(toggle); wrap.appendChild(pop);
+            var mode = hasJalali ? 'jalali' : 'gregorian', viewDate = dateOnly(new Date()), selected = null, sourceValue;
+            var controls = [jalali, gregorian, time].filter(Boolean);
+            function invalid() { return controls.some(function (field) { return !!field.validationMessage; }); }
+            function sync() {
+                var date = parseCalendarField(input.value); sourceValue = input.value;
+                selected = date ? dateOnly(date) : null;
+                gregorian.value = date ? gregorianText(date) : '';
+                if (jalali) { jalali.value = date ? jalaliText(date) : ''; }
+                time.value = date ? datePad(date.getHours()) + ':' + datePad(date.getMinutes()) : '';
+                controls.forEach(function (field) { field.setCustomValidity(''); field.removeAttribute('aria-invalid'); });
+                if (selected) { viewDate = selected; }
+            }
+            function writeDate(date) {
+                var old = parseCalendarField(input.value);
+                var hhmm = time.value || (old ? datePad(old.getHours()) + ':' + datePad(old.getMinutes()) : '00:00');
+                input.value = gregorianText(date) + ' ' + hhmm;
+                sync(); input.dispatchEvent(new Event('change', { bubbles: true })); validateRange();
+            }
+            function commitField(field) {
+                var date;
+                if (field === jalali) {
+                    var m = /^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})$/.exec(toEn(field.value).trim());
+                    date = m && jalaliToGregorian(Number(m[1]), Number(m[2]), Number(m[3]));
+                } else { date = parseCalendarField(gregorian.value); }
+                var validTime = /^\d{2}:\d{2}$/.test(time.value);
+                if (!date || !validTime) {
+                    field.setCustomValidity('تاریخ و ساعت معتبر وارد کنید.'); field.setAttribute('aria-invalid', 'true'); validateRange(); return;
                 }
-                html += '</div><div class="voiz-jdate-foot"><span>' + jalaliInput.value + '</span>' +
-                    '<button type="button" class="voiz-jdate-apply" data-voiz-jdate="apply">تأیید</button></div>';
+                field.setCustomValidity(''); writeDate(date);
+            }
+            function close(returnFocus) {
+                pop.hidden = true; toggle.setAttribute('aria-expanded', 'false');
+                if (activePicker === controller) { activePicker = null; }
+                if (returnFocus) { toggle.focus(); }
+            }
+            function viewParts() { return mode === 'jalali' ? jalaliParts(viewDate) : { y: viewDate.getFullYear(), m: viewDate.getMonth() + 1, d: viewDate.getDate() }; }
+            function monthStart(y, m) { return mode === 'jalali' ? jalaliToGregorian(y, m, 1) : new Date(y, m - 1, 1, 12); }
+            function moveMonth(step) {
+                var parts = viewParts(), index = parts.y * 12 + parts.m - 1 + step;
+                viewDate = monthStart(Math.floor(index / 12), index % 12 + 1); render();
+            }
+            function render() {
+                var parts = viewParts(), first = monthStart(parts.y, parts.m);
+                var next = monthStart(parts.m === 12 ? parts.y + 1 : parts.y, parts.m === 12 ? 1 : parts.m + 1);
+                var count = Math.round((next - first) / 86400000), offset = (first.getDay() + 1) % 7;
+                var names = mode === 'jalali' ? jalaliMonths : faLocale.monthNames;
+                var start = parseCalendarField(dialog.querySelector('input[name="date"]').value);
+                var end = parseCalendarField(dialog.querySelector('input[name="to"]').value);
+                var today = gregorianText(new Date());
+                var html = '<div class="voiz-date-modes" role="group" aria-label="نوع تقویم">';
+                if (hasJalali) { html += '<button type="button" data-calendar-mode="jalali" aria-pressed="' + (mode === 'jalali') + '">شمسی</button>'; }
+                html += '<button type="button" data-calendar-mode="gregorian" aria-pressed="' + (mode === 'gregorian') + '">میلادی</button></div>';
+                html += '<div class="voiz-jalali-head"><button type="button" data-voiz-jdate="prev" aria-label="ماه قبل">›</button><select data-date-month aria-label="ماه">';
+                names.forEach(function (name, index) { html += '<option value="' + (index + 1) + '"' + (parts.m === index + 1 ? ' selected' : '') + '>' + name + '</option>'; });
+                html += '</select><select data-date-year aria-label="سال">';
+                for (var y = parts.y - 100; y <= parts.y + 100; y++) { html += '<option value="' + y + '"' + (y === parts.y ? ' selected' : '') + '>' + toFa(y) + '</option>'; }
+                html += '</select><button type="button" data-voiz-jdate="next" aria-label="ماه بعد">‹</button></div><div class="voiz-jalali-grid" role="group" aria-label="روزهای ماه">';
+                calendarDays.forEach(function (day) { html += '<span class="voiz-jalali-dow">' + day + '</span>'; });
+                for (var empty = 0; empty < offset; empty++) { html += '<span aria-hidden="true"></span>'; }
+                for (var day = 1; day <= count; day++) {
+                    var date = addCalendarDays(first, day - 1), key = gregorianText(date);
+                    var isSelected = !!selected && key === gregorianText(selected), inRange = start && end && date >= dateOnly(start) && date <= dateOnly(end);
+                    var disabled = input.name === 'to' && start && date < dateOnly(start);
+                    var classes = 'voiz-jalali-day' + (inRange ? ' voiz-date-in-range' : '') + (isSelected ? ' voiz-jalali-selected' : '') + (key === today ? ' voiz-jalali-today' : '') + (date.getDay() === 5 ? ' voiz-jalali-holiday' : '');
+                    var caption = (hasJalali ? jalaliText(date) + '، ' : '') + gregorianText(date);
+                    html += '<button type="button" class="' + classes + '" data-voiz-jdate="pick" data-date="' + key + '" data-day="' + day + '" aria-label="' + caption + '" aria-pressed="' + isSelected + '"' + (key === today ? ' aria-current="date"' : '') + (disabled ? ' disabled' : '') + ' tabindex="-1">' + toFa(day) + '</button>';
+                }
+                html += '</div><div class="voiz-jdate-foot"><span>با انتخاب روز، تاریخ ثبت می‌شود.</span><button type="button" data-voiz-jdate="today">امروز</button><button type="button" data-voiz-jdate="close">بستن</button></div>';
                 pop.innerHTML = html;
+                var focusDay = pop.querySelector('.voiz-jalali-selected:not(:disabled)') || pop.querySelector('[data-voiz-jdate="pick"]:not(:disabled)');
+                if (focusDay) { focusDay.tabIndex = 0; }
             }
-            function openPop() {
-                all('.voiz-jdate-pop', dialog).forEach(function (other) { if (other !== pop) { other.hidden = true; } });
-                renderPop();
-                pop.hidden = false;
-                toggle.setAttribute('aria-expanded', 'true');
-                var rect = toggle.getBoundingClientRect(), wrapRect = wrap.getBoundingClientRect();
-                pop.style.top = (rect.bottom - wrapRect.top + 6) + 'px';
-                pop.style.insetInlineStart = '0';
-                wrap.appendChild(pop);
-            }
-            function closePop() { pop.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }
-            function applySelection() {
-                if (!state.selected) { return; }
-                var g = jalaliToGregorian(state.selected.y, state.selected.m, state.selected.d);
-                var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-                input.value = g.getFullYear() + '-' + pad(g.getMonth() + 1) + '-' + pad(g.getDate());
-                syncFromGregorian();
-                input.dispatchEvent(new Event('change', { bubbles: true }));
-                closePop();
-            }
-            toggle.addEventListener('click', function () { pop.hidden ? openPop() : closePop(); });
-            pop.addEventListener('click', function (event) {
-                var action = closest(event.target, '[data-voiz-jdate]');
-                if (!action) { return; }
-                event.preventDefault();
-                var what = action.getAttribute('data-voiz-jdate');
-                if (what === 'prev') { state.m--; if (state.m < 1) { state.m = 12; state.y--; } renderPop(); }
-                else if (what === 'next') { state.m++; if (state.m > 12) { state.m = 1; state.y++; } renderPop(); }
-                else if (what === 'today') { state = { y: today.y, m: today.m, selected: today }; renderPop(); }
-                else if (what === 'pick') {
-                    state.selected = { y: state.y, m: state.m, d: parseInt(action.getAttribute('data-day'), 10) };
-                    renderPop();
+            function open() {
+                if (activePicker && activePicker !== controller) { activePicker.close(false); }
+                if (sourceValue !== input.value) { sync(); }
+                viewDate = selected || dateOnly(new Date());
+                if (input.name === 'to') {
+                    var start = parseCalendarField(dialog.querySelector('input[name="date"]').value);
+                    if (start && viewDate < dateOnly(start)) { viewDate = dateOnly(start); }
                 }
-                else if (what === 'apply') { applySelection(); }
+                render(); pop.hidden = false; activePicker = controller; toggle.setAttribute('aria-expanded', 'true');
+                var first = pop.querySelector('[tabindex="0"]'); if (first) { first.focus(); }
+            }
+            var controller = { close: close, sync: sync, invalid: invalid, markRange: function (bad) { wrap.classList.toggle('voiz-date-invalid', bad); } };
+            controllers.push(controller);
+            toggle.addEventListener('click', function () { pop.hidden ? open() : close(true); });
+            pop.addEventListener('click', function (event) {
+                var action = closest(event.target, '[data-voiz-jdate], [data-calendar-mode]'); if (!action) { return; }
+                var modeValue = action.getAttribute('data-calendar-mode'), what = action.getAttribute('data-voiz-jdate');
+                if (modeValue) { mode = modeValue; render(); pop.querySelector('[data-calendar-mode="' + mode + '"]').focus(); }
+                else if (what === 'prev' || what === 'next') { moveMonth(what === 'prev' ? -1 : 1); pop.querySelector('[data-voiz-jdate="' + what + '"]').focus(); }
+                else if (what === 'today') { viewDate = dateOnly(new Date()); render(); }
+                else if (what === 'close') { close(true); }
+                else if (what === 'pick') { writeDate(parseCalendarField(action.getAttribute('data-date'))); close(true); }
             });
-            input.addEventListener('change', syncFromGregorian);
-            syncFromGregorian();
+            pop.addEventListener('change', function (event) {
+                if (!event.target.matches('[data-date-month], [data-date-year]')) { return; }
+                var selector = event.target.hasAttribute('data-date-month') ? '[data-date-month]' : '[data-date-year]';
+                viewDate = monthStart(Number(pop.querySelector('[data-date-year]').value), Number(pop.querySelector('[data-date-month]').value));
+                render(); pop.querySelector(selector).focus();
+            });
+            pop.addEventListener('keydown', function (event) {
+                var button = closest(event.target, '[data-date]'); if (!button) { return; }
+                var date = parseCalendarField(button.getAttribute('data-date')), delta = { ArrowRight: -1, ArrowLeft: 1, ArrowUp: -7, ArrowDown: 7 }[event.key];
+                if (event.key === 'Home') { delta = -((date.getDay() + 1) % 7); }
+                if (event.key === 'End') { delta = 6 - ((date.getDay() + 1) % 7); }
+                if (delta === undefined && event.key !== 'PageUp' && event.key !== 'PageDown') { return; }
+                event.preventDefault();
+                if (delta !== undefined) { viewDate = addCalendarDays(date, delta); render(); }
+                else { moveMonth(event.key === 'PageUp' ? -1 : 1); }
+                var target = pop.querySelector('[data-date="' + gregorianText(viewDate) + '"]:not(:disabled)') || pop.querySelector('[data-date]:not(:disabled)');
+                if (target) { all('[data-date]', pop).forEach(function (day) { day.tabIndex = -1; }); target.tabIndex = 0; target.focus(); }
+            });
+            controls.forEach(function (field) { field.addEventListener('change', function () { commitField(field); }); });
+            input.addEventListener('change', function () { sync(); });
+            sync();
         });
+        function syncDialog() { controllers.forEach(function (c) { c.close(false); c.sync(); }); error.hidden = true; controllers.forEach(function (c) { c.markRange(false); }); }
+        if (window.jQuery) {
+            window.jQuery(dialog).on('dialogopen.voizCalendar', function () {
+                syncDialog();
+                var frame = closest(dialog, '.ui-dialog');
+                if (frame) { frame.setAttribute('aria-modal', 'true'); }
+                var name = dialog.querySelector('input[name="event"]'); if (name) { name.focus(); }
+            }).on('dialogclose.voizCalendar', syncDialog);
+        }
+        dialog.addEventListener('voiz:calendar-open', syncDialog);
+        // Capture Escape before jQuery UI so closing a picker keeps the event open.
+        doc.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && activePicker) { event.preventDefault(); event.stopImmediatePropagation(); activePicker.close(true); }
+        }, true);
         doc.addEventListener('click', function (event) {
-            if (closest(event.target, '.voiz-jdate-wrap')) { return; }
-            all('.voiz-jdate-pop', dialog).forEach(function (pop) { if (!pop.hidden) { pop.hidden = true; } });
-        });
+            if (activePicker && !closest(event.target, '.voiz-jdate-wrap')) { activePicker.close(false); }
+            var frame = closest(dialog, '.ui-dialog'), save = frame && frame.querySelector('.ui-dialog-buttonset button');
+            if (save && (event.target === save || save.contains(event.target)) && !validateRange()) {
+                event.preventDefault(); event.stopImmediatePropagation();
+                var invalidField = dialog.querySelector('.voiz-jdate-wrap [aria-invalid="true"]') || dialog.querySelector('#voiz-to-gregorian');
+                if (invalidField) { invalidField.focus(); }
+            }
+        }, true);
     }
     function init() {
         var css = doc.querySelector('link[href*="voiz-tailwind.css"]'); frameStyleHref = css && css.href;
