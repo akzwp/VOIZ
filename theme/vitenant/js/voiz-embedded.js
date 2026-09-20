@@ -74,12 +74,12 @@
     /* GeoIP-style map tooltips must stay inside the visible frame. */
     function initMapTooltips() {
         var pending = false;
-        var selector = '.jvectormap-tip, .jvectormap-label, .ammap-tooltip, .map-tooltip, .maptooltip, ' +
-            '[class*="tooltip"]:not(script):not(style):not(input):not(.tw-tooltip)';
+        var selector = '.jvectormap-tip, .jvectormap-label, .ammap-tooltip, .map-tooltip, .maptooltip, .country-tooltip, .leaflet-tooltip';
         function clamp() {
             pending = false;
             all(selector).forEach(function (tip) {
-                if (!tip.getClientRects().length) { return; }
+                // SVG tooltip geometry belongs to the chart renderer.
+                if (tip.namespaceURI !== 'http://www.w3.org/1999/xhtml' || tip.closest('svg') || !tip.getClientRects().length) { return; }
                 var rect = tip.getBoundingClientRect(), pad = 8, dx = 0, dy = 0;
                 if (rect.left < pad) { dx = pad - rect.left; }
                 else if (rect.right > window.innerWidth - pad) { dx = window.innerWidth - pad - rect.right; }

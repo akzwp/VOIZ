@@ -51,8 +51,8 @@ $html .= '<a target="_blank" href="' . $amp_conf['BRAND_IMAGE_SPONSOR_LINK_FOOT'
 */
 echo $html;
 ?>
-<link id="voiz-frame-theme" rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.5">
-<script id="voiz-pbx-ui" src="/themes/vitenant/js/voiz-embedded.js?v=7.1.5"></script>
+<link id="voiz-frame-theme" rel="stylesheet" href="/themes/vitenant/css/voiz-tailwind.css?v=7.1.6">
+<script id="voiz-pbx-ui" src="/themes/vitenant/js/voiz-embedded.js?v=7.1.6"></script>
 <script>
 (function () {
     var theme = 'dark';

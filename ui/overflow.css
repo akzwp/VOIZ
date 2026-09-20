@@ -42,7 +42,13 @@ html body .appletwindow_widgets { flex-shrink: 0; }
 html body .neo-modal-issabel-popup-title { padding-inline-end: 56px; }
 html body .neo-modal-issabel-popup-box { height: auto !important; }
 html body .neo-modal-issabel-popup-title { position: relative; inset: auto; font: 600 15px/1.8 Vazirmatn, sans-serif; text-align: start; }
-html body .neo-modal-issabel-popup-content { position: static; top: auto; }
+/* Core ShowModalPopUP supplies absolute offsets and scrolling inline. The
+   content must participate in layout so the dialog can fit all form rows. */
+html body .neo-modal-issabel-popup-content {
+  position: relative !important; inset: auto !important; box-sizing: border-box !important;
+  width: auto !important; height: auto !important; min-height: 0; max-height: none !important;
+  overflow: visible !important;
+}
 html body .ui-dialog .ui-dialog-title { float: none; display: block; width: auto; margin-inline-end: 36px; }
 html body .voiz-brand span { min-width: 0; }
 html body .voiz-user-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

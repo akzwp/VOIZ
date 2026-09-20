@@ -133,6 +133,13 @@ html body :is(.voiz-embedded, .neo-module-content) :is(
   border: 1px solid var(--voiz-border-strong) !important; box-shadow: var(--voiz-popover-shadow) !important;
 }
 
+/* GeoIP uses amCharts SVG labels. Its left-to-right geometry must not inherit
+   the page's RTL text anchor, which puts the label outside its measured box. */
+html body #chartdiv.chart,
+html body #chartdiv.chart svg,
+html body #chartdiv.chart svg text,
+html body #chartdiv.chart svg tspan { direction: ltr !important; unicode-bidi: isolate; }
+
 /* Issues 5 / 13 / 14 — PBX Configuration pages (تنظیمات تلفنی،
    تنظیمات دسته‌ای/QR Configurations، تنظیم گوشی‌ها). The FreePBX
    UI is framed; its legacy dark-on-dark text is forced onto the
@@ -342,6 +349,13 @@ html body .fc .fc-event :is(.fc-event-title, span) { color: inherit; }
 
 /* FullCalendar 1.x computes event segments in physical left-to-right,
    content-box coordinates, even when it reverses the dates for RTL. */
+/* The renderer measures the first day's content to position every event in a
+   week. Give all date labels equal space in normal flow, including empty days. */
+html body #calendar_main .fc-grid .fc-day-number {
+  float: none; display: block; height: 24px; line-height: 24px;
+  margin: 0; padding: 4px 8px; text-align: right; white-space: nowrap;
+}
+html body #calendar_main .fc-grid .fc-day-content { clear: both; padding: 4px 2px 2px; }
 html body #calendar_main .fc-content,
 html body #calendar_main .fc-content * { box-sizing: content-box !important; }
 html body #calendar_main .fc-content,

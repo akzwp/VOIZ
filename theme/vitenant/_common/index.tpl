@@ -49,7 +49,7 @@
         {$HEADER}
     {$HEADER_MODULES}
     <!-- Final theme contract: loaded after module-provided styles. -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.5">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.6">
     <!-- Voiz: Force Farsi calendar language if Calendar object exists -->
     <script type="text/javascript">
     (function () {
@@ -97,7 +97,7 @@
                             <b>&nbsp;{$mb_title}</b>
                         </div>
                     {/if}
-                        <div class="div_msg_errors_dismiss"><button type="button" aria-label="بستن پیام خطا" onclick="hide_message_error();"><i class="fa fa-times" aria-hidden="true"></i></button></div>
+                        <div class="div_msg_errors_dismiss"><button type="button" aria-label="بستن پیام" title="بستن پیام" onclick="hide_message_error();"><i class="fa fa-times" aria-hidden="true"></i></button></div>
                         <div class="div_msg_errors_content" {if empty($mb_title)}style="margin-left: 0;"{/if}>{$mb_message}</div>
                     </div>
                     {/if}
@@ -198,7 +198,7 @@ $(document).ready(function(e) {
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-login.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-custom.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-demo.js"></script>
-        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/voiz-ui.js?v=7.1.5"></script>
+        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/voiz-ui.js?v=7.1.6"></script>
     </div>
 </body>
 </html>

@@ -248,8 +248,43 @@
     }
     var dataTables = 'table.issabel-standard-table, table.tabla_listado, table.table, table.dataTable, table.listDataTable, table.table_data';
     var excludedTables = '.fc, .calendar, .ui-datepicker, .datepicker, #applet_grid, .voiz-hardware, .voiz-contact-form, #endpointConfigApplication, .calendarContainer, #calendar_eventdialog';
+    function enhanceMessages() {
+        var headings = {
+            'MESSAGE': ['پیام', 'info'], 'پیام': ['پیام', 'info'],
+            'INFORMATION': ['اطلاعات', 'info'], 'INFO': ['اطلاعات', 'info'], 'اطلاعات': ['اطلاعات', 'info'],
+            'ERROR': ['خطا', 'error'], 'خطا': ['خطا', 'error'],
+            'WARNING': ['هشدار', 'warning'], 'هشدار': ['هشدار', 'warning'],
+            'SUCCESS': ['موفق', 'success'], 'موفق': ['موفق', 'success']
+        };
+        all('.div_msg_errors').forEach(function (message) {
+            // Older modules, including Beta Channel, emit unclassed children.
+            // Add presentation hooks without replacing their content or callbacks.
+            if (!message.querySelector('.div_msg_errors_content')) {
+                var parts = message.children;
+                if (parts.length === 3 && parts[1].querySelector('[onclick*="hide_message_error"]')) {
+                    parts[0].classList.add('div_msg_errors_title');
+                    parts[1].classList.add('div_msg_errors_dismiss');
+                    parts[2].classList.add('div_msg_errors_content');
+                }
+            }
+            var title = message.querySelector('.div_msg_errors_title');
+            var heading = title && headings[title.textContent.trim().replace(/[:：]\s*$/, '').toUpperCase()];
+            var type = heading ? heading[1] : 'error';
+            if (heading) {
+                var caption = title.querySelector('b') || title;
+                if (caption.textContent.trim() !== heading[0]) { caption.textContent = heading[0]; }
+            }
+            message.setAttribute('data-voiz-message-type', type);
+            message.setAttribute('role', type === 'error' || type === 'warning' ? 'alert' : 'status');
+            all('.div_msg_errors_dismiss button, .div_msg_errors_dismiss input[type="button"]', message).forEach(function (button) {
+                button.setAttribute('aria-label', 'بستن پیام');
+                button.setAttribute('title', 'بستن پیام');
+            });
+        });
+    }
     function enhanceContent() {
         enhanceNetworkControls();
+        enhanceMessages();
         var selectedModule = doc.getElementById('issabel_framework_module_id');
         var moduleId = selectedModule ? selectedModule.value : new URL(window.location.href).searchParams.get('menu');
         var moduleContent = doc.querySelector('.neo-module-content');
@@ -383,13 +418,24 @@
             modal.style.setProperty('bottom', 'auto', 'important');
             modal.style.setProperty('transform', 'translate(-50%, -50%)', 'important');
             modal.style.setProperty('height', 'auto', 'important');
-            modal.style.setProperty('min-height', '140px', 'important');
-            modal.style.setProperty('max-height', 'min(640px, calc(100vh - 48px))', 'important');
+            modal.style.setProperty('min-height', '0', 'important');
+            modal.style.setProperty('max-height', 'calc(100vh - 48px)', 'important');
+            if (window.CSS && window.CSS.supports('height', '100dvh')) {
+                modal.style.setProperty('max-height', 'calc(100dvh - 48px)', 'important');
+            }
             modal.style.setProperty('overflow-y', 'auto', 'important');
             modal.style.setProperty('width', 'min(600px, calc(100vw - 24px))', 'important');
             modal.style.setProperty('padding', '0', 'important');
             var inner = modal.querySelector('.neo-modal-issabel-popup-content');
             if (inner) { inner.style.maxHeight = 'none'; inner.style.overflow = 'visible'; }
+            all('#curr_pass, #curr_pass_new, #curr_pass_renew', modal).forEach(function (input) {
+                input.setAttribute('autocomplete', input.id === 'curr_pass' ? 'current-password' : 'new-password');
+                var row = input.closest('tr'), label = row && row.querySelector('td:first-child b');
+                if (label) {
+                    label.id = label.id || input.id + '-label';
+                    input.setAttribute('aria-labelledby', label.id);
+                }
+            });
             var field = modal.querySelector('input[type="password"], input[type="text"]');
             if (field && !modal.contains(doc.activeElement)) { setTimeout(function () { try { field.focus(); } catch (e) { /* Focusing can fail. */ } }, 40); }
         }
@@ -440,7 +486,10 @@
         if (title) { title.id = title.id || 'voiz-modal-title'; modal.setAttribute('aria-labelledby', title.id); }
         function sync() {
             var visible = getComputedStyle(modal).display !== 'none';
-            if (visible && !modalVisible) { modalOpener = doc.activeElement; (close || modal).focus(); }
+            if (visible && !modalVisible) {
+                modalOpener = doc.activeElement;
+                (modal.querySelector('input[type="password"], input[type="text"]') || close || modal).focus();
+            }
             else if (!visible && modalVisible && modalOpener && doc.contains(modalOpener)) { modalOpener.focus(); }
             modalVisible = visible;
         }
@@ -550,12 +599,12 @@
        visible tooltip back inside the visible frame. */
     function initMapTooltips() {
         var pending = false;
-        var selector = '.jvectormap-tip, .jvectormap-label, .ammap-tooltip, .map-tooltip, .maptooltip, ' +
-            '[class*="tooltip"]:not(script):not(style):not(input)';
+        var selector = '.jvectormap-tip, .jvectormap-label, .ammap-tooltip, .map-tooltip, .maptooltip, .country-tooltip, .leaflet-tooltip';
         function clamp() {
             pending = false;
             all(selector).forEach(function (tip) {
-                if (!tip.getClientRects().length) { return; }
+                // SVG tooltip geometry belongs to the chart renderer.
+                if (tip.namespaceURI !== 'http://www.w3.org/1999/xhtml' || tip.closest('svg') || !tip.getClientRects().length) { return; }
                 var rect = tip.getBoundingClientRect(), pad = 8, dx = 0, dy = 0;
                 if (rect.left < pad) { dx = pad - rect.left; }
                 else if (rect.right > window.innerWidth - pad) { dx = window.innerWidth - pad - rect.right; }

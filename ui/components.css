@@ -212,7 +212,7 @@ html body :is(.ui-dialog, .modal-content, .neo-modal-issabel-popup-box, .swal2-p
 }
 html body .modal-dialog { max-width: calc(100vw - 24px); margin: 24px auto; }
 html body :is(.modal-content, .ui-dialog, .neo-modal-issabel-popup-box) { max-height: calc(100vh - 48px); max-height: calc(100dvh - 48px); overflow-y: auto; }
-html body .neo-modal-issabel-popup-box { display: none; position: fixed !important; width: min(600px, calc(100vw - 24px)) !important; height: auto !important; min-height: 140px; max-height: min(640px, calc(100dvh - 48px)); top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%) !important; margin: 0 !important; padding: 0 !important; z-index: 2000 !important; overflow-y: auto !important; }
+html body .neo-modal-issabel-popup-box { display: none; box-sizing: border-box !important; position: fixed !important; width: min(600px, calc(100vw - 24px)) !important; height: auto !important; min-height: 0; max-height: calc(100dvh - 48px); top: 50% !important; left: 50% !important; right: auto !important; transform: translate(-50%, -50%) !important; margin: 0 !important; padding: 0 !important; z-index: 2000 !important; overflow-x: hidden !important; overflow-y: auto !important; }
 html body .neo-modal-issabel-popup-title { padding-inline-end: 56px !important; }
 /* The change-password form (and every framework popup) must be readable and
    roomy: labels above full-width fields, comfortable spacing. */
@@ -221,21 +221,55 @@ html body .neo-modal-issabel-popup-content :is(input:not([type]), input[type="te
 html body .neo-modal-issabel-popup-content :is(table.tabForm, .voiz-form-table) { width: 100%; }
 html body .neo-modal-issabel-popup-content td { padding: 6px 8px; }
 html body .neo-modal-issabel-popup-content :is(.button, .btn, input[type="button"], input[type="submit"]) { min-width: 110px; margin-top: 14px; }
+/* Keep the original password inputs and submission handlers in a single column. */
+html body .neo-modal-issabel-popup-content:has(#curr_pass) { direction: rtl; }
+html body .neo-modal-issabel-popup-content:has(#curr_pass) :is(table, tbody, tr, td) {
+  display: block; box-sizing: border-box; width: 100% !important; height: auto;
+  margin: 0; padding: 0 !important; border: 0; border-spacing: 0; text-align: start;
+}
+html body .neo-modal-issabel-popup-content:has(#curr_pass) tr + tr { margin-top: 16px; }
+html body .neo-modal-issabel-popup-content:has(#curr_pass) b { margin: 0 0 6px; }
+html body .neo-modal-issabel-popup-content:has(#curr_pass) input[type="password"] { box-sizing: border-box; direction: ltr; text-align: left; }
+html body .neo-modal-issabel-popup-content:has(#curr_pass) #sendChanPass { margin-top: 4px; min-height: 44px; }
 html body .neo-modal-issabel-popup-blockmask { position: fixed; inset: 0; z-index: 1990; background: rgb(0 0 0 / 60%); }
 html body :is(.modal-header, .ui-dialog-titlebar, .neo-modal-issabel-popup-title) { padding: 16px 20px; border: 0; border-bottom: 1px solid var(--voiz-border); background: var(--voiz-surface-2) !important; color: var(--voiz-heading) !important; text-shadow: none; }
 html body :is(.modal-body, .ui-dialog-content, .neo-modal-issabel-popup-content, .swal2-content, .swal2-html-container) { padding: 20px; color: var(--voiz-text-soft) !important; background: transparent; overflow-wrap: anywhere; }
 html body :is(.modal-footer, .ui-dialog-buttonpane) { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; border-color: var(--voiz-border); padding: 12px 20px; background: var(--voiz-surface-2); }
 html body :is(.close, .swal2-close) { opacity: 1; color: var(--voiz-text-soft); text-shadow: none; }
-html body .neo-modal-issabel-popup-close { position: absolute; top: 10px; left: 10px; right: auto; width: 34px; height: 34px; border: 1px solid var(--voiz-border); border-radius: 8px; color: var(--voiz-text); background: var(--voiz-surface); cursor: pointer; }
-html body .neo-modal-issabel-popup-close::after { content: '×'; display: grid; place-items: center; height: 100%; font-size: 24px; }
+html body .neo-modal-issabel-popup-close { position: absolute; top: 9px; inset-inline-end: 10px; inset-inline-start: auto; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--voiz-border-strong); border-radius: 8px; color: var(--voiz-text); background: var(--voiz-surface) !important; cursor: pointer; }
+html body .neo-modal-issabel-popup-close::after { content: '×'; font: 26px/1 sans-serif; }
+html body .neo-modal-issabel-popup-close:hover { background: var(--voiz-surface-3) !important; color: var(--voiz-heading); }
 html body :is(.swal2-title, .sweet-alert h2) { color: var(--voiz-heading); }
 html body .swal2-styled.swal2-confirm { background: var(--voiz-primary); }
 html body :is(.div_msg_errors, .alert, .form-login-error) { padding: 16px; margin: 0 0 18px; border-radius: 10px; box-shadow: none; line-height: 1.8; }
-html body .div_msg_errors { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; background: var(--voiz-danger-soft); border: 1px solid var(--voiz-danger); color: var(--voiz-danger); }
-html body .div_msg_errors_title { width: 100%; padding: 0; background: transparent; color: inherit; border: 0; }
-html body .div_msg_errors_content { flex: 1; min-width: 0; padding: 0; margin: 0 !important; background: transparent; color: var(--voiz-text); border: 0; }
-html body .div_msg_errors_dismiss { order: 3; position: static; margin-inline-start: auto; }
-html body .div_msg_errors_dismiss button { width: 34px; height: 34px; border: 0; border-radius: 7px; color: var(--voiz-danger); background: transparent; }
+html body .div_msg_errors {
+  --voiz-message-color: var(--voiz-danger); --voiz-message-bg: var(--voiz-danger-soft);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: start;
+  height: auto; min-height: 0; text-align: start; font-size: 14px;
+  background: var(--voiz-message-bg); border: 1px solid var(--voiz-message-color); color: var(--voiz-message-color);
+}
+html body .div_msg_errors[data-voiz-message-type="info"] { --voiz-message-color: var(--voiz-info); --voiz-message-bg: var(--voiz-accent-soft); }
+html body .div_msg_errors[data-voiz-message-type="success"] { --voiz-message-color: var(--voiz-success); --voiz-message-bg: var(--voiz-success-soft); }
+html body .div_msg_errors[data-voiz-message-type="warning"] { --voiz-message-color: var(--voiz-warning); --voiz-message-bg: var(--voiz-warning-soft); }
+html body .div_msg_errors > :is(.div_msg_errors_title, .div_msg_errors_content, .div_msg_errors_dismiss) {
+  position: static !important; float: none !important; width: auto !important; min-width: 0;
+  margin: 0 !important; padding: 0 !important; border: 0; background: transparent; text-align: start !important;
+}
+html body .div_msg_errors_title { grid-column: 1; font-weight: 600; color: inherit; }
+html body .div_msg_errors_title b { color: inherit !important; }
+html body .div_msg_errors_content { grid-column: 1; color: var(--voiz-text); }
+html body .div_msg_errors_content > :first-child { margin-top: 0; }
+html body .div_msg_errors_content > :last-child { margin-bottom: 0; }
+html body .div_msg_errors_dismiss { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
+html body .div_msg_errors_dismiss :is(button, input[type="button"]) {
+  display: inline-flex; align-items: center; justify-content: center; width: auto; min-width: 36px;
+  height: 36px; min-height: 36px; margin: 0; padding: 4px 8px; border: 1px solid currentColor;
+  border-radius: 7px; color: var(--voiz-message-color); background: transparent; cursor: pointer;
+}
+html body .div_msg_errors_dismiss :is(button, input[type="button"]):hover { background: var(--voiz-surface); }
+html body .alert { position: relative; text-align: start; overflow-wrap: anywhere; }
+html body .alert:has(> .close) { padding-inline-end: 60px; }
+html body .alert > .close { position: absolute; top: 10px; inset-inline-end: 10px; inset-inline-start: auto; float: none; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; font-size: 22px; line-height: 1; color: inherit; border-radius: 7px; }
 html body :is(.alert-danger, .alert-error, .form-login-error, #toast-container .toast-error) { background-color: var(--voiz-danger-soft); border: 1px solid var(--voiz-danger); color: var(--voiz-danger); }
 html body :is(.alert-warning, #toast-container .toast-warning) { background-color: var(--voiz-warning-soft); border: 1px solid var(--voiz-warning); color: var(--voiz-warning); }
 html body :is(.alert-success, #toast-container .toast-success) { background-color: var(--voiz-success-soft); border: 1px solid var(--voiz-success); color: var(--voiz-success); }
