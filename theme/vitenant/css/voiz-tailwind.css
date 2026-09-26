@@ -4020,7 +4020,10 @@ html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close .ui-ic
 html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close::after {
     content: "x";
     font-size: 24px;
+    position: relative;
     line-height: 1;
+    top: -32px;
+    color: darkorange;
 }
 html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonpane {
     position: sticky;
