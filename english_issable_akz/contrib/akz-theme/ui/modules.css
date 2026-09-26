@@ -1,0 +1,229 @@
+/* Dashboard: retain the sortable column containers and their hit areas. */
+html body #applet_grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; width: 100% !important; margin: 0; }
+html body #applet_grid > .appletcolumn { display: flex !important; flex-direction: column; gap: 20px; min-width: 0; min-height: 80px; width: auto !important; padding: 0; }
+/* Older Issabel releases deliver a table instead of the supplied div template. */
+html body table#applet_grid { display: table !important; table-layout: fixed; border-spacing: 10px; }
+html body table#applet_grid > tbody > tr > .appletcolumn { display: table-cell !important; width: 50% !important; vertical-align: top; }
+html body table#applet_grid .appletwindow { margin-bottom: 20px !important; }
+html body #applet_grid .appletwindow, html body div.neo-applet {
+  display: flex; flex-direction: column; position: relative; width: 100% !important; min-width: 0; height: auto !important;
+  min-height: 200px; float: none !important; padding: 0 !important; margin: 0 !important; border: 1px solid var(--akz-border);
+  border-radius: 12px; background: var(--akz-surface) !important; color: var(--akz-text); box-shadow: var(--akz-card-shadow); overflow: visible;
+}
+html body #applet_grid .appletwindow_topbar, html body .neo-applet-title {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; position: relative;
+  min-height: 54px; height: auto !important; padding: 12px 16px; background: var(--akz-surface-2);
+  color: var(--akz-heading); border-bottom: 1px solid var(--akz-border); border-radius: 12px 0 0 12px; text-shadow: none;
+}
+html body #applet_grid .appletwindow_title, html body #applet_grid .appletwindow_widgets {
+  position: static; float: none; padding: 0; margin: 0; font: 600 14px/1.7 Arial, sans-serif;
+  color: var(--akz-heading); text-shadow: none;
+}
+html body #applet_grid .appletrefresh { display: grid; place-items: center; width: 32px; height: 32px; color: var(--akz-muted); border: 0; border-radius: 6px; background: transparent; cursor: pointer; }
+html body #applet_grid .appletrefresh:hover { background: var(--akz-surface-3); color: var(--akz-primary-text); }
+html body #applet_grid .appletwindow_content, html body div.neo-applet-content { position: static !important; width: 100% !important; min-width: 0; padding: 16px; flex: 1; font-size: 13px; }
+html body #applet_grid .appletwindow_fullcontent { max-height: none; min-width: 0; width: 100%; color: var(--akz-text); }
+html body #applet_grid .appletwindow_wait { padding: 30px 10px; text-align: center; color: var(--akz-muted); }
+html body #applet_grid .ui-sortable-placeholder { visibility: visible !important; min-height: 180px; border: 2px dashed var(--akz-border-strong); border-radius: 12px; background: var(--akz-surface-2); }
+html body #applet_grid :is(.gadget, .tabFormTable) { width: 100%; color: var(--akz-text); background: transparent !important; }
+html body #applet_grid .akz-gauges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; gap: 6px; min-width: 0; height: auto !important; min-height: 140px; direction: ltr; }
+html body #applet_grid :is(#cpugauge, #memgauge, #swapgauge) { float: none !important; width: 100% !important; min-width: 0; }
+html body #applet_grid [id^="dashboard-applet-"] svg text { fill: var(--akz-text) !important; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important; }
+html body #applet_grid :is(#dashboard-applet-cpugauge, #dashboard-applet-memgauge, #dashboard-applet-swapgauge) { width: 140px !important; max-width: 100%; height: 140px !important; margin: auto; }
+html body #applet_grid .akz-gauges svg { display: block; width: 100%; height: 140px; overflow: visible; }
+html body #applet_grid :is(.neo-applet-tline, .neo-applet-hd-report-row) { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; height: auto; width: 100%; padding: 7px 0; overflow: visible; border-bottom: 1px solid var(--akz-border); }
+html body #applet_grid :is(.neo-applet-titem, .neo-applet-tdesc, .neo-applet-hd-report-row-left, .neo-applet-hd-report-row-right) { position: static; float: none; width: auto; max-width: 100%; height: auto; padding: 0; margin: 0; white-space: normal; overflow-wrap: anywhere; color: var(--akz-text-soft); }
+.akz-drive { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+html body #applet_grid #dashboard-applet-hd-usage { flex: 0 0 140px; width: 140px !important; margin: auto; }
+html body #applet_grid .neo-applet-hd-innerbox { position: static; flex: 1 1 180px; min-width: 0; width: auto; height: auto; margin: 0; padding: 12px; border: 1px solid var(--akz-border); border-radius: 8px; background: var(--akz-surface-2); color: var(--akz-text); }
+html body #applet_grid :is(.neo-applet-hd-innerbox-top, .neo-applet-hd-innerbox-bottom) { position: static; width: auto; height: auto; padding: 8px 0; color: var(--akz-text-soft); border-color: var(--akz-border); line-height: 1.9; overflow-wrap: anywhere; }
+html body #harddrives_dirspacereport { color: var(--akz-text-soft); }
+html body #harddrives_dirspacereport p { margin: 0 0 12px; font-size: 12px; }
+html body .neo-applet-processes-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; height: auto; min-height: 48px; margin-bottom: 8px;
+  padding: 8px 10px; border: 1px solid var(--akz-border); border-radius: 8px; background: var(--akz-surface-2); white-space: normal; overflow: visible;
+}
+html body .neo-applet-processes-row > div { position: relative; float: none; width: auto; min-width: 0; height: auto; border: 0; padding: 0; margin: 0; font: 400 13px/1.7 Arial, sans-serif; text-shadow: none; }
+html body .neo-applet-processes-row-name { flex: 1 1 120px; color: var(--akz-text); }
+html body .neo-applet-processes-row-icon img { width: 25px; height: 25px; object-fit: contain; }
+html body .neo-applet-processes-row-status-msg { font-size: 12px; }
+html body #applet_grid .neo-applet-processes-row-status-icon { display: block; flex: 0 0 auto; }
+html body .neo-applet-processes-row-menu { padding: 6px !important; }
+html body .neo-applet-processes-menu { max-width: calc(100vw - 32px); padding: 8px; border: 1px solid var(--akz-border); background: var(--akz-surface); color: var(--akz-text); border-radius: 10px; box-shadow: var(--akz-popover-shadow); }
+html body .neo_applet_process { margin: 4px; background: var(--akz-surface-2); color: var(--akz-text); }
+/* Restore the original applet details without fixed-height clipping or
+   legacy dark text on the dark dashboard surface. */
+html body #applet_grid .appletwindow_fullcontent { display: flow-root; }
+html body #applet_grid .infoActivity {
+  display: grid; grid-template-columns: minmax(100px, 1fr) minmax(0, 3fr);
+  gap: 8px 12px; float: none; clear: both; width: 100%; padding: 0; margin: 0; direction: ltr;
+}
+html body #applet_grid .infoActivity :is(.typeActivity, .detailActivity, .detailText) {
+  float: none; clear: none; width: auto; min-width: 0; margin: 0; padding: 6px 0;
+  color: var(--akz-text); text-align: left; overflow-wrap: anywhere;
+}
+html body #applet_grid .infoActivity .typeActivity { color: var(--akz-text-soft); }
+html body #applet_grid .infoActivity font[color="green"] { color: var(--akz-success); }
+html body #applet_grid .infoActivity font[color="red"] { color: var(--akz-danger); }
+html body #applet_grid .infoActivity font[color="gray"] { color: var(--akz-muted); }
+html body #applet_grid .neo-applet-news-row {
+  display: flex; align-items: baseline; gap: 8px; height: auto; min-height: 42px; padding: 10px 0;
+  overflow: visible; white-space: normal; color: var(--akz-text); border-bottom: 1px solid var(--akz-border);
+}
+html body #applet_grid .neo-applet-news-row > a { color: var(--akz-accent-text); min-width: 0; overflow-wrap: anywhere; }
+html body #applet_grid .neo-applet-news-row > a:last-child { flex: 1; }
+html body #applet_grid .neo-applet-news-row > a:hover { color: var(--akz-primary-text); text-decoration: underline; }
+html body #applet_grid .neo-applet-news-row-date {
+  flex: 0 0 auto; direction: ltr; white-space: nowrap; padding: 2px 6px; border: 1px solid var(--akz-border);
+  border-radius: 5px; color: var(--akz-text-soft); background: var(--akz-surface-2);
+}
+html body #applet_grid .neo-applet-processes-row-menu { display: flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; }
+html[data-theme="dark"] body #applet_grid .neo-applet-processes-row-menu img { filter: brightness(0) invert(.8); }
+
+html body :is(.jqplot-target, .jqplot-axis, .tickLabel, .flot-text, .legendLabel) { color: var(--akz-text-soft) !important; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
+html body :is(.jqplot-table-legend, .legend > div) { background-color: var(--akz-surface) !important; border-color: var(--akz-border) !important; }
+html body :is(#myChart, .chart-container) { background-color: var(--akz-surface) !important; color: var(--akz-text); }
+html body .chart-container { position: relative; width: 100%; min-width: 0; overflow: hidden; margin: 16px 0; padding: 12px; border: 1px solid var(--akz-border); border-radius: 10px; }
+html body #myChart { max-width: 100%; }
+html body #dashboard-applet-performancegraph { width: 100% !important; min-width: 0; max-width: 100%; }
+html body #loader { border-color: var(--akz-surface-3); border-top-color: var(--akz-primary); }
+html body mark { background: var(--akz-primary-soft); color: var(--akz-primary-text); }
+html body #msgFilter { display: block; color: var(--akz-text-soft); font-size: 13px; line-height: 2; margin: 12px 0; overflow-wrap: anywhere; }
+html body.akz-cdr-page { padding: 20px; }
+html body.akz-cdr-page .neo-table-header-row { display: none; }
+
+/* FullCalendar retains its table geometry, including event position layers.
+   The calendar module's own tabForm row (#formCalendar) is a two-column
+   layout (toolbar column + FullCalendar), so neutralize the global tabForm
+   cell rules and legacy widths that squeeze the toolbar to 10%. */
+html body #formCalendar .tabForm { table-layout: auto !important; width: 100% !important; background: none !important; border: 0 !important; }
+html body #formCalendar .tabForm > tbody > tr > :is(td) { min-width: 0; background: none !important; border: 0 !important; padding: 0 !important; white-space: normal !important; }
+html body #formCalendar .tabForm > tbody > tr > td[width="10%"] { width: 280px !important; }
+html body #formCalendar .tabForm > tbody > tr > td[width="90%"] { width: auto !important; }
+html body :is(.calendar-env, .calendar-sidebar) { display: contents; } /* legacy fixtures only */
+html body .calendar-env { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; width: 100%; margin: 0; }
+html body .calendar-env::before, html body .calendar-env::after { content: none; }
+html body .calendar-env .calendar-body { float: none; flex: 1 1 480px; min-width: 0; width: auto; padding: 0; }
+html body .calendar-env .calendar-sidebar { float: none; flex: 0 1 240px; min-width: 0; width: 240px; padding: 16px; margin: 0; border: 1px solid var(--akz-border); border-radius: 10px; background: var(--akz-surface-2); }
+html body .calendar-env :is(.calendar-body, .fc-content, .fc-view, .fc-view-container) { background: var(--akz-surface); color: var(--akz-text); }
+html body .fc table { display: table; width: 100%; border-collapse: collapse; margin: 0; table-layout: fixed; }
+html body .fc :is(th, td) { border-color: var(--akz-border) !important; color: var(--akz-text-soft); background: transparent; border-radius: 0; box-shadow: none; }
+html body .fc :is(th, td.fc-day-header) { background: var(--akz-surface-2); color: var(--akz-text); padding: 10px 3px; font-size: 12px; text-align: center; }
+html body .fc td.fc-day { background: var(--akz-surface); vertical-align: top; }
+html body .fc :is(.fc-today, .fc-state-highlight) { background: var(--akz-primary-soft) !important; color: var(--akz-primary-text); }
+html body .fc :is(.fc-day-number, .fc-day-top) { padding: 6px; color: var(--akz-text); font-size: 13px; }
+html body .fc :is(.fc-other-month, .fc-past .fc-day-number) { color: var(--akz-muted); }
+html body .fc :is(.fc-button, button) { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; min-height: 36px; height: auto; padding: 5px 10px; margin: 2px; border: 1px solid var(--akz-border); border-radius: 7px; background: var(--akz-surface-2); color: var(--akz-text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; text-shadow: none; box-shadow: none; }
+html body #calendar_main .fc :is(.fc-button, button) { margin: 2px; }
+html body .fc :is(.fc-state-active, .fc-button-active) { background: var(--akz-primary) !important; color: white !important; border-color: var(--akz-primary); }
+html body .fc .fc-event { background: var(--akz-primary); color: white; border-color: var(--akz-primary); border-radius: 4px; padding: 2px 4px; font-size: 12px; line-height: 1.5; word-break: normal; overflow: hidden; }
+html body .fc .fc-event-title { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+html body .fc .fc-event-inner { color: inherit; background: transparent; }
+html body .fc .fc-header { margin-bottom: 16px; table-layout: auto; }
+html body .fc .fc-header td { vertical-align: middle; padding: 4px; }
+html body .fc .fc-header h2 { margin: 4px; font-size: 19px; color: var(--akz-heading); }
+html body .fc .fc-header-title { vertical-align: middle; }
+html body .calendar-env .calendar-body .fc-header :is(.fc-header-left, .fc-header-right, .fc-header-center) { display: table-cell; padding: 4px; }
+html body .calendar-env .calendar-body .fc-header .fc-button { border: 1px solid var(--akz-border); border-radius: 7px; background: var(--akz-surface-2) !important; color: var(--akz-text) !important; box-shadow: none !important; text-shadow: none; padding: 5px 10px; }
+html body .calendar-env .calendar-body .fc-header .fc-button.fc-state-active { background: var(--akz-primary) !important; color: white !important; }
+html body .calendar-env .calendar-body .fc-content .fc-view table :is(th, td.fc-day) { border-color: var(--akz-border) !important; background: var(--akz-surface) !important; color: var(--akz-text) !important; }
+html body .calendar-env .calendar-body .fc-content .fc-view table th { background: var(--akz-surface-2) !important; }
+html body .calendar-env .calendar-body .fc-content .fc-view table td.fc-today { background: var(--akz-primary-soft) !important; }
+html body .calendar-env .calendar-body .fc-content .fc-view .fc-event { background: var(--akz-primary) !important; color: white !important; border-color: var(--akz-primary) !important; }
+html body .calendar-env .calendar-sidebar :is(.events-list li a, #add_event_form .input-group) { background: var(--akz-surface-2); color: var(--akz-text); }
+/* jQuery UI and Jalali pickers: no global cell padding or button reset. */
+html body :is(.ui-datepicker, div.calendar, .calendarContainer, .datepicker-dropdown, .datepicker-inline) { width: auto; max-width: calc(100vw - 24px); padding: 8px; border: 1px solid var(--akz-border); border-radius: 10px; background: var(--akz-surface) !important; color: var(--akz-text); font: 400 13px/1.7 Arial, sans-serif; box-shadow: var(--akz-card-shadow); }
+html body .ui-datepicker { width: 264px; }
+html body :is(.ui-datepicker, div.calendar, .calendarContainer) table { display: table; width: 100%; border-collapse: collapse; background: transparent; margin: 0; }
+html body :is(.ui-datepicker, div.calendar, .calendarContainer) :is(th, td) { width: auto; min-width: 0; padding: 3px; background: transparent; color: var(--akz-text); border-color: var(--akz-border); font-size: 12px; text-align: center; }
+html body :is(.ui-datepicker, div.calendar) :is(.ui-datepicker-header, .title, .headrow, .daynames, .name) { background: var(--akz-surface-2); color: var(--akz-heading); text-shadow: none; border: 0; }
+html body .ui-datepicker :is(select.ui-datepicker-year, select.ui-datepicker-month) { width: 44%; min-height: 32px; height: 32px; padding: 2px; font-size: 12px !important; }
+html body .ui-datepicker td a { padding: 4px; border: 0; border-radius: 5px; background: var(--akz-surface-2); color: var(--akz-text); }
+html body .ui-datepicker .ui-state-active, html body div.calendar .selected { background: var(--akz-primary) !important; color: white !important; }
+html body .ui-datepicker .ui-state-highlight, html body div.calendar .today { color: var(--akz-primary-text); border: 1px solid var(--akz-primary); }
+html body div.calendar .button { display: table-cell; min-height: 0; padding: 4px; border-radius: 0; border: 0; background: var(--akz-surface-2) !important; color: var(--akz-text) !important; }
+
+/* Addons grid and hardware markup shipped by the core. */
+html body :is(.flexigrid, .flexigrid div.bDiv, .flexigrid div.hDiv, .flexigrid div.pDiv, .flexigrid div.tDiv, .flexigrid div.sDiv, .flexigrid div.mDiv) { max-width: 100%; background: var(--akz-surface) !important; color: var(--akz-text) !important; border-color: var(--akz-border) !important; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; box-shadow: none; }
+html body .flexigrid :is(div.hDiv, div.pDiv, div.tDiv, div.sDiv, div.mDiv) { background: var(--akz-surface-2) !important; height: auto; min-height: 44px; padding: 6px; }
+html body .flexigrid :is(td, th, div.pGroup, div.pPageStat) { background: transparent !important; color: var(--akz-text-soft); border-color: var(--akz-border); font-size: 13px; }
+html body :is(.ui-jqgrid, .ui-jqgrid-view, .ui-jqgrid-hdiv, .ui-jqgrid-bdiv, .ui-jqgrid-pager) { max-width: 100%; background: var(--akz-surface); color: var(--akz-text); border-color: var(--akz-border); }
+html body .akz-hardware { width: 100% !important; table-layout: fixed; }
+html body .akz-hardware > tbody > tr > td { padding: 12px !important; width: auto !important; color: var(--akz-text); }
+html body .akz-hardware > tbody > tr.filterForm > td { vertical-align: top; background: var(--akz-surface-2) !important; border: 1px solid var(--akz-border); }
+html body .akz-hardware :is(.textConf, .table_navigation_row, fieldset) { color: var(--akz-text); background: var(--akz-surface) !important; border-color: var(--akz-border); }
+html body .akz-hardware td[style*="background-color:#EFEFEF"], html body .akz-hardware td[style*="background-color:white"] { background-color: var(--akz-surface-2) !important; color: var(--akz-text); }
+html body .akz-hardware .table_navigation_row { overflow-x: auto; }
+html body .akz-hardware .table_title_row { width: auto; }
+html body .akz-hardware :is(.textConf, #port_desc, .sombreado, .filterForm2) { color: var(--akz-text); }
+html body .akz-module-frame { display: block; border: 0; width: 100%; min-width: 0; background: var(--akz-surface); }
+/* Embedded PBX keeps technical English fields LTR, with an RTL navigation rail. */
+html body .akz-pbx-layout { width: 100%; table-layout: fixed; border-spacing: 16px 0; }
+html body .akz-pbx-navigation { width: 210px; direction: ltr; vertical-align: top; }
+html body #content_pbx { min-width: 0; direction: ltr; text-align: left; overflow-wrap: anywhere; }
+html body #content_pbx :is(table, fieldset, form, .rnav) { max-width: 100%; }
+html body #content_pbx :is(input, select, textarea) { max-width: 100%; }
+html body #nav { width: 100%; }
+html body #nav ul { padding: 0; list-style: none; margin: 0; background: var(--akz-surface-2); border: 1px solid var(--akz-border); border-radius: 10px; overflow: hidden; }
+html body #nav ul li { background: transparent; margin: 0; padding: 0; border: 0; }
+html body #nav ul li a { display: block; min-height: 40px; padding: 8px 12px; color: var(--akz-text-soft); background: transparent; font-size: 13px; white-space: normal; }
+html body #nav ul li.category-header { color: var(--akz-heading); background: var(--akz-surface-3); padding: 8px 12px; font-weight: 600; }
+html body #nav ul li a.current, html body #nav ul li a:hover { color: var(--akz-primary-text); background: var(--akz-primary-soft); }
+html body.akz-embedded :is(#header, #page, #page_body, .container, .columns) { min-width: 0; max-width: 100%; }
+html body.akz-embedded :is(.navbar, .navbar-dropdown, .box, .card, #footer) { background: var(--akz-surface); color: var(--akz-text); border-color: var(--akz-border); }
+html body.akz-embedded :is(.navbar-item, .navbar-link, .title, .subtitle) { color: var(--akz-text); }
+html body.akz-embedded #footer { position: static; height: auto; padding: 16px; z-index: auto; }
+html body.akz-embedded #footer_content { height: auto; flex-wrap: wrap; gap: 12px; }
+html body.akz-embedded .columns { flex-wrap: wrap; }
+html body .pbxpanel { border: 1px solid var(--akz-border); border-radius: 10px; padding: 12px; background: var(--akz-surface); }
+html body .pbxelement { max-width: 100%; width: 190px; height: auto; min-height: 56px; padding: 8px; margin: 4px; font-size: 13px; line-height: 1.7; border: 1px solid var(--akz-border); background: var(--akz-surface-2); color: var(--akz-text); }
+html body .pbxelement.pbxactive { border-color: var(--akz-primary); background: var(--akz-primary-soft); color: var(--akz-primary-text); }
+html body .pbxelement > div { white-space: normal; }
+html body dl.faq2 { width: min(380px, 100%); max-width: 100%; z-index: auto; }
+html body .statusbar { min-height: 40px; height: auto; padding: 8px; color: var(--akz-text); background: var(--akz-surface-2); }
+html body a.pbxtooltip > div { color: var(--akz-text); background: var(--akz-surface); border-color: var(--akz-border); white-space: normal; max-width: min(320px, calc(100vw - 32px)); box-shadow: var(--akz-popover-shadow); }
+html body span.monitor { color: var(--akz-info); font-size: 12px; }
+html body.akz-popup-page { padding: 20px; }
+html body.akz-phone { min-height: 100vh; padding: 24px; }
+html body.akz-phone > div, html body.akz-phone #panels { width: min(100%, 720px); margin-inline: auto; max-width: 100%; background: transparent; }
+html body.akz-phone :is(.panel, #dialer_panel) { max-width: 100%; width: 100%; padding: 20px; border: 1px solid var(--akz-border); border-radius: 12px; background: var(--akz-surface); }
+html body.akz-phone #dialer_panel { display: block; margin-top: 16px; }
+html body.akz-phone #panels { margin-top: 16px; }
+html body.akz-phone span { background: transparent; color: inherit; white-space: normal; overflow-wrap: anywhere; }
+html body.akz-phone :is(.badge, .btn) { margin: 4px; }
+html body.akz-phone #call_form table { table-layout: fixed; width: 100%; }
+html body.akz-phone #call_form table td { padding: 6px; }
+html body.akz-phone #call_form table td:first-child { width: 65%; }
+html body.akz-phone #call_form input[name="call_to"] { width: 100%; direction: ltr; }
+html body.akz-phone #setting input { width: 100%; margin-block: 6px; }
+html body.akz-phone :is(#call_log_ul li, #message_ul li) { color: var(--akz-text); background: var(--akz-surface-2); border: 1px solid var(--akz-border); border-radius: 8px; padding: 8px; overflow-wrap: anywhere; }
+html body.akz-phone #keypad_table { width: min(320px, 100%); margin-inline: auto; }
+html body.akz-phone #keypad_table :is(button, input) { width: 100%; min-height: 48px; }
+html body.akz-phone #video_view { width: 100%; }
+html body.akz-phone #video_view video { max-width: 100%; }
+html body.akz-phone .akz-phone-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 0 auto 20px; max-width: 720px; }
+html body.akz-phone .akz-phone-heading h1 { margin: 0; }
+@media (max-width: 1199px) {
+  html body #applet_grid { gap: 16px; }
+  html body #applet_grid > .appletcolumn { gap: 16px; }
+  html body .calendar-env .calendar-body { flex-basis: 100%; }
+  html body .calendar-env .calendar-sidebar { flex: 1 1 100%; width: 100%; }
+}
+@media (max-width: 767px) {
+  html body.akz-phone { padding: 12px; }
+  html body.akz-phone :is(.panel, #dialer_panel) { padding: 12px; }
+  html body .akz-pbx-layout, html body .akz-pbx-layout > tbody, html body .akz-pbx-layout > tbody > tr, html body .akz-pbx-layout > tbody > tr > td { display: block; width: 100%; }
+  html body .akz-pbx-navigation { margin-bottom: 16px; }
+  html body #applet_grid { grid-template-columns: minmax(0, 1fr); }
+  html body table#applet_grid, html body table#applet_grid > tbody, html body table#applet_grid > tbody > tr, html body table#applet_grid > tbody > tr > .appletcolumn { display: block !important; width: 100% !important; }
+  html body #applet_grid .appletwindow_content { padding: 12px; }
+  html body .akz-hardware, html body .akz-hardware > tbody, html body .akz-hardware > tbody > tr, html body .akz-hardware > tbody > tr > td { display: block; width: 100% !important; }
+  html body .fc .fc-header, html body .fc .fc-header > tbody, html body .fc .fc-header > tbody > tr { display: block; }
+  html body .fc .fc-header > tbody > tr > td { display: inline-block; width: auto; max-width: 100%; text-align: center; }
+  html body .calendar-env .calendar-body .fc-header :is(.fc-header-left, .fc-header-right, .fc-header-center) { display: block; }
+  html body .fc .fc-header > tbody > tr { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+  html body .fc .fc-header h2 { font-size: 16px; }
+  html body .fc :is(th, td.fc-day-header) { font-size: 11px; }
+  html body #calendar_buttonbox :is(.button, .btn) { width: 100%; }
+  html body.akz-cdr-page { padding: 12px; }
+}

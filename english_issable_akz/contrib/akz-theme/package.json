@@ -1,0 +1,13 @@
+{
+  "name": "issabel-akz-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "English left-to-right theme for the Issabel framework",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.cjs -i ui/akz-theme.css -o ../../framework/html/themes/akz/css/akz-tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

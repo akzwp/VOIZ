@@ -1,0 +1,190 @@
+/* The shell owns layout; module tables never define the page width. */
+html body .page-container { display: block; position: relative; width: 100%; min-height: 100vh; padding: 0 !important; }
+html body .page-container .main-content {
+  display: flex !important; flex-direction: column; min-width: 0; min-height: 100vh;
+  width: auto !important; margin: 0 0 0 var(--akz-sidebar-width) !important;
+  padding: 0 28px 24px !important; float: none !important; background: var(--akz-bg) !important;
+}
+html body #neo-contentbox, html body #neo-contentbox-maincolumn {
+  width: 100% !important; min-width: 0; margin: 0 !important; padding: 0 !important;
+  float: none !important; background: none !important; border: 0 !important;
+}
+html body #neo-contentbox { flex: 1 0 auto; overflow: visible; }
+html body .neo-module-content, html body .neo-module-content-frame {
+  min-width: 0; max-width: 100%; width: 100%; padding: 20px; margin: 0;
+  background: var(--akz-surface); border: 1px solid var(--akz-border); border-radius: var(--akz-radius);
+  color: var(--akz-text); overflow-wrap: anywhere; overflow: visible; display: flow-root;
+}
+html body .neo-module-content:has(#applet_grid) { border: 0; background: none; padding: 0; }
+html body .sidebar-menu {
+  position: fixed !important; top: 0 !important; left: 0 !important; right: auto !important;
+  bottom: 0; z-index: 1050; width: var(--akz-sidebar-width) !important; height: 100vh; height: 100dvh;
+  display: flex !important; flex-direction: column; padding: 0 !important; margin: 0 !important;
+  background: var(--akz-sidebar-bg) !important; border: 0; border-right: 1px solid var(--akz-border);
+  overflow: hidden; transform: none;
+}
+html body .sidebar-menu .logo-env {
+  display: flex; align-items: center; justify-content: space-between; flex: 0 0 auto;
+  min-height: 84px; padding: 20px !important; background: none !important; border-bottom: 1px solid var(--akz-border);
+}
+.akz-brand { @apply tw-flex tw-items-center tw-gap-3; }
+.akz-brand > img { width: 32px; height: 38px; object-fit: contain; }
+.akz-brand strong { display: block; font-size: 21px; font-weight: 700; letter-spacing: 1px; color: var(--akz-heading); }
+.akz-brand small { display: block; font-size: 11px; color: var(--akz-muted); }
+.akz-sidebar-label { padding: 18px 24px 6px; font-size: 12px; color: var(--akz-muted); }
+html body .sidebar-menu #main-menu {
+  flex: 1; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  margin: 0 !important; padding: 6px 12px 24px !important; width: 100% !important;
+  list-style: none; background: none !important; display: block !important;
+}
+html body .sidebar-menu #main-menu li { position: relative; list-style: none; border: 0 !important; background: none !important; padding: 0; margin: 3px 0; }
+html body .sidebar-menu #main-menu a {
+  display: flex !important; align-items: center; gap: 10px; min-height: 44px;
+  padding: 10px 12px !important; margin: 0; border: 0 !important; border-radius: 8px;
+  color: var(--akz-sidebar-text) !important; background: none !important; font-size: 14px !important;
+  line-height: 1.65; text-shadow: none; white-space: normal; text-align: start; width: 100%;
+}
+html body .sidebar-menu #main-menu a::before, html body .sidebar-menu #main-menu a::after { content: none !important; display: none !important; }
+html body .sidebar-menu #main-menu a > i { width: 20px; flex: 0 0 20px; margin: 0 !important; font-size: 16px; text-align: center; color: inherit !important; }
+html body .sidebar-menu #main-menu a > span { min-width: 0; padding: 0; overflow-wrap: anywhere; }
+html body .sidebar-menu #main-menu li.has-sub > a { padding-right: 42px !important; }
+html body .sidebar-menu #main-menu a:hover { background: var(--akz-surface-2) !important; color: var(--akz-heading) !important; }
+html body .sidebar-menu #main-menu > li.opened > a { color: var(--akz-heading) !important; font-weight: 600; }
+html body .sidebar-menu #main-menu a[aria-current="page"] {
+  color: var(--akz-primary-text) !important; background: var(--akz-primary-soft) !important;
+  box-shadow: inset 3px 0 var(--akz-primary); font-weight: 600;
+}
+html body .sidebar-menu #main-menu ul {
+  display: none !important; position: static !important; opacity: 1 !important; transform: none !important;
+  width: auto !important; height: auto !important; padding: 2px 0 2px 8px !important;
+  margin: 6px 0 10px 20px !important; background: none !important; border: 0; border-left: 1px solid var(--akz-border);
+}
+html body .sidebar-menu #main-menu li.opened > ul { display: block !important; }
+html body .sidebar-menu #main-menu ul a { font-size: 13px !important; min-height: 40px; }
+html body .sidebar-menu .akz-menu-toggle {
+  position: absolute; top: 6px; right: 4px; width: 32px; height: 32px; min-height: 32px;
+  padding: 0; display: grid; place-items: center; border: 0; background: transparent; border-radius: 6px;
+  color: var(--akz-muted); cursor: pointer;
+}
+.akz-menu-toggle::after { content: ''; width: 6px; height: 6px; border-right: 1.5px solid; border-bottom: 1.5px solid; transform: rotate(225deg); }
+.akz-menu-toggle[aria-expanded="true"]::after { transform: rotate(-45deg); }
+html body .sidebar-menu .akz-menu-toggle:hover { background: var(--akz-surface-3); color: var(--akz-heading); }
+.akz-sidebar-credit { flex: 0 0 auto; padding: 14px 20px; border-top: 1px solid var(--akz-border); color: var(--akz-muted); font-size: 12px; }
+.akz-sidebar-close { display: none !important; }
+
+html body .akz-topbar {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 12px; position: relative; z-index: 1010;
+  min-height: 84px; height: auto; width: auto; margin: 0 -28px; padding: 16px 28px;
+  background: var(--akz-topbar-bg); border: 0; border-bottom: 1px solid var(--akz-border);
+}
+.akz-topbar-logo { display: flex; align-items: center; gap: 10px; }
+.akz-topbar-logo img { width: 54px; height: 28px; object-fit: contain; }
+html[data-theme="light"] .akz-topbar-logo img { filter: brightness(.25); }
+.akz-topbar-logo kbd { color: var(--akz-muted); background: var(--akz-surface-2); border: 1px solid var(--akz-border); border-radius: 6px; box-shadow: none; font: 11px Arial, sans-serif; padding: 3px 6px; direction: ltr; }
+.akz-topbar-search { position: relative; min-width: 180px; flex: 1 1 230px; max-width: 520px; }
+.akz-topbar-search form { margin: 0; position: relative; }
+html body .akz-topbar-search input { width: 100%; height: 44px; padding-inline: 38px 42px !important; border-radius: 10px; }
+.akz-search-icon { position: absolute; top: 14px; left: 14px; color: var(--akz-muted); pointer-events: none; z-index: 1; }
+html body .akz-topbar-search button { position: absolute; right: 4px; top: 4px; width: 36px; height: 36px; min-height: 36px; padding: 0; background: transparent; border: 0; color: var(--akz-muted); }
+.akz-topbar-sep { width: 1px; height: 28px; background: var(--akz-border); }
+html body .akz-topbar-actions { display: flex !important; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 0 auto; padding: 0 !important; list-style: none; }
+html body .akz-topbar-actions > li { position: relative; margin: 0 !important; padding: 0 !important; float: none !important; }
+html body .akz-topbar-actions > li > a, html body .akz-icon-button, html body .akz-topbar-burger, html body .akz-theme-toggle {
+  display: inline-flex !important; align-items: center; justify-content: center; flex: 0 0 auto;
+  width: 40px !important; height: 40px !important; min-height: 40px; padding: 0 !important; margin: 0 !important;
+  border: 1px solid var(--akz-border) !important; border-radius: 9px;
+  background: var(--akz-surface-2) !important; color: var(--akz-text-soft) !important; cursor: pointer; transform: none !important;
+}
+html body .akz-topbar-actions > li > a:hover, html body .akz-icon-button:hover, html body .akz-theme-toggle:hover {
+  background: var(--akz-primary-soft) !important; color: var(--akz-primary-text) !important; border-color: var(--akz-primary) !important;
+}
+html body .akz-topbar i { margin: 0 !important; line-height: 1; color: inherit; translate: none !important; font-size: 16px; }
+.akz-topbar-user { position: relative; }
+.akz-user-link { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.akz-user-link img { width: 32px; height: 32px; object-fit: contain; }
+.akz-user-name { max-width: 140px; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+.akz-user-caret { font-size: 11px; }
+html body .akz-topbar-burger { display: none !important; }
+/* Issue 3: the sidebar close (X) button only makes sense while the sidebar is
+   a mobile drawer. On desktop it is dead weight and must never render. */
+html body .akz-sidebar-close { display: none !important; visibility: hidden !important; pointer-events: none !important; }
+html body.akz-sidebar-open .akz-sidebar-close { display: inline-flex !important; visibility: visible !important; pointer-events: auto !important; }
+/* Issue 3: the admin user menu must open cleanly under its trigger and above
+   the sidebar/content in every breakpoint. In RTL the trigger sits at the far
+   left edge, so the panel must be anchored on its inline-END edge to grow
+   into the viewport instead of off-screen. */
+html body .akz-topbar-user { position: relative; z-index: 30; flex: 0 0 auto; white-space: nowrap; }
+html body .akz-topbar-user .dropdown-menu {
+  position: absolute !important; top: 100% !important;
+  inset-inline-end: 0 !important; inset-inline-start: auto !important;
+  margin-top: 8px !important; min-width: 220px; max-width: calc(100vw - 16px);
+  z-index: 2100 !important; padding: 8px !important;
+  box-shadow: var(--akz-popover-shadow) !important;
+}
+html body .akz-topbar-user .dropdown-menu > li > a {
+  display: flex !important; align-items: center; gap: 10px;
+  min-height: 46px; padding: 11px 14px !important; border-radius: 8px;
+  font-size: 14px !important; color: var(--akz-text) !important; white-space: nowrap;
+}
+html body .akz-topbar-user .dropdown-menu > li > a:hover { background: var(--akz-primary-soft) !important; color: var(--akz-primary-text) !important; }
+html body .akz-topbar-user .dropdown-menu > li > a > :is(i, span) { font-size: inherit; }
+/* Only one authority decides visibility: bootstrap's .open or the Akz fallback. */
+html body .akz-topbar-user.akz-open > .dropdown-menu { display: block !important; }
+@media (max-width: 767px) {
+  html body .akz-topbar-user .dropdown-menu {
+    position: fixed !important; top: 76px !important; inset-inline: 12px !important;
+    margin-top: 0 !important; min-width: 0; width: auto; z-index: 2100 !important;
+  }
+}
+.akz-search-results {
+  display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 1060;
+  max-height: min(420px, 65vh); overflow-y: auto; padding: 6px; border-radius: 12px;
+  background: var(--akz-surface); border: 1px solid var(--akz-border); box-shadow: var(--akz-popover-shadow);
+}
+.akz-search-results.akz-open { display: block; }
+.akz-search-item { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 7px; color: var(--akz-text); }
+.akz-search-item small { font-size: 11px; color: var(--akz-muted); }
+.akz-search-item.akz-active, .akz-search-item:hover { background: var(--akz-primary-soft); color: var(--akz-primary-text); }
+.akz-search-empty, .akz-search-group-label { padding: 10px 12px; color: var(--akz-muted); }
+.akz-search-group-label { font-size: 12px; }
+html body .breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; width: 100%; min-height: 60px; padding: 14px 0; margin: 0; border: 0; background: none; font-size: 13px; }
+html body .breadcrumb > li { float: none !important; color: var(--akz-muted); line-height: 1.8; }
+html body .breadcrumb > li.active { color: var(--akz-heading); }
+html body .breadcrumb #tenant-help { margin-inline-start: auto; }
+html body .breadcrumb #tenant-help::before, html body .breadcrumb #tenant-sticky::before { content: none; }
+html body .breadcrumb #tenant-help a, html body .breadcrumb #tenant-sticky a { display: grid; place-items: center; width: 36px; height: 36px; }
+html body footer.main { margin: 24px 0 0; padding: 18px 0 0; border-top: 1px solid var(--akz-border); color: var(--akz-muted); background: transparent; font-size: 12px; }
+.akz-footer-brands { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px 12px; }
+.akz-footer-brands .sep { opacity: .55; }
+.akz-sidebar-overlay { display: none; }
+@media (max-width: 1199px) {
+  :root { --akz-sidebar-width: 244px; }
+  .akz-topbar-search { max-width: none; }
+  .akz-topbar-sep, .akz-topbar-logo kbd { display: none; }
+}
+@media (max-width: 991px) {
+  html body .page-container .main-content { margin: 0 !important; padding: 0 20px 20px !important; }
+  html body .sidebar-menu { width: min(300px, calc(100vw - 48px)) !important; transform: translateX(-105%); visibility: hidden; transition: transform .2s ease, visibility .2s; }
+  /* Harden the open state: legacy GSAP sets inline transforms and the old
+     neon CSS sets its own visibility/position - these must never win. */
+  html body.akz-sidebar-open .sidebar-menu {
+    transform: none !important; visibility: visible !important; opacity: 1 !important;
+    pointer-events: auto !important; z-index: 1060 !important; box-shadow: var(--akz-popover-shadow);
+  }
+  html body.akz-sidebar-open .sidebar-menu :is(a, button, input, select) { pointer-events: auto !important; }
+  html body.akz-sidebar-open .akz-sidebar-overlay { display: block; position: fixed; inset: 0; z-index: 1055; background: rgb(0 0 0 / 55%); }
+  html body.akz-sidebar-open { overflow: hidden; }
+  html body .akz-topbar { margin: 0 -20px; padding: 12px 20px; gap: 10px; min-height: 72px; }
+  html body .akz-topbar-burger, html body .akz-sidebar-close { display: inline-flex !important; visibility: visible !important; pointer-events: auto !important; }
+}
+@media (max-width: 640px) {
+  html body .page-container .main-content { padding: 0 12px 16px !important; }
+  html body .akz-topbar { margin: 0 -12px; padding: 12px; gap: 8px; }
+  .akz-topbar-logo { flex: 1; }
+  .akz-topbar-user { margin-inline-start: auto; }
+  .akz-user-name, .akz-user-caret { display: none; }
+  .akz-topbar-search { order: 5; flex: 1 0 100%; }
+  html body .akz-topbar-actions { order: 6; width: 100%; justify-content: space-between; gap: 4px; padding-top: 4px !important; }
+  html body .neo-module-content, html body .neo-module-content-frame { padding: 12px; }
+  html body .breadcrumb { min-height: 52px; font-size: 12px; }
+}

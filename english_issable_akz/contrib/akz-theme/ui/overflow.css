@@ -1,0 +1,115 @@
+/* Long Persian labels, URLs and identifiers must never enlarge their container.
+   Inputs retain native horizontal editing; code and data grids scroll locally. */
+/* content.css applies box-sizing:initial to every module descendant, adding
+   padding/borders outside 100% widths. Override that actual source of overflow. */
+html body .neo-module-content *, html body .neo-module-content *::before,
+html body .neo-module-content *::after { box-sizing: border-box !important; }
+html body :is(.neo-module-content, .neo-module-content-frame, .appletwindow_content,
+  .panel-body, .modal-content, .ui-dialog-content, .neo-modal-issabel-popup-content,
+  .swal2-popup, .div_msg_errors, .alert, .dropdown-menu, .akz-search-results,
+  .akz-sidebar-credit, .akz-footer-brands, .login-wrapper) {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+html body :is(.neo-module-content, .panel-body, .modal-body, .appletwindow_fullcontent)
+  :is(p, label, legend, h1, h2, h3, h4, h5, h6, .help-block, .description,
+  .control-label, .moduleTitle, .panel-title, .label, .badge, .alert, .message) {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  height: auto;
+  line-height: 1.8;
+}
+html body :is(.akz-topbar-user, .akz-user-link, .akz-search-item, .akz-brand,
+  .akz-footer-brands, .akz-actions, .form-actions, .button-bar, .panel-heading,
+  .modal-header, .appletwindow_topbar, .neo-applet-tline, .neo-applet-processes-row) > * {
+  min-width: 0;
+}
+html body :is(.appletwindow_title, .panel-title, .modal-title, .ui-dialog-title,
+  .neo-modal-issabel-popup-title, .swal2-title, .toast-title, .toast-message,
+  .div_msg_errors_title, .div_msg_errors_content) {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  height: auto !important;
+  text-overflow: clip;
+  line-height: 1.8;
+}
+html body .appletwindow_widgets { flex-shrink: 0; }
+html body .neo-modal-issabel-popup-title { padding-inline-end: 56px; }
+html body .neo-modal-issabel-popup-box { height: auto !important; }
+html body .neo-modal-issabel-popup-title { position: relative; inset: auto; font: 600 15px/1.8 Arial, sans-serif; text-align: start; }
+/* Core ShowModalPopUP supplies absolute offsets and scrolling inline. The
+   content must participate in layout so the dialog can fit all form rows. */
+html body .neo-modal-issabel-popup-content {
+  position: relative !important; inset: auto !important; box-sizing: border-box !important;
+  width: auto !important; height: auto !important; min-height: 0; max-height: none !important;
+  overflow: visible !important;
+}
+html body .ui-dialog .ui-dialog-title { float: none; display: block; width: auto; margin-inline-end: 36px; }
+html body .akz-brand span { min-width: 0; }
+html body .akz-user-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html body :is(.akz-search-item, .dropdown-menu > li > a, .akz-footer-brands > *, .copyr a) { overflow-wrap: anywhere; white-space: normal; }
+html body :is(.btn, .button, button.submit, .neo-table-toolbar-button, .dt-button) {
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+html body :is(.neo-module-content, .akz-popup-page, .akz-cdr-page, .akz-embedded)
+  :is(pre, .confdir) {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  overflow: auto;
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+  direction: ltr;
+  text-align: left;
+  padding: 14px;
+  border: 1px solid var(--akz-border);
+  border-radius: 8px;
+  background: var(--akz-input-bg);
+  color: var(--akz-text);
+  font-size: 13px;
+}
+html body :is(.neo-module-content, .akz-popup-page, .akz-embedded) code { white-space: break-spaces; overflow-wrap: anywhere; }
+html body pre code { white-space: pre !important; overflow-wrap: normal !important; }
+html body :is(table.tabForm, table.akz-form-table) { table-layout: fixed; }
+html body :is(table.tabForm, table.akz-form-table) > tbody > tr > td {
+  min-width: 0;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  text-align: start !important;
+}
+html body :is(table.tabForm, table.akz-form-table) :is(.input-group, .form-group, .chosen-container, .select2-container) { min-width: 0; max-width: 100%; }
+html body :is(table.tabForm, table.akz-form-table) :is(input, select, textarea) { min-width: 0; max-width: 100% !important; }
+html body :is(table.issabel-standard-table, table.dataTable, table.table, table.tabla_listado, table.listDataTable)
+  > tbody > tr > td {
+  overflow-wrap: anywhere;
+  white-space: normal;
+  max-width: 36rem;
+}
+/* The viewport scroll wrapper contains intrinsically wide tables. Never turn
+   a report's rows/cells into flex or block elements. */
+.akz-table-scroll > table { min-width: 100%; }
+html body :is(.neo-applet-titem, .neo-applet-tdesc, .neo-applet-hd-report-row-left, .neo-applet-hd-report-row-right) { min-width: 0; overflow-wrap: anywhere; }
+html body .neo-applet-processes-row-status-msg { flex: 0 1 auto; max-width: 100%; overflow-wrap: anywhere; }
+html body .akz-hardware td { overflow-wrap: anywhere; }
+html body .akz-hardware fieldset { min-width: 0; max-width: 100%; }
+html body .akz-hardware legend { white-space: normal; overflow-wrap: anywhere; }
+html body #toast-container > div { overflow-wrap: anywhere; }
+html body label[data-tooltip]::after { max-width: min(320px, calc(100vw - 32px)); white-space: normal; overflow-wrap: anywhere; background: var(--akz-surface-3); color: var(--akz-text); border: 1px solid var(--akz-border); box-shadow: var(--akz-popover-shadow); }
+html body .fc .fc-event-title { display: block; min-width: 0; max-width: 100%; }
+@media (max-width: 767px) {
+  html body .neo-module-content > .row { margin-right: 0; margin-left: 0; }
+  html body :is(.panel-body, .modal-body) > .row { margin-right: 0; margin-left: 0; }
+  html body :is(.neo-table-header-row, .neo-table-footer-row) > * { min-width: 0; max-width: 100%; }
+  html body :is(.form-actions, .button-bar, .akz-actions) > :is(button, .btn, input) { flex: 1 1 140px; }
+}

@@ -1,0 +1,11 @@
+/* Issabel / AKZ — single Tailwind entry point. npm run build:css */
+@import "./tokens.css";
+@import "./shell.css";
+@import "./components.css";
+@import "./modules.css";
+@import "./overflow.css";
+@import "./embedded.css";
+@import "./module-layouts.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
