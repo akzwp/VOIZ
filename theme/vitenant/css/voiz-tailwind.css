@@ -4015,9 +4015,9 @@ html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close {
     background: var(--voiz-border);
 }
 html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close .ui-icon {
-    display: block;
+    display: none;
 }
-ui-button-text {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close::after {
     content: "x";
     font-size: 24px;
     line-height: 1;
