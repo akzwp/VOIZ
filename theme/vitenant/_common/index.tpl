@@ -49,7 +49,7 @@
         {$HEADER}
     {$HEADER_MODULES}
     <!-- Final theme contract: loaded after module-provided styles. -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.8">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.9">
     <!-- Voiz: Force Farsi calendar language if Calendar object exists -->
     <script type="text/javascript">
     (function () {

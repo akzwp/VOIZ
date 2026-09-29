@@ -121,6 +121,32 @@ html body .ibutton-container > input:is([type="checkbox"], [type="radio"]) {
 }
 html body .ibutton-container > input::before, html body .ibutton-container > input::after { content: none !important; }
 
+/* Applet Admin ("Issabel Network" and the other dashboard applets): the per-applet
+   activation checkbox uses the very same standard 48x26 switch as the iButton above,
+   so every ON/OFF toggle in the panel looks and behaves identically. */
+html body input[type="checkbox"][name^="chkdau_"] {
+  appearance: none; -webkit-appearance: none; box-sizing: border-box; position: relative;
+  display: inline-block; flex: 0 0 48px; overflow: hidden; vertical-align: middle; direction: ltr;
+  width: 48px !important; min-width: 48px !important; max-width: 48px !important;
+  height: 26px !important; min-height: 26px !important; max-height: 26px !important;
+  margin: 0; padding: 0 !important; cursor: pointer;
+  border: 2px solid var(--voiz-border-strong) !important; border-radius: 999px !important;
+  background: var(--voiz-surface-3) !important; box-shadow: none !important;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+html body input[type="checkbox"][name^="chkdau_"]::before {
+  content: ""; position: absolute; top: 50%; left: 3px; box-sizing: border-box; width: 16px; height: 16px;
+  margin: -8px 0 0; border-radius: 50%; background: var(--voiz-muted); transform: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .3); transition: transform .15s ease, background-color .15s ease;
+}
+html body input[type="checkbox"][name^="chkdau_"]::after { content: none !important; }
+html body input[type="checkbox"][name^="chkdau_"]:checked {
+  background: var(--voiz-primary) !important; border-color: var(--voiz-primary) !important;
+}
+html body input[type="checkbox"][name^="chkdau_"]:checked::before { transform: translateX(22px); background: #fff; }
+html body input[type="checkbox"][name^="chkdau_"]:hover:not(:checked):not(:disabled) { border-color: var(--voiz-primary-text) !important; }
+html body input[type="checkbox"][name^="chkdau_"]:disabled { opacity: .45; cursor: not-allowed; }
+
 /* Issue 6: dotted-quad IP octet inputs (DHCP server and similar network forms).
    Each octet box becomes a fixed-width, centered, LTR numeric field that is
    easy to type into; the dot separator is rendered by the module markup. */

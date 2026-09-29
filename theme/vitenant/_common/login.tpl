@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms.css">
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/font-awesome-animation.min.css">
         <!-- Voiz: UI/UX layer (loaded last) -->
-        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.7">
+        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/voiz-tailwind.css?v=7.1.9">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
