@@ -282,9 +282,51 @@
             });
         });
     }
+    function initColorSwatches() {
+        var selector = doc.querySelector('#calendar_eventdialog #colorSelector');
+        if (!selector || selector.dataset.akzSwatches) { return; }
+        var current = selector.querySelector('div');
+        if (!current) { return; }
+        selector.dataset.akzSwatches = 'true';
+        var palette = ['#e35332', '#e67e22', '#f1c40f', '#27ae60', '#16a085', '#2980b9', '#2c3e80', '#8e44ad', '#e84393', '#7f8c8d'];
+        var currentColor = (current.style.backgroundColor || '').trim();
+        var colorField = doc.querySelector('#calendar_eventdialog input[name="color"], #calendar_eventdialog input#color');
+        var box = doc.createElement('div'); box.className = 'akz-color-swatches'; box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'انتخاب رنگ رویداد');
+        palette.forEach(function (color) {
+            var swatch = doc.createElement('button');
+            swatch.type = 'button'; swatch.className = 'akz-color-swatch';
+            swatch.style.backgroundColor = color;
+            swatch.dataset.akzColor = color;
+            swatch.setAttribute('aria-label', 'رنگ ' + color);
+            swatch.setAttribute('aria-pressed', 'false');
+            swatch.addEventListener('click', function () {
+                current.style.backgroundColor = color;
+                if (colorField) { colorField.value = color.replace('#', ''); }
+                all('.akz-color-swatch', box).forEach(function (other) { other.setAttribute('aria-pressed', String(other === swatch)); });
+            });
+            box.appendChild(swatch);
+        });
+        function markSelected() {
+            var value = rgbToHex(current.style.backgroundColor).toLowerCase();
+            if (!value) { return; }
+            all('.akz-color-swatch', box).forEach(function (swatch) {
+                swatch.setAttribute('aria-pressed', String((swatch.dataset.akzColor || '').toLowerCase() === value));
+            });
+        }
+        function rgbToHex(value) {
+            var match = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(value || '');
+            if (!match) { return ''; }
+            return '#' + match.slice(1).map(function (part) { return ('0' + Number(part).toString(16)).slice(-2); }).join('');
+        }
+        selector.appendChild(box);
+        // The module's own color picker may still set the div color; keep the ring in sync.
+        if (window.MutationObserver) { new MutationObserver(markSelected).observe(current, { attributes: true, attributeFilter: ['style'] }); }
+        markSelected();
+    }
     function enhanceContent() {
         enhanceNetworkControls();
         enhanceMessages();
+        initColorSwatches();
         var selectedModule = doc.getElementById('issabel_framework_module_id');
         var moduleId = selectedModule ? selectedModule.value : new URL(window.location.href).searchParams.get('menu');
         var moduleContent = doc.querySelector('.neo-module-content');
@@ -805,6 +847,7 @@
                 field.setAttribute('aria-labelledby', caption.id);
             }
         });
+        
         var error = doc.createElement('p');
         error.id = 'voiz-event-date-error'; error.className = 'voiz-date-error'; error.hidden = true;
         error.setAttribute('role', 'alert');

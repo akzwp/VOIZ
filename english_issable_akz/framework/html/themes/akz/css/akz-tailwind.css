@@ -5372,6 +5372,35 @@ html body #calendar_eventdialog #colorSelector .colorpicker-box {
     border-radius: 8px;
     cursor: pointer;
 }
+/* Swatch row: the module ships a bare color div; the theme renders an
+   accessible swatch palette inside #colorSelector instead. */
+html body #calendar_eventdialog #colorSelector .akz-color-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--voiz-border);
+    border-radius: 10px;
+    background: var(--voiz-surface-2);
+}
+html body #calendar_eventdialog #colorSelector .akz-color-swatch {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 2px var(--voiz-surface-2);
+}
+html body #calendar_eventdialog #colorSelector .akz-color-swatch:hover {
+    transform: scale(1.08);
+}
+html body #calendar_eventdialog #colorSelector .akz-color-swatch[aria-pressed="true"] {
+    border-color: var(--voiz-primary-text);
+    box-shadow: inset 0 0 0 2px var(--voiz-surface-2), 0 0 0 2px var(--voiz-surface-2);
+}
 html body #calendar_eventdialog :is(#divReminder, #divNotification) {
     display: flex;
     align-items: center;
@@ -5694,6 +5723,13 @@ html body #calendar_main .fc-grid .fc-day-content {
 html body #calendar_main .fc-content,
 html body #calendar_main .fc-content * {
     box-sizing: content-box !important;
+}
+/* FC 1.x measures cell geometry with the content-box model above, but dialog
+   controls must keep the standard border-box: without this the close button
+   padding pushes its × glyph outside the 36px hit area. */
+html body .ui-dialog:has(#calendar_eventdialog),
+html body .ui-dialog:has(#calendar_eventdialog) * {
+    box-sizing: border-box !important;
 }
 html body #calendar_main .fc-content,
 html body #calendar_main .fc-content table {
