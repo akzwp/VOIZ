@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/styles.css">
   <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/help.css">
   <!-- Akz: internal utility engine + redesign layer (always last) -->
-  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/akz-tailwind.css?v=1.0.0">
+  <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/akz-tailwind.css?v=1.0.1">
   <script src="{$WEBCOMMON}js/base.js"></script>
   <script src="{$WEBCOMMON}js/iframe.js"></script>
 </head>

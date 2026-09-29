@@ -50,7 +50,7 @@
         {$HEADER}
     {$HEADER_MODULES}
     <!-- Final theme contract: loaded after module-provided styles. -->
-    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/akz-tailwind.css?v=1.0.0">
+    <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/akz-tailwind.css?v=1.0.1">
     
     </head>
     <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="mainBody page-body" {$BODYPARAMS}>
@@ -156,7 +156,7 @@ $(document).ready(function(e) {
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/jquery.validate.min.js"></script>
         <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/neon-custom.js"></script>
         
-        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/akz-ui.js?v=1.0.0"></script>
+        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/akz-ui.js?v=7.1.7"></script>
     </div>
 </body>
 </html>

@@ -5196,7 +5196,11 @@ html body #calendar_toolbar .voiz-jalali-card {
         flex: 1 1 100%;
     }
 }
-html body .ui-dialog:has(#calendar_eventdialog) {
+/* NOTE: some engines never match "E:has(#self)" when E itself carries the id
+   (jQuery UI puts .ui-dialog on #calendar_eventdialog itself), so every
+   dialog rule below is repeated with direct selectors as a fallback. */
+html body .ui-dialog:has(#calendar_eventdialog),
+html body #calendar_eventdialog.ui-dialog {
     position: fixed !important;
     inset: 50% auto auto 50% !important;
     transform: translate(-50%, -50%) !important;
@@ -5210,7 +5214,8 @@ html body .ui-dialog:has(#calendar_eventdialog) {
     z-index: 6100 !important;
     scrollbar-gutter: stable;
 }
-html body:has(#calendar_eventdialog) .ui-widget-overlay {
+html body:has(#calendar_eventdialog) .ui-widget-overlay,
+html body #calendar_eventdialog.ui-dialog ~ .ui-widget-overlay {
     position: fixed;
     inset: 0;
     z-index: 6090 !important;
@@ -5222,7 +5227,8 @@ html body .voiz-dialog-mask {
     z-index: 6090;
     background: rgba(0, 0, 0, 0.55);
 }
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-titlebar {
     position: sticky;
     top: 0;
     z-index: 3;
@@ -5234,14 +5240,16 @@ html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar {
     border-radius: 0;
     min-height: 64px;
 }
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-title {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-title,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-titlebar .ui-dialog-title {
     float: none;
     width: auto;
     margin: 0;
     font-size: 16px;
     font-weight: 700;
 }
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-titlebar > .ui-dialog-titlebar-close {
     position: static;
     flex: 0 0 36px;
     margin: 0;
@@ -5252,17 +5260,24 @@ html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close {
     place-items: center;
     border: 1px solid var(--voiz-border);
     border-radius: 8px;
+    background: var(--voiz-surface-2);
     color: var(--voiz-text);
-}
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close .ui-icon {
-    display: none;
-}
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close:after {
-    content: "×";
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: 400;
     line-height: 1;
 }
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonpane {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close .ui-icon,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-titlebar > .ui-dialog-titlebar-close .ui-icon {
+    display: none;
+}
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-titlebar-close:after,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-titlebar > .ui-dialog-titlebar-close:after {
+    content: "×";
+    font-size: 20px;
+    line-height: 1;
+}
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonpane,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-buttonpane {
     position: sticky;
     bottom: 0;
     z-index: 3;
@@ -5272,19 +5287,22 @@ html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonpane {
     border-top: 1px solid var(--voiz-border);
     background: var(--voiz-surface-2);
 }
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonset {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonset,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-buttonpane .ui-dialog-buttonset {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     width: 100%;
     float: none;
 }
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonset button {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonset button,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-buttonpane .ui-dialog-buttonset button {
     margin: 0;
     min-height: 42px;
     min-width: 100px;
 }
-html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonset button:first-child {
+html body .ui-dialog:has(#calendar_eventdialog) .ui-dialog-buttonset button:first-child,
+html body #calendar_eventdialog.ui-dialog > .ui-dialog-buttonpane .ui-dialog-buttonset button:first-child {
     background: var(--voiz-primary);
     border-color: var(--voiz-primary);
     color: #fff;
@@ -5728,7 +5746,9 @@ html body #calendar_main .fc-content * {
    controls must keep the standard border-box: without this the close button
    padding pushes its × glyph outside the 36px hit area. */
 html body .ui-dialog:has(#calendar_eventdialog),
-html body .ui-dialog:has(#calendar_eventdialog) * {
+html body .ui-dialog:has(#calendar_eventdialog) *,
+html body #calendar_eventdialog.ui-dialog,
+html body #calendar_eventdialog.ui-dialog * {
     box-sizing: border-box !important;
 }
 html body #calendar_main .fc-content,

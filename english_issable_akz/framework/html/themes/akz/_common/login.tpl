@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/neon-forms.css">
         <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/font-awesome-animation.min.css">
         <!-- Akz: UI/UX layer (loaded last) -->
-        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/akz-tailwind.css?v=1.0.0">
+        <link rel="stylesheet" href="{$WEBPATH}themes/{$THEMENAME}/css/akz-tailwind.css?v=1.0.1">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
@@ -95,7 +95,7 @@
         
         
         
-        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/akz-ui.js?v=1.0.0"></script>
+        <script type='text/javascript' src="{$WEBPATH}themes/{$THEMENAME}/js/akz-ui.js?v=7.1.7"></script>
 
         
         <script type="text/javascript">
