@@ -7900,10 +7900,90 @@ html body #calendar_main .fc-event-hori.fc-event-end {
     border-bottom-left-radius: 7px !important;
 }
 
-.wrapper input:checked + .toggle .toggle--handler {
-    -webkit-transform: translateX(75px);
-    transform: translateX(25px) !important;
-    background: -webkit-radial-gradient(120% 120%, #ABFF00, #304701);
-    background: radial-gradient(120% 120%, #ABFF00, #304701);
-    box-shadow: 0px 5px 40px rgba(171, 255, 0, 0.8);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== Issabel Network applet: standard ON/OFF toggle ===== */
+html body #remoteadmintog {
+  zoom: 1 !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  display: inline-block !important;
+  box-sizing: border-box !important;
+  width: 48px !important;
+  height: 26px !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  direction: ltr !important;
+  vertical-align: middle !important;
+  border: 2px solid var(--voiz-border-strong, #676d77) !important;
+  border-radius: 999px !important;
+  background: var(--voiz-surface-3, #2d3035) !important;
+  box-shadow: none !important;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+/* remove the old centre line and the x / check icons */
+html body #remoteadmintog::after,
+html body #remoteadmintog .toggle--handler::before {
+  content: none !important;
+  display: none !important;
+}
+/* hide the real checkbox but keep it working */
+html body #remoteadmintog input {
+  position: absolute !important;
+  left: -999em !important;
+}
+html body #remoteadmintog .toggle {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+}
+/* OFF: grey knob on the left */
+html body #remoteadmintog .toggle--handler {
+  position: relative !important;
+  z-index: 2 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 16px !important;
+  height: 16px !important;
+  margin: 3px !important;
+  border-radius: 50% !important;
+  background: var(--voiz-muted, #a0a6b1) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .3) !important;
+  transform: none !important;
+  transition: transform .15s ease, background-color .15s ease !important;
+}
+html body #remoteadmintog .toggle--handler::after {
+  content: none !important;
+  display: none !important;
+}
+/* ON: coloured track and white knob on the right */
+html body #remoteadmintog:has(input:checked) {
+  background: var(--voiz-primary, #b9471f) !important;
+  border-color: var(--voiz-primary, #b9471f) !important;
+}
+html body #remoteadmintog input:checked + .toggle .toggle--handler {
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .3) !important;
+  transform: translateX(22px) !important;
+}
+/* keyboard focus */
+html body #remoteadmintog:has(input:focus-visible) {
+  outline: 2px solid var(--voiz-primary-text, #ffb38f);
+  outline-offset: 3px;
 }
