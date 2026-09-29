@@ -759,8 +759,8 @@
             if (!first || !next) { return; }
             var count = Math.round((next - first) / 86400000), offset = (first.getDay() + 1) % 7;
             var html = '<div class="voiz-jalali-head"><div class="voiz-jalali-title">' + jalaliMonths[view.m - 1] + ' ' + toFa(view.y) +
-                '</div><div class="voiz-jalali-nav"><button type="button" data-voiz-jalali="prev" aria-label="ماه قبل">›</button>' +
-                '<button type="button" data-voiz-jalali="today">امروز</button><button type="button" data-voiz-jalali="next" aria-label="ماه بعد">‹</button></div></div><div class="voiz-jalali-grid">';
+                '</div><div class="voiz-jalali-nav"><button type="button" data-voiz-jalali="prev" aria-label="ماه قبل">‹</button>' +
+                '<button type="button" data-voiz-jalali="today">امروز</button><button type="button" data-voiz-jalali="next" aria-label="ماه بعد">›</button></div></div><div class="voiz-jalali-grid">';
             calendarDays.forEach(function (day) { html += '<div class="voiz-jalali-dow">' + day + '</div>'; });
             for (var i = 0; i < offset; i++) { html += '<span aria-hidden="true"></span>'; }
             for (var day = 1; day <= count; day++) {
