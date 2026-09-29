@@ -5668,20 +5668,27 @@ html body .fc .fc-event {
 html body .fc .fc-event :is(.fc-event-title, span) {
     color: inherit;
 }
+/* Month-view day number: one identical box for every cell so all numbers
+   align on the same baseline; no fixed height or negative offset that would
+   collide with the absolutely-positioned event bars (FC 1.x z-index: 8). */
 html body #calendar_main .fc-grid .fc-day-number {
     float: none;
     display: block;
-    height: 24px;
-    top: -5px;
+    height: auto;
+    top: 0;
     position: relative;
-    line-height: 24px;
+    z-index: 9;
+    line-height: 20px;
     margin: 0;
-    padding: 4px 8px;
+    padding: 2px 8px;
     text-align: right;
     white-space: nowrap;
 }
+/* The event-bar layer measures its anchor from .fc-day-content; a top margin
+   here pushes every bar safely below the day number. */
 html body #calendar_main .fc-grid .fc-day-content {
     clear: both;
+    margin-top: 6px;
     padding: 4px 2px 2px;
 }
 html body #calendar_main .fc-content,
