@@ -2789,7 +2789,7 @@ html
         select,
         textarea
     ) {
-    width: 100%;
+    width: 100% !important;
 }
 html body :is(.fila_botonera, .button-bar, .form-actions, .voiz-actions) {
     display: flex;
