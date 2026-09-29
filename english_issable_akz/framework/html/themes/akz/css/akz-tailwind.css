@@ -5087,7 +5087,7 @@ html body .neo-module-content table.tabForm textarea {
 }
 html body .neo-module-content table.tabForm tr > td {
     padding: 8px 10px;
-    vertical-align: middle;
+    /* vertical-align: middle; */
 }
 html body .neo-module-content img[src*="Icon-user"] {
     max-width: 120px;
