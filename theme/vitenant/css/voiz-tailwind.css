@@ -7918,8 +7918,8 @@ html body #calendar_main .fc-event-hori.fc-event-end {
 html body #remoteadmintog {
   zoom: 1 !important;
   position: relative !important;
-  top: auto !important;
-  left: auto !important;
+  top: -92px !important;
+  left: 310px !important;
   transform: none !important;
   display: inline-block !important;
   box-sizing: border-box !important;
@@ -7957,6 +7957,7 @@ html body #remoteadmintog .toggle {
 html body #remoteadmintog .toggle--handler {
   position: relative !important;
   z-index: 2 !important;
+  top: 2px !important;
   display: block !important;
   box-sizing: border-box !important;
   width: 16px !important;
