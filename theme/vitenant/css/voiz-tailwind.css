@@ -7899,3 +7899,11 @@ html body #calendar_main .fc-event-hori.fc-event-end {
     border-top-left-radius: 7px !important;
     border-bottom-left-radius: 7px !important;
 }
+
+.wrapper input:checked + .toggle .toggle--handler {
+    -webkit-transform: translateX(75px);
+    transform: translateX(25px);
+    background: -webkit-radial-gradient(120% 120%, #ABFF00, #304701);
+    background: radial-gradient(120% 120%, #ABFF00, #304701);
+    box-shadow: 0px 5px 40px rgba(171, 255, 0, 0.8);
+}
