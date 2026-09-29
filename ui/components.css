@@ -62,41 +62,64 @@ html[dir="rtl"] body input[type="checkbox"].switch:checked::before, html[dir="rt
 html[dir="ltr"] body input[type="checkbox"].switch:checked::before, html[dir="ltr"] body input[type="checkbox"][class*="switch"]:checked::before { --voiz-switch-shift: 20px; }
 html body input[type="checkbox"].switch:checked::after, html body input[type="checkbox"][class*="switch"]:checked::after { content: none; }
 
-/* Keep radio sizing and the selected mark native, including keyboard focus. */
+/* Standard radio button: one fixed 20px circle drawn by the theme (identical in
+   every browser). OFF = empty ring, ON = accent ring with a centred accent dot.
+   The selected mark is a background gradient, so nothing can overflow the box. */
 html body input[type="radio"], html body input[type="radio"]:checked {
-  appearance: auto; -webkit-appearance: auto; accent-color: var(--voiz-primary);
+  appearance: none; -webkit-appearance: none; box-sizing: border-box;
+  display: inline-block; position: relative; flex: 0 0 20px;
   width: 20px !important; min-width: 20px !important; max-width: 20px !important;
-  height: 20px !important; min-height: 20px; flex: 0 0 20px;
-  padding: 0 !important; border: 0; background: transparent !important; box-shadow: none !important;
+  height: 20px !important; min-height: 20px !important; max-height: 20px !important;
+  margin: 0 5px; padding: 0 !important; overflow: hidden; vertical-align: middle;
+  border: 2px solid var(--voiz-border-strong) !important; border-radius: 50% !important;
+  background: var(--voiz-input-bg) !important; box-shadow: none !important;
+  outline-offset: 2px; cursor: pointer;
 }
+html body input[type="radio"]:hover:not(:disabled) { border-color: var(--voiz-primary-text) !important; }
+html body input[type="radio"]:checked {
+  border-color: var(--voiz-primary) !important;
+  background: radial-gradient(circle at center, var(--voiz-primary) 0, var(--voiz-primary) 4px, transparent 5px), var(--voiz-input-bg) !important;
+}
+html body input[type="radio"]::before, html body input[type="radio"]::after { content: none !important; }
 
 /* Issabel's iButton (Beta Channel and other modules) keeps its original input
-   and change callbacks. Replace the sprite skin with a native clickable switch. */
+   and change callbacks. The plugin's sprite skin is replaced by a standard
+   48x26 switch: OFF = neutral track + muted knob, ON = accent track + white knob.
+   The track clips everything (overflow: hidden) so no legacy handle, label or
+   sprite can ever stick out of it, and inline widths set by the plugin are ignored. */
 html body .ibutton-container {
-  display: inline-block; position: relative; vertical-align: middle; overflow: visible;
-  box-sizing: border-box; width: 52px !important; min-width: 52px; max-width: 52px !important;
-  height: 30px !important; padding: 0; border: 1px solid var(--voiz-border-strong);
-  border-radius: 999px; background: var(--voiz-surface-3) !important;
-  direction: ltr; cursor: pointer; transition: background-color .15s ease, border-color .15s ease;
+  display: inline-block; position: relative; vertical-align: middle; overflow: hidden;
+  box-sizing: border-box; width: 48px !important; min-width: 48px !important; max-width: 48px !important;
+  height: 26px !important; min-height: 26px !important; max-height: 26px !important;
+  margin: 0; padding: 0 !important; border: 2px solid var(--voiz-border-strong) !important;
+  border-radius: 999px !important; background: var(--voiz-surface-3) !important; background-image: none !important;
+  box-shadow: none !important; direction: ltr; cursor: pointer; line-height: 0; font-size: 0;
+  transition: background-color .15s ease, border-color .15s ease;
 }
-html body .ibutton-container > div { display: none !important; }
+html body .ibutton-container > :not(input), html body .ibutton-container > :not(input) * {
+  display: none !important; background: none !important; width: 0 !important; height: 0 !important;
+}
+html body .ibutton-container::before { content: none !important; }
 html body .ibutton-container::after {
-  content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;
-  border-radius: 50%; background: var(--voiz-text-soft); pointer-events: none;
-  transition: transform .15s ease, background-color .15s ease;
+  content: ""; position: absolute; top: 50%; left: 3px; box-sizing: border-box; width: 16px; height: 16px;
+  margin: -8px 0 0; border-radius: 50%; background: var(--voiz-muted); pointer-events: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .3); transition: transform .15s ease, background-color .15s ease;
 }
 html body .ibutton-container:has(> input:checked) {
-  background: var(--voiz-primary) !important; border-color: var(--voiz-primary);
+  background: var(--voiz-primary) !important; border-color: var(--voiz-primary) !important;
 }
 html body .ibutton-container:has(> input:checked)::after { transform: translateX(22px); background: #fff; }
 html body .ibutton-container:has(> input:focus-visible) { outline: 2px solid var(--voiz-primary-text); outline-offset: 3px; }
 html body .ibutton-container:has(> input:disabled) { opacity: .45; cursor: not-allowed; }
 html body .ibutton-container > input:is([type="checkbox"], [type="radio"]) {
+  appearance: none; -webkit-appearance: none;
   display: block !important; position: absolute !important; inset: 0 !important; z-index: 4;
-  width: 100% !important; min-width: 0 !important; max-width: 100% !important;
-  height: 100% !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important;
-  opacity: 0 !important; cursor: inherit; pointer-events: auto; border: 0 !important;
+  box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important;
+  height: 100% !important; min-height: 0 !important; max-height: 100% !important; margin: 0 !important; padding: 0 !important;
+  opacity: 0 !important; cursor: inherit; pointer-events: auto; border: 0 !important; border-radius: 0 !important;
+  background: transparent !important; box-shadow: none !important; overflow: visible;
 }
+html body .ibutton-container > input::before, html body .ibutton-container > input::after { content: none !important; }
 
 /* Issue 6: dotted-quad IP octet inputs (DHCP server and similar network forms).
    Each octet box becomes a fixed-width, centered, LTR numeric field that is

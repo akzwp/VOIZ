@@ -2366,87 +2366,147 @@ html[dir="ltr"] body input[type="checkbox"][class*="switch"]:checked:before {
 }
 html body input[type="radio"],
 html body input[type="radio"]:checked {
-    -moz-appearance: auto;
-    appearance: auto;
-    -webkit-appearance: auto;
-    accent-color: var(--voiz-primary);
-    width: 20px !important;
-    min-width: 20px !important;
-    max-width: 20px !important;
-    height: 20px !important;
-    min-height: 20px;
-    flex: 0 0 20px;
-    padding: 0 !important;
-    border: 0;
-    background: 0 0 !important;
-    box-shadow: none !important;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  flex: 0 0 20px;
+  width: 20px !important;
+  min-width: 20px !important;
+  max-width: 20px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  margin: 0 5px;
+  padding: 0 !important;
+  overflow: hidden;
+  vertical-align: middle;
+  border: 2px solid var(--voiz-border-strong) !important;
+  border-radius: 50% !important;
+  background: var(--voiz-input-bg) !important;
+  box-shadow: none !important;
+  outline-offset: 2px;
+  cursor: pointer;
+}
+html body input[type="radio"]:hover:not(:disabled) {
+  border-color: var(--voiz-primary-text) !important;
+}
+html body input[type="radio"]:checked {
+  border-color: var(--voiz-primary) !important;
+  background:
+    radial-gradient(
+      circle at center,
+      var(--voiz-primary) 0,
+      var(--voiz-primary) 4px,
+      transparent 5px
+    ),
+    var(--voiz-input-bg) !important;
+}
+html body input[type="radio"]:after,
+html body input[type="radio"]:before {
+  content: none !important;
 }
 html body .ibutton-container {
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
-    overflow: visible;
-    box-sizing: border-box;
-    width: 52px !important;
-    min-width: 52px;
-    max-width: 52px !important;
-    height: 30px !important;
-    padding: 0;
-    border: 1px solid var(--voiz-border-strong);
-    border-radius: 999px;
-    background: var(--voiz-surface-3) !important;
-    direction: ltr;
-    cursor: pointer;
-    transition:
-        background-color 0.15s,
-        border-color 0.15s;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  height: 26px !important;
+  min-height: 26px !important;
+  max-height: 26px !important;
+  margin: 0;
+  padding: 0 !important;
+  border: 2px solid var(--voiz-border-strong) !important;
+  border-radius: 999px !important;
+  background: var(--voiz-surface-3) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  direction: ltr;
+  cursor: pointer;
+  line-height: 0;
+  font-size: 0;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+html body .ibutton-container > :not(input),
+html body .ibutton-container > :not(input) * {
+  display: none !important;
+  background: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+html body .ibutton-container:before {
+  content: none !important;
 }
 html body .ibutton-container:after {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--voiz-text-soft);
-    pointer-events: none;
-    transition:
-        transform 0.15s,
-        background-color 0.15s;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0;
+  border-radius: 50%;
+  background: var(--voiz-muted);
+  pointer-events: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
 }
 html body .ibutton-container:has(> input:checked) {
-    background: var(--voiz-primary) !important;
-    border-color: var(--voiz-primary);
+  background: var(--voiz-primary) !important;
+  border-color: var(--voiz-primary) !important;
 }
 html body .ibutton-container:has(> input:checked):after {
-    transform: translateX(22px);
-    background: #fff;
+  transform: translateX(22px);
+  background: #fff;
 }
 html body .ibutton-container:has(> input:focus-visible) {
-    outline: 2px solid var(--voiz-primary-text);
-    outline-offset: 3px;
+  outline: 2px solid var(--voiz-primary-text);
+  outline-offset: 3px;
 }
 html body .ibutton-container:has(> input:disabled) {
-    opacity: 0.45;
-    cursor: not-allowed;
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 html body .ibutton-container > input:is([type="checkbox"], [type="radio"]) {
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 4;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    height: 100% !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    opacity: 0 !important;
-    cursor: inherit;
-    pointer-events: auto;
-    border: 0 !important;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 4;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  cursor: inherit;
+  pointer-events: auto;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible;
+}
+html body .ibutton-container > input:after,
+html body .ibutton-container > input:before {
+  content: none !important;
 }
 html body .voiz-embedded input[maxlength="3"][size="3"],
 html body input.octet,
