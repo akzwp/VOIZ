@@ -280,37 +280,91 @@
         var current = selector.querySelector('div');
         if (!current) { return; }
         selector.dataset.akzSwatches = 'true';
-        var palette = ['#e35332', '#e67e22', '#f1c40f', '#27ae60', '#16a085', '#2980b9', '#2c3e80', '#8e44ad', '#e84393', '#7f8c8d'];
-        var currentColor = (current.style.backgroundColor || '').trim();
+        current.classList.add('colorpicker-box');
+        current.setAttribute('aria-hidden', 'true');
+        current.setAttribute('title', 'پیش‌نمایش رنگ انتخاب‌شده');
+        var palette = [
+            { hex: '#e35332', name: 'قرمز' },
+            { hex: '#e67e22', name: 'نارنجی' },
+            { hex: '#f1c40f', name: 'زرد' },
+            { hex: '#27ae60', name: 'سبز' },
+            { hex: '#16a085', name: 'فیروزه‌ای' },
+            { hex: '#2980b9', name: 'آبی' },
+            { hex: '#2c3e80', name: 'سرمه‌ای' },
+            { hex: '#8e44ad', name: 'بنفش' },
+            { hex: '#e84393', name: 'صورتی' },
+            { hex: '#7f8c8d', name: 'خاکستری' }
+        ];
         var colorField = doc.querySelector('#calendar_eventdialog input[name="color"], #calendar_eventdialog input#color');
-        var box = doc.createElement('div'); box.className = 'akz-color-swatches'; box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'انتخاب رنگ رویداد');
-        palette.forEach(function (color) {
+        var box = doc.createElement('span');
+        box.className = 'akz-color-swatches';
+        box.setAttribute('role', 'group');
+        box.setAttribute('aria-label', 'انتخاب رنگ رویداد');
+        var statusLabel = doc.createElement('span');
+        statusLabel.className = 'voiz-color-label';
+        statusLabel.setAttribute('aria-live', 'polite');
+        function selectColor(hex) {
+            current.style.backgroundColor = hex;
+            if (colorField) { colorField.value = hex.replace('#', ''); }
+            markSelected();
+        }
+        palette.forEach(function (item) {
             var swatch = doc.createElement('button');
-            swatch.type = 'button'; swatch.className = 'akz-color-swatch';
-            swatch.style.backgroundColor = color;
-            swatch.dataset.akzColor = color;
-            swatch.setAttribute('aria-label', 'رنگ ' + color);
+            swatch.type = 'button';
+            swatch.className = 'akz-color-swatch';
+            swatch.style.backgroundColor = item.hex;
+            swatch.dataset.akzColor = item.hex;
+            swatch.dataset.colorName = item.name;
+            swatch.title = item.name;
+            swatch.setAttribute('aria-label', 'رنگ ' + item.name + ' (' + item.hex + ')');
             swatch.setAttribute('aria-pressed', 'false');
-            swatch.addEventListener('click', function () {
-                current.style.backgroundColor = color;
-                if (colorField) { colorField.value = color.replace('#', ''); }
-                all('.akz-color-swatch', box).forEach(function (other) { other.setAttribute('aria-pressed', String(other === swatch)); });
+            swatch.addEventListener('mousedown', function (event) { event.stopPropagation(); });
+            swatch.addEventListener('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                selectColor(item.hex);
             });
             box.appendChild(swatch);
         });
-        function markSelected() {
-            var value = rgbToHex(current.style.backgroundColor).toLowerCase();
-            if (!value) { return; }
-            all('.akz-color-swatch', box).forEach(function (swatch) {
-                swatch.setAttribute('aria-pressed', String((swatch.dataset.akzColor || '').toLowerCase() === value));
-            });
-        }
+        box.addEventListener('keydown', function (event) {
+            var swatches = all('.akz-color-swatch', box);
+            var idx = swatches.indexOf(event.target);
+            if (idx < 0) { return; }
+            var nextIdx = -1;
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') { nextIdx = (idx + 1) % swatches.length; }
+            else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') { nextIdx = (idx - 1 + swatches.length) % swatches.length; }
+            else if (event.key === 'Home') { nextIdx = 0; }
+            else if (event.key === 'End') { nextIdx = swatches.length - 1; }
+            if (nextIdx >= 0) {
+                event.preventDefault();
+                event.stopPropagation();
+                swatches[nextIdx].focus();
+                selectColor(swatches[nextIdx].dataset.akzColor);
+            }
+        });
         function rgbToHex(value) {
-            var match = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(value || '');
+            var raw = String(value || '').trim();
+            if (/^#[0-9a-f]{6}$/i.test(raw)) { return raw.toLowerCase(); }
+            if (/^#[0-9a-f]{3}$/i.test(raw)) {
+                return '#' + raw.slice(1).split('').map(function (c) { return c + c; }).join('').toLowerCase();
+            }
+            var match = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(raw);
             if (!match) { return ''; }
-            return '#' + match.slice(1).map(function (part) { return ('0' + Number(part).toString(16)).slice(-2); }).join('');
+            return '#' + match.slice(1).map(function (part) { return ('0' + Number(part).toString(16)).slice(-2); }).join('').toLowerCase();
+        }
+        function markSelected() {
+            var value = rgbToHex(current.style.backgroundColor);
+            if (!value) { return; }
+            var activeName = '';
+            all('.akz-color-swatch', box).forEach(function (swatch) {
+                var isMatch = (swatch.dataset.akzColor || '').toLowerCase() === value;
+                swatch.setAttribute('aria-pressed', String(isMatch));
+                if (isMatch) { activeName = swatch.dataset.colorName || value; }
+            });
+            statusLabel.textContent = 'رنگ انتخابی: ' + (activeName || value);
         }
         selector.appendChild(box);
+        selector.appendChild(statusLabel);
         // The module's own color picker may still set the div color; keep the ring in sync.
         if (window.MutationObserver) { new MutationObserver(markSelected).observe(current, { attributes: true, attributeFilter: ['style'] }); }
         markSelected();
